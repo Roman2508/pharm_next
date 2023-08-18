@@ -9,15 +9,16 @@ import { Videos } from '@/components/Videos/Videos'
 import { Contacts } from '@/components/Contacts/Contacts'
 import { Partners } from '@/components/Partners/Partners'
 import { GetStaticProps, NextPage } from 'next'
-import { gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
 
 interface IHomeProps {
-  headerData: any
+  headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
-const Home: NextPage<IHomeProps> = ({ headerData }) => {
+const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData }) => {
   return (
-    <HomePageLayout title="ЖБФФК | Головна сторінка" headerData={headerData}>
+    <HomePageLayout title="ЖБФФК | Головна сторінка" headerData={headerData} mainScreenData={mainScreenData}>
       <Announcement />
       <About />
       <Stats />
@@ -34,8 +35,14 @@ const Home: NextPage<IHomeProps> = ({ headerData }) => {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
 
-    return { props: { headerData } }
+    return {
+      props: {
+        headerData,
+        mainScreenData,
+      },
+    }
   } catch (error) {
     console.log(error, 'home page error')
     return { props: { headerData: {} } }

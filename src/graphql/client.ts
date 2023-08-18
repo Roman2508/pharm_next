@@ -3,7 +3,7 @@ import { GraphQLClient } from 'graphql-request'
 import { getSdk } from './__generated__'
 // import { ApolloClient, InMemoryCache } from '@apollo/client'
 
-const client = new GraphQLClient('http://localhost:1337/graphql')
+const client = new GraphQLClient(process.env.GRAPHQL_API_URL || 'http://localhost:1337/graphql')
 
 // export const client = new ApolloClient({
 //   uri: 'http://localhost:1337/graphql',

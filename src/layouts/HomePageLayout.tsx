@@ -1,13 +1,15 @@
 import { Footer } from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import MainScreen from '@/components/MainScreen/MainScreen'
+import { GetHeaderQuery, GetMainScreenQuery } from '@/graphql/__generated__'
 import Head from 'next/head'
 import React, { PropsWithChildren } from 'react'
 
 interface ILayoutProps {
   title?: string
   description?: string
-  headerData: any
+  headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
 export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
@@ -15,6 +17,7 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
   title = 'ЖБФФК',
   description = 'ЖБФФК',
   headerData,
+  mainScreenData,
 }) => {
   return (
     <>
@@ -25,7 +28,7 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
       </Head>
       <main>
         <Header headerData={headerData} />
-        <MainScreen />
+        <MainScreen mainScreenData={mainScreenData} />
         {children}
         <Footer />
       </main>
