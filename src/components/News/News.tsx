@@ -1,6 +1,7 @@
 import React from 'react'
+import cn from 'classnames'
 
-import './news.css'
+import styles from './News.module.scss'
 import { NewsItem } from './NewsItem'
 
 const NewsData = [
@@ -32,31 +33,33 @@ const NewsData = [
 
 export const News = () => {
   return (
-    <div className="news">
-      <div className="container">
-        <div className="news__inner">
-          <h2 className="news__title section-title">Новини</h2>
+    <div className={styles['news']}>
+      <div className={'container'}>
+        <div className={styles['news__inner']}>
+          <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>
 
-          <div className="news__items">
+          <div className={styles['news__items']}>
             {NewsData.map((news) => (
               <NewsItem key={news.id} {...news} />
             ))}
           </div>
 
-          <div className="news__pagination">
-            <span className="news__pagination-item"> &#60; Перша</span>
-            <span className="news__pagination-item news__pagination-prev">&#60; Попередня</span>
-            <span className="naws__pages">
-              <span className="news__pagination-item news__pagination-page">1</span>
+          <div className={styles['news__pagination']}>
+            <span className={styles['news__pagination-item']}> &#60; Перша</span>
+            <span className={cn(styles['news__pagination-item'], styles['news__pagination-prev'])}>
+              &#60; Попередня
+            </span>
+            <span className={styles['naws__pages']}>
+              <span className={cn(styles['news__pagination-item'], styles['news__pagination-page'])}>1</span>
               <span>|</span>
-              <span className="news__selected-page  news__pagination-page">2</span>
+              <span className={cn(styles['news__selected-page'], styles['news__pagination-page'])}>2</span>
               <span>|</span>
-              <span className="news__pagination-item  news__pagination-page">3</span>
+              <span className={cn(styles['news__pagination-item'], styles['news__pagination-page'])}>3</span>
               <span>...</span>
             </span>
-            <span className="news__pagination-item news__pagination-next">Наступна &#62;</span>
-            <span className="news__pagination-item">Остання &#62;</span>
-            <span className="news__all-news">Всі новини</span>
+            <span className={cn(styles['news__pagination-item'], styles['news__pagination-next'])}>Наступна &#62;</span>
+            <span className={styles['news__pagination-item']}>Остання &#62;</span>
+            <span className={styles['news__all-news']}>Всі новини</span>
           </div>
         </div>
       </div>

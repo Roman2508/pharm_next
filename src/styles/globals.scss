@@ -169,3 +169,13 @@ body {
 }
 
 /* // photos gallery */
+
+/* slick slider */
+.slick-list {
+  min-width: 0;
+}
+
+.slick-track {
+  display: flex;
+  min-width: 0;
+}

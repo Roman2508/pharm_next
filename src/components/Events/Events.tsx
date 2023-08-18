@@ -1,9 +1,10 @@
 'use client'
 import React from 'react'
 import { SwiperSlide } from 'swiper/react'
+import cn from 'classnames'
 
-import './events.css'
-import { Slider } from '../Slider/Slider'
+import styles from './Events.module.scss'
+import { SliderWrapper } from '../Slider/Slider'
 
 const eventsItems = [
   {
@@ -28,23 +29,49 @@ const eventsItems = [
 
 export const Events = () => {
   return (
-    <div className="events">
-      <h2 className="events__title section-title">Події</h2>
-      <Slider>
+    <div className={styles['events']}>
+      <h2 className={cn(styles['events__title'], 'section-title')}>Події</h2>
+      <SliderWrapper>
         {eventsItems.map((el) => (
-          <SwiperSlide key={el.id}>
-            <div className="events__item">
-              <div className="events__photo">
+          <div className="keen-slider__slide">
+            <div className={cn(styles['events__item'])}>
+              <div className={styles['events__photo']}>
                 <img src={el.photo} alt="slider photo" />
               </div>
-              <div className="events__content">
-                <div className="events__date">{el.date}</div>
-                <h5 className="events__slider-title">{el.title}</h5>
+              <div className={styles['events__content']}>
+                <div className={styles['events__date']}>{el.date}</div>
+                <h5 className={styles['events__slider-title']}>{el.title}</h5>
               </div>
             </div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Slider>
+      </SliderWrapper>
     </div>
   )
 }
+
+/* 
+      <SliderWrapper>
+        {eventsItems.map((el) => (
+          <SwiperSlide key={el.id}>
+            {({ isActive }) => {
+              return (
+                <div
+                  className={cn(styles['events__item'], {
+                    [styles.slideActive]: isActive,
+                  })}
+                >
+                  <div className={styles['events__photo']}>
+                    <img src={el.photo} alt="slider photo" />
+                  </div>
+                  <div className={styles['events__content']}>
+                    <div className={styles['events__date']}>{el.date}</div>
+                    <h5 className={styles['events__slider-title']}>{el.title}</h5>
+                  </div>
+                </div>
+              )
+            }}
+          </SwiperSlide>
+        ))}
+      </SliderWrapper>
+*/
