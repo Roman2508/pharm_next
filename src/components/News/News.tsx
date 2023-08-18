@@ -3,6 +3,7 @@ import cn from 'classnames'
 
 import styles from './News.module.scss'
 import { NewsItem } from './NewsItem'
+import { GetNewsQuery } from '@/graphql/__generated__'
 
 const NewsData = [
   {
@@ -31,7 +32,11 @@ const NewsData = [
   },
 ]
 
-export const News = () => {
+interface INewsProps {
+  newsData: GetNewsQuery
+}
+
+export const News: React.FC<INewsProps> = ({ newsData }) => {
   return (
     <div className={styles['news']}>
       <div className={'container'}>

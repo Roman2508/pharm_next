@@ -32,6 +32,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         headerData,
       },
+      revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'about page error')
