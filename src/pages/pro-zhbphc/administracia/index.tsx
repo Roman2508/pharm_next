@@ -4,6 +4,8 @@ import styles from './Administration.module.scss'
 
 import { Layout } from '@/layouts/Layout'
 import AdministrationCard from '@/components/AdministrationCard/AdministrationCard'
+import { GetStaticProps } from 'next'
+import { GetHeaderQuery, gql } from '@/graphql/client'
 
 const administrationItems = [
   {
@@ -120,9 +122,13 @@ const administrationItems = [
   },
 ]
 
-const Administration = () => {
+interface IAdministrationProps {
+  headerData: GetHeaderQuery
+}
+
+const Administration: React.FC<IAdministrationProps> = ({ headerData }) => {
   return (
-    <Layout>
+    <Layout headerData={headerData}>
       <div className={styles['administration']}>
         <div className="container">
           <div className={`${styles['administration__title']} section-title`}>Адміністрація</div>
@@ -141,6 +147,21 @@ const Administration = () => {
       </div>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const headerData = await gql.GetHeader()
+
+    return {
+      props: {
+        headerData,
+      },
+    }
+  } catch (error) {
+    console.log(error, 'about page error')
+    return { props: { headerData: {} } }
+  }
 }
 
 export default Administration

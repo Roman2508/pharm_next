@@ -7,6 +7,8 @@ import styles from './CollegeHistory.module.scss'
 import pharmacyHistoryImage from '../../../../public/assets/images/college-history/pharmacy-history.jpg'
 import { Layout } from '@/layouts/Layout'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
+import { GetStaticProps } from 'next'
+import { GetHeaderQuery, gql } from '@/graphql/client'
 
 const directors = [
   {
@@ -88,9 +90,13 @@ const archivePhotos = [
   },
 ]
 
-const CollegeHistory = () => {
+interface ICollegeHistoryProps {
+  headerData: GetHeaderQuery
+}
+
+const CollegeHistory: React.FC<ICollegeHistoryProps> = ({ headerData }) => {
   return (
-    <Layout>
+    <Layout headerData={headerData}>
       <div className={styles['college-history']}>
         <div className="container">
           <h1 className={cn(styles['college-history__main-title'], 'section-title')}>Історія коледжу</h1>
@@ -199,6 +205,21 @@ const CollegeHistory = () => {
       </div>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const headerData = await gql.GetHeader()
+
+    return {
+      props: {
+        headerData,
+      },
+    }
+  } catch (error) {
+    console.log(error, 'college history page error')
+    return { props: { headerData: {} } }
+  }
 }
 
 export default CollegeHistory

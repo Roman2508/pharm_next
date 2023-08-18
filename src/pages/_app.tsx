@@ -1,4 +1,6 @@
+import { gql } from '@/graphql/client'
 import '@/styles/globals.scss'
+import { GetStaticProps } from 'next'
 import type { AppProps } from 'next/app'
 
 import NextProgressBar from 'nextjs-progressbar'

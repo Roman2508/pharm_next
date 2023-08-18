@@ -3,10 +3,16 @@ import React from 'react'
 import styles from './AboutPage.module.scss'
 import { Layout } from '@/layouts/Layout'
 import About from '@/components/About/About'
+import { GetStaticProps } from 'next'
+import { GetHeaderQuery, gql } from '@/graphql/client'
 
-const AboutPage = () => {
+interface IAboutPageProps {
+  headerData: GetHeaderQuery
+}
+
+const AboutPage: React.FC<IAboutPageProps> = ({ headerData }) => {
   return (
-    <Layout>
+    <Layout headerData={headerData}>
       <div className="container">
         <div className={styles['about-page']}>
           <h1 className={`${styles['about-page__title']} section-title`}>Про ЖБФФК</h1>
@@ -16,6 +22,21 @@ const AboutPage = () => {
       </div>
     </Layout>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const headerData = await gql.GetHeader()
+
+    return {
+      props: {
+        headerData,
+      },
+    }
+  } catch (error) {
+    console.log(error, 'about page error')
+    return { props: { headerData: {} } }
+  }
 }
 
 export default AboutPage
