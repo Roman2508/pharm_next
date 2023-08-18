@@ -4,6 +4,10 @@ import Announcement from '@/components/Announcement/Announcement'
 import Stats from '@/components/Stats/Stats'
 import { News } from '@/components/News/News'
 import { Events } from '@/components/Events/Events'
+import { Gallery } from '@/components/Gallery/Gallery'
+import { Videos } from '@/components/Videos/Videos'
+import { Contacts } from '@/components/Contacts/Contacts'
+import { Partners } from '@/components/Partners/Partners'
 
 export default function Home() {
   return (
@@ -13,6 +17,10 @@ export default function Home() {
       <Stats />
       <News />
       <Events />
+      <Gallery />
+      <Videos />
+      <Contacts />
+      <Partners />
     </HomePageLayout>
   )
 }

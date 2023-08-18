@@ -2,7 +2,7 @@
 import React from 'react'
 import { usePathname } from 'next/navigation'
 
-import './breadcrumbs.css'
+import styles from './Breadcrumbs.module.scss'
 import Link from 'next/link'
 
 const Breadcrumbs = () => {
@@ -16,16 +16,16 @@ const Breadcrumbs = () => {
     .map((el) => {
       currentLink += `/${el}`
       return (
-        <div className="breadcrumbs__item" key={el}>
+        <div className={styles['breadcrumbs__item']} key={el}>
           <Link href={currentLink}>{el}</Link>
         </div>
       )
     })
 
   return (
-    <div className="breadcrumbs">
+    <div className={styles['breadcrumbs']}>
       <div className="container">
-        <div className="breadcrumbs__list">{crumbs}</div>
+        <div className={styles['breadcrumbs__list']}>{crumbs}</div>
       </div>
     </div>
   )

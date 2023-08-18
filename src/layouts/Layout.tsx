@@ -1,5 +1,9 @@
 import Head from 'next/head'
 import React, { PropsWithChildren } from 'react'
+import Header from '@/components/Header/Header'
+import SubHeader from '@/components/SubHeader/SubHeader'
+import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
+import { Footer } from '@/components/Footer/Footer'
 
 // import Header from '@/components/Header/Header'
 
@@ -21,8 +25,11 @@ export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
-        {/* <Header /> */}
+        <Header />
+        <SubHeader />
+        <Breadcrumbs />
         {children}
+        <Footer />
       </main>
     </>
   )

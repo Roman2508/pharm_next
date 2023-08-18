@@ -1,0 +1,15 @@
+.administration__title {
+  margin-bottom: 40px;
+}
+
+.administration__list {
+  display: flex;
+  flex-wrap: wrap;
+  /* justify-content: space-between; */
+}
+
+@media (max-width: 1024px) {
+  .administration__list {
+    justify-content: center;
+  }
+}

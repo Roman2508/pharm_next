@@ -81,3 +81,10 @@
   bottom: -1px;
   left: 0;
 }
+
+@media (max-width: 1024px) {
+  .administration__item {
+    max-width: initial;
+    flex-basis: auto;
+  }
+}

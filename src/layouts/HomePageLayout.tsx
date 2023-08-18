@@ -1,3 +1,4 @@
+import { Footer } from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import MainScreen from '@/components/MainScreen/MainScreen'
 import Head from 'next/head'
@@ -24,6 +25,7 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         <Header />
         <MainScreen />
         {children}
+        <Footer />
       </main>
     </>
   )

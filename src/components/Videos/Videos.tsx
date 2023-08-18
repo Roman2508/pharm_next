@@ -1,8 +1,9 @@
-'use client'
 import React from 'react'
-import './videos.css'
-import { Slider } from '../Slider/Slider'
-import { SwiperSlide } from 'swiper/react'
+import cn from 'classnames'
+import useSlider from '@/hooks/useSlider'
+import styles from './Videos.module.scss'
+import stylesSlider from '../Slider/Slider.module.scss'
+import { SliderArrow } from '../Slider/SliderArrows'
 
 const videosItems = [
   {
@@ -23,20 +24,42 @@ const videosItems = [
 ]
 
 export const Videos = () => {
-  return (
-    <div className="videos">
-      <h2 className="section-title videos__title">Відео</h2>
+  const { activeSlide, loaded, sliderRef, instanceRef } = useSlider()
 
-      <Slider>
-        {videosItems.map((video) => (
-          <SwiperSlide key={video.id}>
-            <div className="videos__slider-inner" style={{ backgroundImage: `url(${video.photo})` }}>
-              <h3 className="videos__slider-title">{video.title}</h3>
-              <img className="videos__slider-play" src="./assets/icons/video-play.svg" alt="video-bg" />
+  return (
+    <div className={styles['videos']}>
+      <h2 className={cn(styles['videos__title'], 'section-title')}>Відео</h2>
+
+      <div ref={sliderRef} className={cn(stylesSlider['slider__wrapper'], 'keen-slider')}>
+        {videosItems.map((video, index) => (
+          <div key={video.id} className={cn(styles['slide-wrapper'], 'keen-slider__slide')}>
+            <div
+              className={cn(styles['videos__slider-inner'], {
+                [styles['active--slide']]: index === activeSlide,
+              })}
+              style={{ backgroundImage: `url(${video.photo})` }}
+            >
+              <h3 className={styles['videos__slider-title']}>{video.title}</h3>
+              <img className={styles['videos__slider-play']} src="./assets/icons/video-play.svg" alt="video-bg" />
             </div>
-          </SwiperSlide>
+          </div>
         ))}
-      </Slider>
+      </div>
+
+      {loaded && instanceRef.current && (
+        <>
+          <SliderArrow
+            left
+            onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()}
+            disabled={activeSlide === 0}
+          />
+
+          <SliderArrow
+            onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
+            disabled={activeSlide === instanceRef.current.track.details.slides.length - 1}
+          />
+        </>
+      )}
     </div>
   )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
-import './contacts.css'
+
+import styles from './Contacts.module.scss'
 
 interface IContactsItemProps {
   position: string
@@ -12,13 +13,13 @@ const ContactsItem: React.FC<IContactsItemProps> = ({ position, name, phone, ema
   const phoneWithoutSymbols = phone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
 
   return (
-    <div className="contact__item">
-      <h6 className="contact__item-position">{position}</h6>
-      <h5 className="contact__item-name">{name}</h5>
-      <a className="contact__item-tel" href={`tel:${phoneWithoutSymbols}`}>
+    <div className={styles['contact__item']}>
+      <h6 className={styles['contact__item-position']}>{position}</h6>
+      <h5 className={styles['contact__item-name']}>{name}</h5>
+      <a className={styles['contact__item-tel']} href={`tel:${phoneWithoutSymbols}`}>
         {phone}
       </a>
-      <a className="contact__item-email" href={`mailto:${email}`}>
+      <a className={styles['contact__item-email']} href={`mailto:${email}`}>
         {email}
       </a>
     </div>
