@@ -8,10 +8,16 @@ import { Gallery } from '@/components/Gallery/Gallery'
 import { Videos } from '@/components/Videos/Videos'
 import { Contacts } from '@/components/Contacts/Contacts'
 import { Partners } from '@/components/Partners/Partners'
+import { GetStaticProps, NextPage } from 'next'
+import { gql } from '@/graphql/client'
 
-export default function Home() {
+interface IHomeProps {
+  headerData: any
+}
+
+const Home: NextPage<IHomeProps> = ({ headerData }) => {
   return (
-    <HomePageLayout title="ЖБФФК | Головна сторінка">
+    <HomePageLayout title="ЖБФФК | Головна сторінка" headerData={headerData}>
       <Announcement />
       <About />
       <Stats />
@@ -24,3 +30,16 @@ export default function Home() {
     </HomePageLayout>
   )
 }
+
+export const getStaticProps: GetStaticProps = async () => {
+  try {
+    const headerData = await gql.GetHeader()
+
+    return { props: { headerData } }
+  } catch (error) {
+    console.log(error, 'home page error')
+    return { props: { headerData: {} } }
+  }
+}
+
+export default Home

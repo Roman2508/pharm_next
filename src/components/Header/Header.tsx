@@ -5,7 +5,6 @@ import cn from 'classnames'
 // import { useQuery } from '@apollo/client'
 
 import styles from './Header.module.scss'
-import { GetServerSideProps, GetStaticProps } from 'next'
 // import { GET_HEADER } from 'gql/GetHeader'
 import cloudIcon from '../../../public/assets/icons/cloud.png'
 import educationIcon from '../../../public/assets/icons/education.png'
@@ -270,7 +269,11 @@ const headerNav = [
   },
 ]
 
-const Header = () => {
+interface IHeaderProps {
+  headerData: any
+}
+
+const Header: React.FC<IHeaderProps> = ({ headerData }) => {
   const [isOpenMobileMenu, setIsOpenMobileMenu] = React.useState(false)
   const [openSubmenuName, setOpenSubmenuName] = React.useState('')
   const [openLoverLevelMenuName, setOpenLoverLevelMenuName] = React.useState('')
@@ -282,7 +285,7 @@ const Header = () => {
     setStickyClass(stickyClass)
   }
 
-  // const { data } = useQuery(GET_HEADER)
+  console.log(headerData)
 
   React.useEffect(() => {
     window.addEventListener('scroll', isSticky)
@@ -353,7 +356,7 @@ const Header = () => {
         <nav className={cn(styles['header__nav'], styles[stickyClass])}>
           <div className={styles['header__nav-mobile']}>
             <div className={styles['header__nav-mobile-logo']}>
-              <Image src={logoIcon} alt="burger icon" width={30} height={50} />
+              <Image src={logoIcon} alt="mobile logo icon" width={150} height={150} />
             </div>
 
             <div className={styles['header__nav-mobile-burger']} onClick={onOpenMobileMenu}>
@@ -469,39 +472,4 @@ const Header = () => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps<{
-  repo: any
-}> = async () => {
-  const res = await fetch('https://api.github.com/repos/vercel/next.js')
-  const repo = await res.json()
-  console.log(
-    '22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222'
-  )
-  console.log(repo)
-  return { props: { repo: '' } }
-}
-
 export default Header
-
-// export const getServerSideProps: GetServerSideProps = async () => {
-// 	try {
-// 		// const { data } = useQuery(GET_HEADER)
-
-// 		const res = await fetch('https://swapi.dev/api/people/1')
-// 		const data = await res.json()
-// 		console.log(111)
-// 		console.log('datadatadatadatadatadatadatadatadata', data)
-
-// 		return {
-// 			props: {
-// 				data
-// 			}
-// 		}
-// 	} catch (error) {
-// 		return {
-// 			props: {
-// 				data: {}
-// 			}
-// 		}
-// 	}
-// }

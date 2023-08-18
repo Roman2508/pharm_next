@@ -13,18 +13,21 @@ const Breadcrumbs = () => {
   const crumbs = pathname
     .split('/')
     .filter((el) => el !== '')
-    .map((el) => {
+    .map((el, index) => {
       currentLink += `/${el}`
       return (
-        <div className={styles['breadcrumbs__item']} key={el}>
-          <Link href={currentLink}>{el}</Link>
-        </div>
+        <>
+          {index !== 0 && <span>&#62;</span>}
+          <div className={styles['breadcrumbs__item']} key={el}>
+            <Link href={currentLink}>{el}</Link>
+          </div>
+        </>
       )
     })
 
   return (
     <div className={styles['breadcrumbs']}>
-      <div className="container">
+      <div className={styles['breadcrumbs-container']}>
         <div className={styles['breadcrumbs__list']}>{crumbs}</div>
       </div>
     </div>

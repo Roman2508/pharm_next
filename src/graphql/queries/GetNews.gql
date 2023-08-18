@@ -1,0 +1,34 @@
+query GetNews($reqItemsCount: Int = 3) {
+  novinas(sort: "date:desc", pagination: { limit: $reqItemsCount }) {
+    data {
+      id
+      attributes {
+        title
+        body
+
+        main_photo {
+          data {
+            attributes {
+              width
+              height
+              url
+            }
+          }
+        }
+
+        collage_photo {
+          data {
+            attributes {
+              width
+              height
+              url
+            }
+          }
+        }
+
+        date
+        video_url
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+query GetMainScreen {
+  header {
+    data {
+      attributes {
+        Header {
+          title
+          logo {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          background {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+          videoPoster {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

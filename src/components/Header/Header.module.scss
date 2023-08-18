@@ -282,7 +282,7 @@
   }
 }
 
-@media (min-width: 981px) {
+@media (min-width: 980px) {
   .header__nav-mobile {
     display: none;
   }
@@ -320,9 +320,15 @@
     margin-right: 15px;
     font-size: 18px;
   }
+  .header__nav-mobile-logo {
+    max-width: 50px;
+    max-height: 50px;
+  }
 
   .header__nav-mobile-logo img {
-    width: 60px;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
   }
 
   /* mobule menu */

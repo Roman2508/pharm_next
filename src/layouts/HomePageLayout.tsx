@@ -7,12 +7,14 @@ import React, { PropsWithChildren } from 'react'
 interface ILayoutProps {
   title?: string
   description?: string
+  headerData: any
 }
 
 export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
   children,
   title = 'ЖБФФК',
   description = 'ЖБФФК',
+  headerData,
 }) => {
   return (
     <>
@@ -22,7 +24,7 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
       <main>
-        <Header />
+        <Header headerData={headerData} />
         <MainScreen />
         {children}
         <Footer />

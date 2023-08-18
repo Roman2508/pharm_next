@@ -37,7 +37,7 @@ export const Events = () => {
 
       <div ref={sliderRef} className={cn(stylesSlider['slider__wrapper'], 'keen-slider')}>
         {eventsItems.map((el, index) => (
-          <div className={cn(styles['events__item'], 'keen-slider__slide')}>
+          <div className={cn(styles['events__item'], 'keen-slider__slide')} key={el.id}>
             <div
               className={cn(stylesSlider['slide--inner'], { [stylesSlider['active--slide']]: activeSlide === index })}
             >

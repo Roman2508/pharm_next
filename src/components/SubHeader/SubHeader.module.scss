@@ -73,3 +73,67 @@
   min-width: 100%;
   background: transparent url('../../../public/assets/images/header/header-video-poster.jpg') 50% 50% / cover no-repeat;
 }
+
+@media (max-width: 1200px) {
+  .sub-header__title {
+    font-size: 34px;
+  }
+  .sub-header__logo-box {
+    max-width: 110px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .sub-header__title {
+    font-size: 30px;
+  }
+  .sub-header__logo-box {
+    max-width: 110px;
+  }
+}
+
+@media (max-width: 980px) {
+  .sub-header__logo-box {
+    display: none;
+  }
+  .sub-header__title {
+    text-align: center;
+    margin: 30px auto 0;
+    max-width: 75%;
+  }
+}
+
+@media (max-width: 840px) {
+  .sub-header__title {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sub-header__title {
+    margin-top: 50px;
+    font-size: 26px;
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 640px) {
+  .sub-header__title {
+    font-size: 24px;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 440px) {
+  .sub-header__title {
+    font-size: 22px;
+    max-width: 95%;
+  }
+}
+
+@media (max-width: 375px) {
+  .sub-header__title {
+    font-size: 20px;
+    max-width: 100%;
+  }
+}
