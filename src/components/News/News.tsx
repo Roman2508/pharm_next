@@ -1,71 +1,70 @@
 import React from 'react'
 import cn from 'classnames'
 
-import styles from './News.module.scss'
 import { NewsItem } from './NewsItem'
+import Pagination from './Pagination'
+import { gql } from '@/graphql/client'
+import styles from './News.module.scss'
 import { GetNewsQuery } from '@/graphql/__generated__'
-
-const NewsData = [
-  {
-    id: 1,
-    title: "ПІДПИСАНО ДОГОВІР ПРО ПАРТНЕРСТВО З МЕРЕЖЕЮ АПТЕК БАЖАЄМО ЗДОРОВ'Я",
-    mainPhoto: './assets/images/news/1.jpg',
-    date: '26 червня 2023',
-    body: "26 червня відбулося підписання договору про співробітництво та партнерство з ТОВ «Сіріус-95», яке представляє мережу аптек Бажаємо здоров'я.",
-    photosForCollage: [],
-  },
-  {
-    id: 2,
-    title: 'Відбулося засідання з обговорення проєкту ОПП Лабораторна діагностика',
-    mainPhoto: './assets/images/news/2.jpg',
-    date: '28 квітня 2023',
-    body: ' У дистанційному форматі за участю здобувачів освіти, викладачів коледжу та роботодавців відбулося громадське обговорення ОПП Лабораторна діагностика.',
-    photosForCollage: [],
-  },
-  {
-    id: 3,
-    title: 'Відбулося засідання з обговорення проєкту ОПП Фармація (ОПС фаховий молодший бакалавр)',
-    mainPhoto: './assets/images/news/3.jpg',
-    date: '27 червня 2023',
-    body: '27 червня 2023р в коледжі відбулося обговорення проєкту освітньо-професійної програми «Фармація» ОПС фаховий молодший бакалавр.',
-    photosForCollage: [],
-  },
-]
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 interface INewsProps {
   newsData: GetNewsQuery
 }
 
 export const News: React.FC<INewsProps> = ({ newsData }) => {
+  const firstRender = React.useRef(false)
+
+  const [news, setNews] = React.useState([])
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  React.useEffect(() => {
+    if (firstRender.current) {
+      const fetchNewsItems = async () => {
+        try {
+          setIsLoading(true)
+          const data = await gql.GetNews({ currentPage })
+          setNews(data.novinas.data)
+        } catch (error) {
+          alert('Помилка при отриманні даних!')
+        } finally {
+          setIsLoading(false)
+        }
+      }
+      fetchNewsItems()
+    } else {
+      firstRender.current = true
+    }
+  }, [currentPage])
+
   return (
     <div className={styles['news']}>
       <div className={'container'}>
         <div className={styles['news__inner']}>
           <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>
-
-          <div className={styles['news__items']}>
-            {NewsData.map((news) => (
-              <NewsItem key={news.id} {...news} />
+          <div className={cn(styles['news__items'], { [styles['news__items--loading']]: isLoading })}>
+            {(news.length ? news : newsData?.novinas.data).map((news) => (
+              <NewsItem
+                key={news.id}
+                id={news.id}
+                title={news.attributes.title}
+                body={news.attributes.body}
+                date={news.attributes.date}
+                mainPhoto={news.attributes.main_photo.data[0].attributes.url}
+                photosForCollage={news.attributes.collage_photo.data}
+                videoUrl={news.attributes.video_url}
+              />
             ))}
           </div>
 
-          <div className={styles['news__pagination']}>
-            <span className={styles['news__pagination-item']}> &#60; Перша</span>
-            <span className={cn(styles['news__pagination-item'], styles['news__pagination-prev'])}>
-              &#60; Попередня
-            </span>
-            <span className={styles['naws__pages']}>
-              <span className={cn(styles['news__pagination-item'], styles['news__pagination-page'])}>1</span>
-              <span>|</span>
-              <span className={cn(styles['news__selected-page'], styles['news__pagination-page'])}>2</span>
-              <span>|</span>
-              <span className={cn(styles['news__pagination-item'], styles['news__pagination-page'])}>3</span>
-              <span>...</span>
-            </span>
-            <span className={cn(styles['news__pagination-item'], styles['news__pagination-next'])}>Наступна &#62;</span>
-            <span className={styles['news__pagination-item']}>Остання &#62;</span>
-            <span className={styles['news__all-news']}>Всі новини</span>
-          </div>
+          {isLoading && <LoadingSpinner />}
+
+          <Pagination
+            pagesCount={newsData.novinas.meta.pagination.pageCount}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+          />
         </div>
       </div>
     </div>

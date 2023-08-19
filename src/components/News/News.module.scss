@@ -2,6 +2,10 @@
   margin: 0 0 100px 0;
 }
 
+.news__inner {
+  position: relative;
+}
+
 .news__title {
   margin-bottom: 50px;
   color: var(--primary-color);
@@ -10,7 +14,14 @@
 .news__items {
   display: flex;
   flex-wrap: wrap;
+  // position: relative;
 }
+
+.news__items--loading {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .news__item {
   max-width: calc(33.33333% - 20px);
   margin: 0 10px 20px;
@@ -178,9 +189,11 @@
   text-decoration: underline;
 }
 
-.news__selected-page {
+.news__selected-page,
+.news__selected-page:hover {
   cursor: default;
   color: var(--primary-color);
+  text-decoration: none;
 }
 
 .news__all-news {

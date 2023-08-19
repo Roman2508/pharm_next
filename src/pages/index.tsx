@@ -19,7 +19,7 @@ interface IHomeProps {
 
 const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData, newsData }) => {
   return (
-    <HomePageLayout title="ЖБФФК | Головна сторінка" headerData={headerData} mainScreenData={mainScreenData}>
+    <HomePageLayout title="Головна сторінка | ЖБФК" headerData={headerData} mainScreenData={mainScreenData}>
       <Announcement />
       <About />
       <Stats />

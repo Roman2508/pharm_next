@@ -26,6 +26,12 @@ export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         <title>{title}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="icon"
+          type="image/png"
+          sizes="32x32"
+          href="https://pharm.zt.ua//themes/custom/pharm/favicon-32x32.png"
+        />
       </Head>
       <main>
         <Header headerData={headerData} />

@@ -1,28 +1,30 @@
 import React from 'react'
 
 import styles from './News.module.scss'
+import convertMonthName from '@/utils/convertMonthName'
 
 interface INewsItemProps {
-  id: number
+  id: string
   title: string
   mainPhoto: string
   date: string
   body: string
+  videoUrl: string
   photosForCollage: any
 }
 
 export const NewsItem: React.FC<INewsItemProps> = ({ id, title, mainPhoto, date, body, photosForCollage }) => {
-  const newsDate = date.split(' ')
+  const { day, month, year } = convertMonthName(date)
 
   return (
     <div className={styles['news__item']}>
       <div className={styles['news__img-wrapper']}>
         <p className={styles['news__item-date']}>
-          <span>{newsDate[0]}</span>
-          <span>{newsDate[1]}</span>
-          <span>{newsDate[2]}</span>
+          <span>{day}</span>
+          <span>{month}</span>
+          <span>{year}</span>
         </p>
-        <img className={styles['news__item-img']} src={mainPhoto} alt="news" />
+        <img className={styles['news__item-img']} src={`${process.env.API_URL}${mainPhoto}`} alt="news" />
       </div>
       <div className={styles['news__item-col']}>
         <div className={styles['news__item-content']}>

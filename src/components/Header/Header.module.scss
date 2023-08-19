@@ -12,6 +12,11 @@
   left: 0 !important;
   background-color: #1d5d9b;
   box-shadow: 0px 10px 8px -6px rgba(34, 60, 80, 0.3);
+  padding: 0 20px;
+}
+
+.header--sticky .header__nav-list {
+  max-width: 1280px;
 }
 
 .header--static {

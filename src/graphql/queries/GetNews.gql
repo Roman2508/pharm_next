@@ -1,5 +1,14 @@
-query GetNews($reqItemsCount: Int = 3) {
-  novinas(sort: "date:desc", pagination: { limit: $reqItemsCount }) {
+query GetNews($currentPage: Int = 1, $pageSize: Int = 3) {
+  novinas(sort: "date:desc", pagination: { page: $currentPage, pageSize: $pageSize }) {
+    meta {
+      pagination {
+        total
+        page
+        pageSize
+        pageCount
+      }
+    }
+
     data {
       id
       attributes {

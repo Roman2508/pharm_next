@@ -42,6 +42,18 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
     setIsOpenMobileMenu(true)
   }
 
+  if (!headerData.header?.data?.attributes?.Header?.headerIcons.length) {
+    return null
+  }
+
+  if (!headerData.header?.data?.attributes?.Header?.social.icons) {
+    return null
+  }
+
+  if (!headerData.header?.data?.attributes?.Header?.navigation) {
+    return null
+  }
+
   return (
     <header className={styles['header']}>
       <div className={'container'}>
@@ -49,7 +61,7 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
           {/* HEADER ICONS */}
 
           <div className={styles['header__left-col']}>
-            {headerData.header.data.attributes.Header.headerIcons.slice(0, 2).map((icon) => (
+            {headerData.header?.data?.attributes?.Header?.headerIcons.slice(0, 2).map((icon) => (
               <Link className={styles['header__top-link']} href={icon.link} key={icon.id} target="_blank">
                 <Image
                   src={`${process.env.API_URL}${icon.icon.data.attributes.url}`}
@@ -64,26 +76,25 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
 
           <Link
             className={styles['header__top-link']}
-            href={headerData.header.data.attributes.Header.headerIcons[2].link}
-            target="_blank"
-          >
+            href={headerData.header?.data?.attributes?.Header?.headerIcons[2].link}
+            target="_blank">
             <Image
-              src={`${process.env.API_URL}${headerData.header.data.attributes.Header.headerIcons[2].icon.data.attributes.url}`}
+              src={`${process.env.API_URL}${headerData.header?.data?.attributes?.Header?.headerIcons[2].icon.data.attributes.url}`}
               alt="ENG icon"
               width={35}
               height={26}
             />
             <span className={styles['header__eng-title']}>
-              {headerData.header.data.attributes.Header.headerIcons[2].text}
+              {headerData.header?.data?.attributes?.Header?.headerIcons[2].text}
             </span>
           </Link>
 
           {/* HEADER SOCIAL */}
 
           <div className={styles['social__wrapper']}>
-            <p>{headerData.header.data.attributes.Header.social.text}</p>
+            <p>{headerData.header?.data?.attributes?.Header?.social.text}</p>
             <ul className={styles['social__list']}>
-              {headerData.header.data.attributes.Header.social.icons.map((el) => (
+              {headerData.header?.data?.attributes?.Header?.social.icons.map((el) => (
                 <li className={styles['social__list-item']} key={el.id}>
                   <Link href={el.link} target="_blank">
                     <Image
@@ -121,7 +132,7 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
               <Image onClick={onCloseMobileMenu} src={closeIcon} alt="close icon" width={30} />
             </li>
 
-            {headerData.header.data.attributes.Header.navigation.map((mainEl, MainMenuIndex) => (
+            {headerData.header?.data?.attributes?.Header?.navigation.map((mainEl, MainMenuIndex) => (
               <li key={mainEl.text} className={styles['header__nav-item']}>
                 <Link href={mainEl.link}>{mainEl.text}</Link>
 
@@ -137,16 +148,14 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
                   <ul
                     className={cn(styles['header__nav-submenu'], {
                       [styles['header__nav-submenu--open']]: openSubmenuName === mainEl.text,
-                    })}
-                  >
+                    })}>
                     <li className={styles['header__nav-list-back']} onClick={() => setOpenSubmenuName('')}>
                       <svg
                         width="30px"
                         height="30px"
                         viewBox="0 0 1024 1024"
                         version="1.1"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
+                        xmlns="http://www.w3.org/2000/svg">
                         <path
                           d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z"
                           fill="#ffffff"
@@ -165,8 +174,7 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
                           <>
                             <div
                               className={styles['main-menu-triangle']}
-                              onClick={() => setOpenLoverLevelMenuName(submenuEl.text)}
-                            >
+                              onClick={() => setOpenLoverLevelMenuName(submenuEl.text)}>
                               <svg viewBox="0 0 76 88" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M75.8809 43.8807L0.880859 87.1819V0.579391L75.8809 43.8807Z" fill="white" />
                               </svg>
@@ -175,22 +183,19 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
                             <ul
                               className={cn(styles['header__nav-submenu'], {
                                 [styles['header__nav-submenu-reverse']]:
-                                  MainMenuIndex + 1 === headerData.header.data.attributes.Header.navigation.length,
+                                  MainMenuIndex + 1 === headerData.header?.data?.attributes?.Header?.navigation.length,
                                 [styles['header__nav-submenu-lover-level--open']]:
                                   openLoverLevelMenuName === submenuEl.text,
-                              })}
-                            >
+                              })}>
                               <li
                                 className={styles['header__nav-list-back']}
-                                onClick={() => setOpenLoverLevelMenuName('')}
-                              >
+                                onClick={() => setOpenLoverLevelMenuName('')}>
                                 <svg
                                   width="30px"
                                   height="30px"
                                   viewBox="0 0 1024 1024"
                                   version="1.1"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
+                                  xmlns="http://www.w3.org/2000/svg">
                                   <path
                                     d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z"
                                     fill="#ffffff"
