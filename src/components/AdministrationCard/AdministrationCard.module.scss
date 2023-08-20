@@ -21,24 +21,19 @@
   overflow: hidden;
 }
 
-.administration__item-top::before {
-  position: absolute;
-  content: '';
-  height: 80px;
-  width: 100%;
-  bottom: 0;
-  z-index: 1;
-  background-color: var(--primary-color);
-}
-
 .administration__item-position {
+  background-color: var(--primary-color);
+  width: 100%;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
   color: #fff;
   font-size: 18px;
   font-weight: 400;
-  margin-bottom: 5px;
+  padding: 10px;
   position: absolute;
-  bottom: 10px;
-  left: 10px;
+  bottom: 0;
+  left: 0;
   z-index: 1;
 }
 

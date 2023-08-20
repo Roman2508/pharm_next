@@ -2,7 +2,7 @@ import React from 'react'
 import Image from 'next/image'
 import cn from 'classnames'
 
-import styles from './CollegeHistory.module.scss'
+import styles from '../ProZhbphc.module.scss'
 
 import pharmacyHistoryImage from '../../../../public/assets/images/college-history/pharmacy-history.jpg'
 import { Layout } from '@/layouts/Layout'
@@ -88,6 +88,36 @@ const archivePhotos = [
     small_photo: '/assets/images/college-history/archive-9-large.jpg',
     large_photo: '/assets/images/college-history/archive-9-large.jpg',
   },
+  {
+    id: 10,
+    small_photo: '/assets/images/college-history/archive-10-large.jpg',
+    large_photo: '/assets/images/college-history/archive-10-large.jpg',
+  },
+  {
+    id: 11,
+    small_photo: '/assets/images/college-history/archive-11-large.jpg',
+    large_photo: '/assets/images/college-history/archive-11-large.jpg',
+  },
+  {
+    id: 12,
+    small_photo: '/assets/images/college-history/archive-12-large.jpg',
+    large_photo: '/assets/images/college-history/archive-12-large.jpg',
+  },
+  {
+    id: 13,
+    small_photo: '/assets/images/college-history/archive-13-large.jpg',
+    large_photo: '/assets/images/college-history/archive-13-large.jpg',
+  },
+  {
+    id: 14,
+    small_photo: '/assets/images/college-history/archive-14-large.jpg',
+    large_photo: '/assets/images/college-history/archive-14-large.jpg',
+  },
+  {
+    id: 15,
+    small_photo: '/assets/images/college-history/archive-15-large.jpg',
+    large_photo: '/assets/images/college-history/archive-15-large.jpg',
+  },
 ]
 
 interface ICollegeHistoryProps {
@@ -96,7 +126,7 @@ interface ICollegeHistoryProps {
 
 const CollegeHistory: React.FC<ICollegeHistoryProps> = ({ headerData }) => {
   return (
-    <Layout headerData={headerData}>
+    <Layout headerData={headerData} title="Історія коледжу">
       <div className={styles['college-history']}>
         <div className="container">
           <h1 className={cn(styles['college-history__main-title'], 'section-title')}>Історія коледжу</h1>
@@ -124,7 +154,7 @@ const CollegeHistory: React.FC<ICollegeHistoryProps> = ({ headerData }) => {
               різні часи, створюючи непорушний щабель професіоналів своєї справи.
             </p>
 
-            <h5 className={'page-subtitle'}>Етапи становлення</h5>
+            <h5 className={'title-sm center'}>Етапи становлення</h5>
 
             <ul className={'page-list'}>
               <li className={'page-list-item'}>
@@ -142,9 +172,49 @@ const CollegeHistory: React.FC<ICollegeHistoryProps> = ({ headerData }) => {
                 1976 рік - на базі Житомирського фармацевтичного училища розпочали роботу курси підвищення кваліфікації
                 фармацевтів.
               </li>
+              <li className={'page-list-item'}>1986 рік – побудовано новий типовий навчальний корпус.</li>
               <li className={'page-list-item'}>
                 1988 рік – з нагоди 50-річчя з дня заснування навчального закладу Постановою Ради Міністрів УРСР
                 навчальному закладу присвоєно ім’я Григорія Семеновича Протасевича.
+              </li>
+              <li className={'page-list-item'}>
+                1990 рік – розпочато підготовку молодших спеціалістів за спеціальністю «Лабораторна діагностика».
+              </li>
+              <li className={'page-list-item'}>
+                1992 рік – розпочато підготовку молодших спеціалістів за спеціальністю «Медико- профілактична справа».
+              </li>
+              <li className={'page-list-item'}>
+                1999 рік – рішенням V Всеукраїнського зїзду фармацевтичних працівників України Житомирське фармацевтичне
+                училище затверджено як методичний центр післядипломної освіти фармацевтів.
+              </li>
+              <li className={'page-list-item'}>
+                2000 рік – за розпорядженням Міністерства охорони здоров’я України на базі училища відбувся І
+                Всеукраїнський конкурс фахової майстерності випускників фармацевтичних (медичних) закладів І –ІІ рівнів
+                акредитації зі спеціальності «Фармація», який проводився у коледжі до 2006 року.
+              </li>
+              <li className={'page-list-item'}>
+                2004 рік – рішенням Житомирської обласної ради від 23.03.2004 № 391 змінено статус та назву
+                Житомирського фармацевтичного училища ім Г.С. Протасевича Житомирської обласної ради на Житомирський
+                фармацевтичний коледж ім. Г.С. Протасевича Житомирської обласної ради.
+              </li>
+              <li className={'page-list-item'}>
+                2004 рік – Житомирський фармацевтичний коледж ім. Г.С.Протасевича за лідерство в освоєнні перспективних
+                технологій навчання, високий рівень викладання та відкриття нових напрямків підготовки фахівців
+                нагороджується дипломом лауреата загальнонаціонального конкурсу «Вища проба».
+              </li>
+              <li className={'page-list-item'}>
+                2005 рік – відповідно до наказу Міністерства охорони здоров’я України від 19.12.2005 р. №727
+                Житомирський фармацевтичний коледж призначається базовим навчальним закладом з питань
+                навчально-методичної роботи для вищих медичних (фармацевтичних) навчальних закладів І-ІІ рівнів
+                акредитації України, в яких проводиться підготовка фахівців з напряму 1202 «Фармація».
+              </li>
+              <li className={'page-list-item'}>
+                2005 рік – розпочато підготовку студентів за освітньо-кваліфікаційним рівнем «бакалавр» зі спеціальності
+                6.120201 «Фармація».
+              </li>
+              <li className={'page-list-item'}>
+                2005 рік – розпочато підготовку студентів за освітньо-кваліфікаційним рівнем «бакалавр» зі спеціальності
+                6.120201 «Фармація».
               </li>
               <li className={'page-list-item'}>
                 2006 рік – рішенням Житомирської обласної ради від 09.11.2006 № 124 змінено статусі назву Житомирського
@@ -159,9 +229,21 @@ const CollegeHistory: React.FC<ICollegeHistoryProps> = ({ headerData }) => {
                 Житомирського базового фармацевтичного коледжу ім. Г.С.Протасевича.
               </li>
               <li className={'page-list-item'}>
+                2010 рік – розпочато підготовку молодших спеціалістів за спеціальністю 5.12020101«Фармація» за заочною
+                формою навчання.
+              </li>
+              <li className={'page-list-item'}>
+                2011 рік – розпочато освітню діяльність, пов’язану з наданням освіти на рівні кваліфікаційних вимог до
+                підвищення кваліфікації зі спеціальностей «Лабораторна діагностика», «Медико-профілактична справа».
+              </li>
+              <li className={'page-list-item'}>
                 2012 рік – рішенням Житомирської обласної ради від 22.11.2012 №682 змінено статус і назву Житомирського
                 базового фармацевтичного колледжу ім Г.С. Протасевича на КВНЗ «Житомирський базовий фармацевтичний
                 колледж ім. Г.С. Протасевича» Житомирської обласної ради.
+              </li>
+              <li className={'page-list-item'}>
+                2018 рік - рішенням Житомирської обласної ради від 25.10 2018 р. № 1252 змінено назву коледжу на
+                комунальний заклад вищої освіти "Житомирський базовий фармацевтичний коледж" Житомирської обласної ради.
               </li>
               <li className={'page-list-item'}>
                 2020 рік - рішенням Житомирської обласної ради від 05.03 2020 р. № 1847 змінено назву коледжу на
@@ -170,37 +252,37 @@ const CollegeHistory: React.FC<ICollegeHistoryProps> = ({ headerData }) => {
             </ul>
           </div>
 
-          <h5 className={'page-subtitle'}>Директори</h5>
-          <FancyboxGallery className={'page-gallery'}>
-            {directors.map((el) => (
-              <a
-                key={el.id}
-                data-fancybox="directors"
-                href={el.large_photo}
-                className={cn('gallery-item', 'hand-pointer')}
-                style={{ maxWidth: '150px' }}
-              >
-                <Image src={el.small_photo} alt="director photo" width={150} height={200} />
-              </a>
-            ))}
-          </FancyboxGallery>
+          <div className={styles['college-history__directors']}>
+            <h5 className={'title-sm center'}>Директори</h5>
+            <FancyboxGallery className={'page-gallery'}>
+              {directors.map((el) => (
+                <a
+                  key={el.id}
+                  data-fancybox="directors"
+                  href={el.large_photo}
+                  className={cn('gallery-item', 'hand-pointer')}
+                  style={{ maxWidth: '150px' }}>
+                  <Image src={el.small_photo} alt="director photo" width={150} height={200} />
+                </a>
+              ))}
+            </FancyboxGallery>
+          </div>
 
-          <h5 className={'page-subtitle'}>Архівні фотографії</h5>
-
-          <FancyboxGallery className={'page-gallery'}>
-            {archivePhotos.map((el) => (
-              <a
-                key={el.id}
-                data-fancybox="archivePhotos"
-                href={el.large_photo}
-                className={cn('gallery-item', 'hand-pointer')}
-                style={{ maxWidth: '300px' }}
-              >
-                {/* <img src={el.small_photo} /> */}
-                <Image src={el.small_photo} alt="director photo" width={300} height={300} />
-              </a>
-            ))}
-          </FancyboxGallery>
+          <div className={styles['college-history__archive-photos']}>
+            <h5 className={'title-sm center'}>Архівні фотографії</h5>
+            <FancyboxGallery className={'page-gallery'}>
+              {archivePhotos.map((el) => (
+                <a
+                  key={el.id}
+                  data-fancybox="archivePhotos"
+                  href={el.large_photo}
+                  className={cn('gallery-item', 'hand-pointer')}
+                  style={{ maxWidth: '300px' }}>
+                  <Image src={el.small_photo} alt="director photo" width={300} height={300} />
+                </a>
+              ))}
+            </FancyboxGallery>
+          </div>
         </div>
       </div>
     </Layout>

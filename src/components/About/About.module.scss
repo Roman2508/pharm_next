@@ -2,10 +2,17 @@
   padding-bottom: 180px;
 }
 
+.about.about--page {
+  padding-bottom: 100px;
+}
+
 .about__wrapper {
   display: flex;
-  /* gap: 40px; */
   align-items: flex-end;
+}
+
+.about__wrapper.vertical-center {
+  align-items: center;
 }
 
 .about__content {

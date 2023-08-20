@@ -6,8 +6,6 @@ import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
 import { Footer } from '@/components/Footer/Footer'
 import { GetHeaderQuery } from '@/graphql/__generated__'
 
-// import Header from '@/components/Header/Header'
-
 interface ILayoutProps {
   title?: string
   description?: string
@@ -16,14 +14,14 @@ interface ILayoutProps {
 
 export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
   children,
-  title = 'ЖБФФК',
+  title = '',
   description = 'ЖБФФК',
   headerData,
 }) => {
   return (
     <>
       <Head>
-        <title>{title}</title>
+        <title>{`${title} | ЖБФК`}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link

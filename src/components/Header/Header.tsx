@@ -42,15 +42,15 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
     setIsOpenMobileMenu(true)
   }
 
-  if (!headerData.header?.data?.attributes?.Header?.headerIcons.length) {
+  if (!headerData?.header?.data?.attributes?.Header?.headerIcons.length) {
     return null
   }
 
-  if (!headerData.header?.data?.attributes?.Header?.social.icons) {
+  if (!headerData?.header?.data?.attributes?.Header?.social.icons) {
     return null
   }
 
-  if (!headerData.header?.data?.attributes?.Header?.navigation) {
+  if (!headerData?.header?.data?.attributes?.Header?.navigation) {
     return null
   }
 

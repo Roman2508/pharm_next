@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from './Administration.module.scss'
+import styles from '../ProZhbphc.module.scss'
 
 import { Layout } from '@/layouts/Layout'
 import AdministrationCard from '@/components/AdministrationCard/AdministrationCard'
@@ -92,34 +92,6 @@ const administrationItems = [
     phone: '(0412) 24-25-45',
     mail: 'bolukh.vira@pharm.zt.ua',
   },
-  {
-    photo: '../assets/images/administration/boychuk-irina-dmitrivna_1.jpg',
-    position: 'Директор',
-    name: 'Бойчук Ірина Дмитрівна',
-    phone: '(0412) 24-25-45',
-    mail: 'Boychuck.Iryna@pharm.zt.ua',
-  },
-  {
-    photo: '../assets/images/administration/moroko-mariya-ivanivna_0.jpg',
-    position: 'Головний бухгалтер',
-    name: 'Мороко Марія Іванівна',
-    phone: '(0412) 24-25-45',
-    mail: 'moroko.maria@pharm.zt.ua',
-  },
-  {
-    photo: '../assets/images/administration/bolukh-vira-andriivna_1.jpg',
-    position: 'Заступник директора з навчальної роботи',
-    name: 'Болух Віра Андріївна',
-    phone: '(0412) 24-25-45',
-    mail: 'bolukh.vira@pharm.zt.ua',
-  },
-  {
-    photo: '../assets/images/administration/bolukh-vira-andriivna_1.jpg',
-    position: 'Заступник директора з навчальної роботи',
-    name: 'Болух Віра Андріївна',
-    phone: '(0412) 24-25-45',
-    mail: 'bolukh.vira@pharm.zt.ua',
-  },
 ]
 
 interface IAdministrationProps {
@@ -128,7 +100,7 @@ interface IAdministrationProps {
 
 const Administration: React.FC<IAdministrationProps> = ({ headerData }) => {
   return (
-    <Layout headerData={headerData}>
+    <Layout headerData={headerData} title="Адміністрація">
       <div className={styles['administration']}>
         <div className="container">
           <div className={`${styles['administration__title']} section-title`}>Адміністрація</div>

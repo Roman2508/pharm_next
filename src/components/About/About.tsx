@@ -1,17 +1,21 @@
 import React from 'react'
+import cn from 'classnames'
+
 import styles from './About.module.scss'
+import Link from 'next/link'
 
 interface IAboutProps {
   titleVisible?: boolean
   buttonVisible?: boolean
+  isMainPage?: boolean
 }
 
-const About: React.FC<IAboutProps> = ({ titleVisible = true, buttonVisible = true }) => {
+const About: React.FC<IAboutProps> = ({ titleVisible = true, buttonVisible = true, isMainPage = false }) => {
   return (
-    <div className={styles['about']}>
+    <div className={cn(styles['about'], styles['about--page'])}>
       <div className={'container'}>
-        <div className={styles['about__wrapper']}>
-          <div className={styles['about__content']}>
+        <div className={cn(styles['about__wrapper'], { [styles['vertical-center']]: isMainPage })}>
+          <div className={cn(styles['about__content'], styles['about--page'])}>
             {titleVisible && <h2>Про ЖБФФК</h2>}
 
             <p>
@@ -28,9 +32,9 @@ const About: React.FC<IAboutProps> = ({ titleVisible = true, buttonVisible = tru
             </p>
 
             {buttonVisible && (
-              <a className={styles['about__button']} href="/pages/about/college-history.html">
+              <Link className={styles['about__button']} href="/pro-zhbphc/istoria-col">
                 Дізнатися більше
-              </a>
+              </Link>
             )}
           </div>
 
