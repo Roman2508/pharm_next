@@ -1,6 +1,7 @@
 .slider__wrapper {
   overflow: initial !important;
   z-index: 5;
+  display: flex;
 }
 
 .slider__wrapper::before,

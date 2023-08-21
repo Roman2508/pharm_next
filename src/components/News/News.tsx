@@ -51,8 +51,8 @@ export const News: React.FC<INewsProps> = ({ newsData }) => {
                 title={news.attributes.title}
                 body={news.attributes.body}
                 date={news.attributes.date}
-                mainPhoto={news.attributes.main_photo.data[0].attributes.url}
-                photosForCollage={news.attributes.collage_photo.data}
+                mainPhoto={news.attributes.main_photo.data.attributes.url}
+                photosForCollage={news.attributes.collage_photos.data}
                 videoUrl={news.attributes.video_url}
               />
             ))}

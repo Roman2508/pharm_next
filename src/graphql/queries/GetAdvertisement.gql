@@ -1,0 +1,10 @@
+query GetAdvertisement {
+  advertisements {
+    data {
+      attributes {
+        title
+        body
+      }
+    }
+  }
+}

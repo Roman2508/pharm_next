@@ -1,5 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
+import Image from 'next/image'
 import useSlider from '@/hooks/useSlider'
 import styles from './Videos.module.scss'
 import stylesSlider from '../Slider/Slider.module.scss'
@@ -9,25 +10,29 @@ const videosItems = [
   {
     id: 1,
     title: 'Фарм Коледж - День Вчителя',
-    photo: './assets/images/video-posters/1.png',
+    photo: ['./assets/images/video-posters/1.png', '../assets/images/video-posters/1.png'],
   },
   {
     id: 2,
     title: 'ЖБФК запрошує на навчання',
-    photo: './assets/images/video-posters/2.png',
+    photo: ['./assets/images/video-posters/2.png', '../assets/images/video-posters/2.png'],
   },
   {
     id: 3,
     title: 'Наш коледж',
-    photo: './assets/images/video-posters/3.jpg',
+    photo: ['./assets/images/video-posters/3.jpg', '../assets/images/video-posters/3.jpg'],
   },
 ]
 
-export const Videos = () => {
+interface IVideoProps {
+  test: boolean
+}
+
+export const Videos: React.FC<IVideoProps> = ({ test }) => {
   const { activeSlide, loaded, sliderRef, instanceRef } = useSlider()
 
   return (
-    <div className={styles['videos']}>
+    <div className={styles['videos']} style={!test ? { marginBottom: '140px' } : {}}>
       <h2 className={cn(styles['videos__title'], 'section-title')}>Відео</h2>
 
       <div ref={sliderRef} className={cn(stylesSlider['slider__wrapper'], 'keen-slider')}>
@@ -37,10 +42,16 @@ export const Videos = () => {
               className={cn(styles['videos__slider-inner'], {
                 [styles['active--slide']]: index === activeSlide,
               })}
-              style={{ backgroundImage: `url(${video.photo})` }}
+              style={{ backgroundImage: `url(${!test ? video.photo[0] : video.photo[1]})` }}
             >
               <h3 className={styles['videos__slider-title']}>{video.title}</h3>
-              <img className={styles['videos__slider-play']} src="./assets/icons/video-play.svg" alt="video-bg" />
+              <Image
+                className={styles['videos__slider-play']}
+                width={80}
+                height={80}
+                src={!test ? './assets/icons/video-play.svg' : '../assets/icons/video-play.svg'}
+                alt="video-bg"
+              />
             </div>
           </div>
         ))}

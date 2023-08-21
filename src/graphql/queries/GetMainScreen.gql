@@ -8,6 +8,8 @@ query GetMainScreen {
             data {
               attributes {
                 url
+                width
+                height
               }
             }
           }
@@ -18,10 +20,21 @@ query GetMainScreen {
               }
             }
           }
-          videoPoster {
+          primaryVideoPoster {
             data {
               attributes {
                 url
+                width
+                height
+              }
+            }
+          }
+          secondaryVideoPoster {
+            data {
+              attributes {
+                url
+                width
+                height
               }
             }
           }

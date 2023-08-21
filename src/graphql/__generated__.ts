@@ -17,16 +17,15 @@ export type Scalars = {
   Float: { input: number; output: number; }
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
-  I18NLocaleCode: { input: any; output: any; }
   JSON: { input: any; output: any; }
   Upload: { input: any; output: any; }
 };
 
 export type Advertisement = {
   readonly __typename?: 'Advertisement';
-  readonly Body: Scalars['String']['output'];
-  readonly Title: Scalars['String']['output'];
+  readonly body: Scalars['String']['output'];
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -48,19 +47,19 @@ export type AdvertisementEntityResponseCollection = {
 };
 
 export type AdvertisementFiltersInput = {
-  readonly Body: InputMaybe<StringFilterInput>;
-  readonly Title: InputMaybe<StringFilterInput>;
   readonly and: InputMaybe<ReadonlyArray<InputMaybe<AdvertisementFiltersInput>>>;
+  readonly body: InputMaybe<StringFilterInput>;
   readonly createdAt: InputMaybe<DateTimeFilterInput>;
   readonly id: InputMaybe<IdFilterInput>;
   readonly not: InputMaybe<AdvertisementFiltersInput>;
   readonly or: InputMaybe<ReadonlyArray<InputMaybe<AdvertisementFiltersInput>>>;
+  readonly title: InputMaybe<StringFilterInput>;
   readonly updatedAt: InputMaybe<DateTimeFilterInput>;
 };
 
 export type AdvertisementInput = {
-  readonly Body: InputMaybe<Scalars['String']['input']>;
-  readonly Title: InputMaybe<Scalars['String']['input']>;
+  readonly body: InputMaybe<Scalars['String']['input']>;
+  readonly title: InputMaybe<Scalars['String']['input']>;
 };
 
 export type BooleanFilterInput = {
@@ -95,9 +94,10 @@ export type ComponentHeaderHeader = {
   readonly id: Scalars['ID']['output'];
   readonly logo: UploadFileEntityResponse;
   readonly navigation: Maybe<ReadonlyArray<Maybe<ComponentHeaderSubmenu1>>>;
+  readonly primaryVideoPoster: Maybe<UploadFileEntityResponse>;
+  readonly secondaryVideoPoster: Maybe<UploadFileEntityResponse>;
   readonly social: Maybe<ComponentUiSocial>;
   readonly title: Scalars['String']['output'];
-  readonly videoPoster: Maybe<UploadFileEntityResponse>;
 };
 
 
@@ -120,9 +120,10 @@ export type ComponentHeaderHeaderInput = {
   readonly id: InputMaybe<Scalars['ID']['input']>;
   readonly logo: InputMaybe<Scalars['ID']['input']>;
   readonly navigation: InputMaybe<ReadonlyArray<InputMaybe<ComponentHeaderSubmenu1Input>>>;
+  readonly primaryVideoPoster: InputMaybe<Scalars['ID']['input']>;
+  readonly secondaryVideoPoster: InputMaybe<Scalars['ID']['input']>;
   readonly social: InputMaybe<ComponentUiSocialInput>;
   readonly title: InputMaybe<Scalars['String']['input']>;
-  readonly videoPoster: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type ComponentHeaderSubmenu1 = {
@@ -223,12 +224,6 @@ export type ComponentPagesMetaFiltersInput = {
   readonly or: InputMaybe<ReadonlyArray<InputMaybe<ComponentPagesMetaFiltersInput>>>;
 };
 
-export type ComponentPagesMetaInput = {
-  readonly content: InputMaybe<Scalars['String']['input']>;
-  readonly id: InputMaybe<Scalars['ID']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-};
-
 export type ComponentPagesSeo = {
   readonly __typename?: 'ComponentPagesSeo';
   readonly description: Scalars['String']['output'];
@@ -242,13 +237,6 @@ export type ComponentPagesSeoMetaArgs = {
   filters: InputMaybe<ComponentPagesMetaFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type ComponentPagesSeoInput = {
-  readonly description: InputMaybe<Scalars['String']['input']>;
-  readonly id: InputMaybe<Scalars['ID']['input']>;
-  readonly meta: InputMaybe<ReadonlyArray<InputMaybe<ComponentPagesMetaInput>>>;
-  readonly title: InputMaybe<Scalars['String']['input']>;
 };
 
 export type ComponentUiIconButton = {
@@ -344,14 +332,6 @@ export type DateTimeFilterInput = {
   readonly startsWith: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export enum Enum_Teacher_Department {
-  CzKFarmaczevtichnihDiscziplin = 'CzK_farmaczevtichnih_discziplin',
-  CzKGumanitarnihDiscziplin = 'CzK_gumanitarnih_discziplin',
-  CzKHimichnihDiscziplin = 'CzK_himichnih_discziplin',
-  CzKMedikoBiologichnihDiscziplin = 'CzK_mediko_biologichnih_discziplin',
-  CzKZagalnoosvitnihDiscziplin = 'CzK_zagalnoosvitnih_discziplin'
-}
-
 export type FileInfoInput = {
   readonly alternativeText: InputMaybe<Scalars['String']['input']>;
   readonly caption: InputMaybe<Scalars['String']['input']>;
@@ -383,14 +363,12 @@ export type FloatFilterInput = {
   readonly startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | Header | HomePage | I18NLocale | Novina | Teacher | Test | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | Header | I18NLocale | NewsTag | Novina | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   readonly __typename?: 'Header';
   readonly Header: Maybe<ComponentHeaderHeader>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly locale: Maybe<Scalars['String']['output']>;
-  readonly localizations: Maybe<HeaderRelationResponseCollection>;
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -407,40 +385,6 @@ export type HeaderEntityResponse = {
 
 export type HeaderInput = {
   readonly Header: InputMaybe<ComponentHeaderHeaderInput>;
-};
-
-export type HeaderRelationResponseCollection = {
-  readonly __typename?: 'HeaderRelationResponseCollection';
-  readonly data: ReadonlyArray<HeaderEntity>;
-};
-
-export type HomePage = {
-  readonly __typename?: 'HomePage';
-  readonly SEO: Maybe<ComponentPagesSeo>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly locale: Maybe<Scalars['String']['output']>;
-  readonly localizations: Maybe<HomePageRelationResponseCollection>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type HomePageEntity = {
-  readonly __typename?: 'HomePageEntity';
-  readonly attributes: Maybe<HomePage>;
-  readonly id: Maybe<Scalars['ID']['output']>;
-};
-
-export type HomePageEntityResponse = {
-  readonly __typename?: 'HomePageEntityResponse';
-  readonly data: Maybe<HomePageEntity>;
-};
-
-export type HomePageInput = {
-  readonly SEO: InputMaybe<ComponentPagesSeoInput>;
-};
-
-export type HomePageRelationResponseCollection = {
-  readonly __typename?: 'HomePageRelationResponseCollection';
-  readonly data: ReadonlyArray<HomePageEntity>;
 };
 
 export type I18NLocale = {
@@ -559,10 +503,8 @@ export type Mutation = {
   /** Change user password. Confirm with the current password. */
   readonly changePassword: Maybe<UsersPermissionsLoginPayload>;
   readonly createAdvertisement: Maybe<AdvertisementEntityResponse>;
-  readonly createHeaderLocalization: Maybe<HeaderEntityResponse>;
-  readonly createHomePageLocalization: Maybe<HomePageEntityResponse>;
+  readonly createNewsTag: Maybe<NewsTagEntityResponse>;
   readonly createNovina: Maybe<NovinaEntityResponse>;
-  readonly createTeacher: Maybe<TeacherEntityResponse>;
   readonly createUploadFile: Maybe<UploadFileEntityResponse>;
   readonly createUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -571,10 +513,8 @@ export type Mutation = {
   readonly createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   readonly deleteAdvertisement: Maybe<AdvertisementEntityResponse>;
   readonly deleteHeader: Maybe<HeaderEntityResponse>;
-  readonly deleteHomePage: Maybe<HomePageEntityResponse>;
+  readonly deleteNewsTag: Maybe<NewsTagEntityResponse>;
   readonly deleteNovina: Maybe<NovinaEntityResponse>;
-  readonly deleteTeacher: Maybe<TeacherEntityResponse>;
-  readonly deleteTest: Maybe<TestEntityResponse>;
   readonly deleteUploadFile: Maybe<UploadFileEntityResponse>;
   readonly deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -595,10 +535,8 @@ export type Mutation = {
   readonly updateAdvertisement: Maybe<AdvertisementEntityResponse>;
   readonly updateFileInfo: UploadFileEntityResponse;
   readonly updateHeader: Maybe<HeaderEntityResponse>;
-  readonly updateHomePage: Maybe<HomePageEntityResponse>;
+  readonly updateNewsTag: Maybe<NewsTagEntityResponse>;
   readonly updateNovina: Maybe<NovinaEntityResponse>;
-  readonly updateTeacher: Maybe<TeacherEntityResponse>;
-  readonly updateTest: Maybe<TestEntityResponse>;
   readonly updateUploadFile: Maybe<UploadFileEntityResponse>;
   readonly updateUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -621,27 +559,13 @@ export type MutationCreateAdvertisementArgs = {
 };
 
 
-export type MutationCreateHeaderLocalizationArgs = {
-  data: InputMaybe<HeaderInput>;
-  id: InputMaybe<Scalars['ID']['input']>;
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationCreateHomePageLocalizationArgs = {
-  data: InputMaybe<HomePageInput>;
-  id: InputMaybe<Scalars['ID']['input']>;
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+export type MutationCreateNewsTagArgs = {
+  data: NewsTagInput;
 };
 
 
 export type MutationCreateNovinaArgs = {
   data: NovinaInput;
-};
-
-
-export type MutationCreateTeacherArgs = {
-  data: TeacherInput;
 };
 
 
@@ -670,22 +594,12 @@ export type MutationDeleteAdvertisementArgs = {
 };
 
 
-export type MutationDeleteHeaderArgs = {
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationDeleteHomePageArgs = {
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationDeleteNovinaArgs = {
+export type MutationDeleteNewsTagArgs = {
   id: Scalars['ID']['input'];
 };
 
 
-export type MutationDeleteTeacherArgs = {
+export type MutationDeleteNovinaArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -764,30 +678,18 @@ export type MutationUpdateFileInfoArgs = {
 
 export type MutationUpdateHeaderArgs = {
   data: HeaderInput;
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 
-export type MutationUpdateHomePageArgs = {
-  data: HomePageInput;
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
+export type MutationUpdateNewsTagArgs = {
+  data: NewsTagInput;
+  id: Scalars['ID']['input'];
 };
 
 
 export type MutationUpdateNovinaArgs = {
   data: NovinaInput;
   id: Scalars['ID']['input'];
-};
-
-
-export type MutationUpdateTeacherArgs = {
-  data: TeacherInput;
-  id: Scalars['ID']['input'];
-};
-
-
-export type MutationUpdateTestArgs = {
-  data: TestInput;
 };
 
 
@@ -823,13 +725,57 @@ export type MutationUploadArgs = {
   refId: InputMaybe<Scalars['ID']['input']>;
 };
 
+export type NewsTag = {
+  readonly __typename?: 'NewsTag';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly title: Scalars['String']['output'];
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type NewsTagEntity = {
+  readonly __typename?: 'NewsTagEntity';
+  readonly attributes: Maybe<NewsTag>;
+  readonly id: Maybe<Scalars['ID']['output']>;
+};
+
+export type NewsTagEntityResponse = {
+  readonly __typename?: 'NewsTagEntityResponse';
+  readonly data: Maybe<NewsTagEntity>;
+};
+
+export type NewsTagEntityResponseCollection = {
+  readonly __typename?: 'NewsTagEntityResponseCollection';
+  readonly data: ReadonlyArray<NewsTagEntity>;
+  readonly meta: ResponseCollectionMeta;
+};
+
+export type NewsTagFiltersInput = {
+  readonly and: InputMaybe<ReadonlyArray<InputMaybe<NewsTagFiltersInput>>>;
+  readonly createdAt: InputMaybe<DateTimeFilterInput>;
+  readonly id: InputMaybe<IdFilterInput>;
+  readonly not: InputMaybe<NewsTagFiltersInput>;
+  readonly or: InputMaybe<ReadonlyArray<InputMaybe<NewsTagFiltersInput>>>;
+  readonly title: InputMaybe<StringFilterInput>;
+  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+};
+
+export type NewsTagInput = {
+  readonly title: InputMaybe<Scalars['String']['input']>;
+};
+
+export type NewsTagRelationResponseCollection = {
+  readonly __typename?: 'NewsTagRelationResponseCollection';
+  readonly data: ReadonlyArray<NewsTagEntity>;
+};
+
 export type Novina = {
   readonly __typename?: 'Novina';
   readonly body: Maybe<Scalars['String']['output']>;
-  readonly collage_photo: Maybe<UploadFileRelationResponseCollection>;
+  readonly collage_photos: Maybe<UploadFileRelationResponseCollection>;
   readonly createdAt: Maybe<Scalars['DateTime']['output']>;
   readonly date: Scalars['Date']['output'];
-  readonly main_photo: UploadFileRelationResponseCollection;
+  readonly main_photo: UploadFileEntityResponse;
+  readonly news_tags: Maybe<NewsTagRelationResponseCollection>;
   readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
   readonly title: Scalars['String']['output'];
   readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
@@ -837,15 +783,15 @@ export type Novina = {
 };
 
 
-export type NovinaCollage_PhotoArgs = {
+export type NovinaCollage_PhotosArgs = {
   filters: InputMaybe<UploadFileFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
-export type NovinaMain_PhotoArgs = {
-  filters: InputMaybe<UploadFileFiltersInput>;
+export type NovinaNews_TagsArgs = {
+  filters: InputMaybe<NewsTagFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -873,6 +819,7 @@ export type NovinaFiltersInput = {
   readonly createdAt: InputMaybe<DateTimeFilterInput>;
   readonly date: InputMaybe<DateFilterInput>;
   readonly id: InputMaybe<IdFilterInput>;
+  readonly news_tags: InputMaybe<NewsTagFiltersInput>;
   readonly not: InputMaybe<NovinaFiltersInput>;
   readonly or: InputMaybe<ReadonlyArray<InputMaybe<NovinaFiltersInput>>>;
   readonly publishedAt: InputMaybe<DateTimeFilterInput>;
@@ -883,9 +830,10 @@ export type NovinaFiltersInput = {
 
 export type NovinaInput = {
   readonly body: InputMaybe<Scalars['String']['input']>;
-  readonly collage_photo: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly collage_photos: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
   readonly date: InputMaybe<Scalars['Date']['input']>;
-  readonly main_photo: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly main_photo: InputMaybe<Scalars['ID']['input']>;
+  readonly news_tags: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
   readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
   readonly title: InputMaybe<Scalars['String']['input']>;
   readonly video_url: InputMaybe<Scalars['String']['input']>;
@@ -916,15 +864,13 @@ export type Query = {
   readonly advertisement: Maybe<AdvertisementEntityResponse>;
   readonly advertisements: Maybe<AdvertisementEntityResponseCollection>;
   readonly header: Maybe<HeaderEntityResponse>;
-  readonly homePage: Maybe<HomePageEntityResponse>;
   readonly i18NLocale: Maybe<I18NLocaleEntityResponse>;
   readonly i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
   readonly me: Maybe<UsersPermissionsMe>;
+  readonly newsTag: Maybe<NewsTagEntityResponse>;
+  readonly newsTags: Maybe<NewsTagEntityResponseCollection>;
   readonly novina: Maybe<NovinaEntityResponse>;
   readonly novinas: Maybe<NovinaEntityResponseCollection>;
-  readonly teacher: Maybe<TeacherEntityResponse>;
-  readonly teachers: Maybe<TeacherEntityResponseCollection>;
-  readonly test: Maybe<TestEntityResponse>;
   readonly uploadFile: Maybe<UploadFileEntityResponse>;
   readonly uploadFiles: Maybe<UploadFileEntityResponseCollection>;
   readonly uploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -948,16 +894,6 @@ export type QueryAdvertisementsArgs = {
 };
 
 
-export type QueryHeaderArgs = {
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type QueryHomePageArgs = {
-  locale: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
 export type QueryI18NLocaleArgs = {
   id: InputMaybe<Scalars['ID']['input']>;
 };
@@ -965,6 +901,18 @@ export type QueryI18NLocaleArgs = {
 
 export type QueryI18NLocalesArgs = {
   filters: InputMaybe<I18NLocaleFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryNewsTagArgs = {
+  id: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryNewsTagsArgs = {
+  filters: InputMaybe<NewsTagFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
@@ -980,23 +928,6 @@ export type QueryNovinasArgs = {
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type QueryTeacherArgs = {
-  id: InputMaybe<Scalars['ID']['input']>;
-};
-
-
-export type QueryTeachersArgs = {
-  filters: InputMaybe<TeacherFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type QueryTestArgs = {
-  publicationState?: InputMaybe<PublicationState>;
 };
 
 
@@ -1075,89 +1006,6 @@ export type StringFilterInput = {
   readonly null: InputMaybe<Scalars['Boolean']['input']>;
   readonly or: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
   readonly startsWith: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Teacher = {
-  readonly __typename?: 'Teacher';
-  readonly additional_information: Maybe<Scalars['String']['output']>;
-  readonly calendar_id: Maybe<Scalars['String']['output']>;
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly department: Enum_Teacher_Department;
-  readonly email: Scalars['String']['output'];
-  readonly name: Scalars['String']['output'];
-  readonly phone: Maybe<Scalars['String']['output']>;
-  readonly position: Scalars['String']['output'];
-  readonly printed_works: Maybe<Scalars['String']['output']>;
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type TeacherEntity = {
-  readonly __typename?: 'TeacherEntity';
-  readonly attributes: Maybe<Teacher>;
-  readonly id: Maybe<Scalars['ID']['output']>;
-};
-
-export type TeacherEntityResponse = {
-  readonly __typename?: 'TeacherEntityResponse';
-  readonly data: Maybe<TeacherEntity>;
-};
-
-export type TeacherEntityResponseCollection = {
-  readonly __typename?: 'TeacherEntityResponseCollection';
-  readonly data: ReadonlyArray<TeacherEntity>;
-  readonly meta: ResponseCollectionMeta;
-};
-
-export type TeacherFiltersInput = {
-  readonly additional_information: InputMaybe<StringFilterInput>;
-  readonly and: InputMaybe<ReadonlyArray<InputMaybe<TeacherFiltersInput>>>;
-  readonly calendar_id: InputMaybe<StringFilterInput>;
-  readonly createdAt: InputMaybe<DateTimeFilterInput>;
-  readonly department: InputMaybe<StringFilterInput>;
-  readonly email: InputMaybe<StringFilterInput>;
-  readonly id: InputMaybe<IdFilterInput>;
-  readonly name: InputMaybe<StringFilterInput>;
-  readonly not: InputMaybe<TeacherFiltersInput>;
-  readonly or: InputMaybe<ReadonlyArray<InputMaybe<TeacherFiltersInput>>>;
-  readonly phone: InputMaybe<StringFilterInput>;
-  readonly position: InputMaybe<StringFilterInput>;
-  readonly printed_works: InputMaybe<StringFilterInput>;
-  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
-};
-
-export type TeacherInput = {
-  readonly additional_information: InputMaybe<Scalars['String']['input']>;
-  readonly calendar_id: InputMaybe<Scalars['String']['input']>;
-  readonly department: InputMaybe<Enum_Teacher_Department>;
-  readonly email: InputMaybe<Scalars['String']['input']>;
-  readonly name: InputMaybe<Scalars['String']['input']>;
-  readonly phone: InputMaybe<Scalars['String']['input']>;
-  readonly position: InputMaybe<Scalars['String']['input']>;
-  readonly printed_works: InputMaybe<Scalars['String']['input']>;
-};
-
-export type Test = {
-  readonly __typename?: 'Test';
-  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
-  readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
-  readonly text: Scalars['String']['output'];
-  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
-};
-
-export type TestEntity = {
-  readonly __typename?: 'TestEntity';
-  readonly attributes: Maybe<Test>;
-  readonly id: Maybe<Scalars['ID']['output']>;
-};
-
-export type TestEntityResponse = {
-  readonly __typename?: 'TestEntityResponse';
-  readonly data: Maybe<TestEntity>;
-};
-
-export type TestInput = {
-  readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
-  readonly text: InputMaybe<Scalars['String']['input']>;
 };
 
 export type UploadFile = {
@@ -1547,7 +1395,7 @@ export type GetHeaderQuery = { readonly __typename?: 'Query', readonly header: {
 export type GetMainScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetMainScreenQuery = { readonly __typename?: 'Query', readonly header: { readonly __typename?: 'HeaderEntityResponse', readonly data: { readonly __typename?: 'HeaderEntity', readonly attributes: { readonly __typename?: 'Header', readonly Header: { readonly __typename?: 'ComponentHeaderHeader', readonly title: string, readonly logo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly background: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly videoPoster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } } } } } };
+export type GetMainScreenQuery = { readonly __typename?: 'Query', readonly header: { readonly __typename?: 'HeaderEntityResponse', readonly data: { readonly __typename?: 'HeaderEntity', readonly attributes: { readonly __typename?: 'Header', readonly Header: { readonly __typename?: 'ComponentHeaderHeader', readonly title: string, readonly logo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly background: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly primaryVideoPoster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly secondaryVideoPoster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } } } } };
 
 export type GetNewsQueryVariables = Exact<{
   currentPage?: InputMaybe<Scalars['Int']['input']>;
@@ -1555,7 +1403,7 @@ export type GetNewsQueryVariables = Exact<{
 }>;
 
 
-export type GetNewsQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly meta: { readonly __typename?: 'ResponseCollectionMeta', readonly pagination: { readonly __typename?: 'Pagination', readonly total: number, readonly page: number, readonly pageSize: number, readonly pageCount: number } }, readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly width: number, readonly height: number, readonly url: string } }> }, readonly collage_photo: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly width: number, readonly height: number, readonly url: string } }> } } }> } };
+export type GetNewsQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly meta: { readonly __typename?: 'ResponseCollectionMeta', readonly pagination: { readonly __typename?: 'Pagination', readonly total: number, readonly page: number, readonly pageSize: number, readonly pageCount: number } }, readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly collage_photos: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> }, readonly news_tags: { readonly __typename?: 'NewsTagRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NewsTagEntity', readonly id: string, readonly attributes: { readonly __typename?: 'NewsTag', readonly title: string } }> } } }> } };
 
 export const GetNavigationFragmentDoc = gql`
     fragment GetNavigation on ComponentHeaderHeader {
@@ -1641,6 +1489,8 @@ export const GetMainScreenDocument = gql`
             data {
               attributes {
                 url
+                width
+                height
               }
             }
           }
@@ -1651,10 +1501,21 @@ export const GetMainScreenDocument = gql`
               }
             }
           }
-          videoPoster {
+          primaryVideoPoster {
             data {
               attributes {
                 url
+                width
+                height
+              }
+            }
+          }
+          secondaryVideoPoster {
+            data {
+              attributes {
+                url
+                width
+                height
               }
             }
           }
@@ -1683,26 +1544,35 @@ export const GetNewsDocument = gql`
       attributes {
         title
         body
+        date
         main_photo {
           data {
             attributes {
+              url
               width
               height
-              url
             }
           }
         }
-        collage_photo {
+        collage_photos {
           data {
+            id
             attributes {
+              url
               width
               height
-              url
             }
           }
         }
-        date
         video_url
+        news_tags {
+          data {
+            id
+            attributes {
+              title
+            }
+          }
+        }
       }
     }
   }
