@@ -1,0 +1,56 @@
+query GetPage ($pageUrl: String) {
+  pages(filters:{ page_url: { in: [$pageUrl] }}) {
+    data {
+      id
+      attributes {
+        title
+        meta_title
+        page_url
+        main_photo {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        layout
+        page_components {
+          ...GetAccordionComponent
+          ...GetBodyComponent
+          ...GetButtonImagesComponent
+          ...GetButtonLinkComponent
+          ...GetEducationBooksComponent
+          ...GetBlocksPanoramsComponent
+          ...GetPartnersBlockComponent
+          ...GetPhotosGalleryComponent
+          ...GetTwoColumnWithImageComponent
+          ...GetBlocksPersonComponent
+        }
+        right_sidebar {
+          ...GetAccordionComponent
+          ...GetBodyComponent
+          ...GetButtonImagesComponent
+          ...GetButtonLinkComponent
+          ...GetEducationBooksComponent
+          ...GetBlocksPanoramsComponent
+          ...GetPartnersBlockComponent
+          ...GetPhotosGalleryComponent
+          ...GetTwoColumnWithImageComponent
+          ...GetBlocksPersonComponent
+        }
+        left_sidebar {
+          ...GetAccordionComponent
+          ...GetBodyComponent
+          ...GetButtonImagesComponent
+          ...GetButtonLinkComponent
+          ...GetEducationBooksComponent
+          ...GetBlocksPanoramsComponent
+          ...GetPartnersBlockComponent
+          ...GetPhotosGalleryComponent
+          ...GetTwoColumnWithImageComponent
+          ...GetBlocksPersonComponent          
+        }
+      }
+    }
+  }
+}

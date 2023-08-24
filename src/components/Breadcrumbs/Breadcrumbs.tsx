@@ -16,12 +16,12 @@ const Breadcrumbs = () => {
     .map((el, index) => {
       currentLink += `/${el}`
       return (
-        <>
+        <React.Fragment key={el}>
           {index !== 0 && <span>&#62;</span>}
-          <div className={styles['breadcrumbs__item']} key={el}>
+          <div className={styles['breadcrumbs__item']}>
             <Link href={currentLink}>{el}</Link>
           </div>
-        </>
+        </React.Fragment>
       )
     })
 

@@ -1,0 +1,129 @@
+fragment GetAccordionComponent on ComponentPageBlocksAccordion {
+  id
+  title
+  body
+  component_type
+}
+
+fragment GetBodyComponent on ComponentPageBlocksBody {
+  body
+  component_type
+}
+
+fragment GetButtonImagesComponent on ComponentPageBlocksButtonImages {
+  id
+  component_type
+  Components {
+    id
+    link
+    image {
+      data {
+        attributes {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+}
+
+fragment GetButtonLinkComponent on ComponentPageBlocksButtonLink {
+  id
+  text
+  component_type
+}
+
+fragment GetEducationBooksComponent on ComponentPageBlocksEducationBooks {
+  id
+  description
+  component_type
+  main_photo {
+    data {
+      attributes {
+        url
+      }
+    }
+  }
+  authors {
+    ...GetAccordionComponent
+  }
+}
+
+fragment GetBlocksPanoramsComponent on ComponentPageBlocksPanorams {
+  id
+  title
+  component_type
+  Panorams {
+    id
+    link
+    poster {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+  withBackground
+}
+
+fragment GetPartnersBlockComponent on ComponentPageBlocksPartnersBlock {
+  id
+  component_type
+  Partners {
+    id
+    name
+    partner_link
+    partner_presentation_link
+    partner_category
+  }
+}
+
+fragment GetPhotosGalleryComponent on ComponentPageBlocksPhotosGallery {
+  id
+  component_type
+  images {
+    data {
+      id
+      attributes {
+        url
+        width
+        height
+      }
+    }
+  }
+}
+
+fragment GetTwoColumnWithImageComponent on ComponentPageBlocksTwoColumnWithImage {
+  id
+  body
+  component_type
+  image {
+    data {
+      attributes {
+        url
+        width
+        height
+      }
+    }
+  }
+  layout
+}
+fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
+  id
+  name
+  position
+  phone
+  email
+  component_type
+  photo {
+    data {
+      attributes {
+        url
+        width
+        hash
+      }
+    }
+  }
+}

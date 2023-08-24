@@ -18,6 +18,9 @@ export type Scalars = {
   Date: { input: any; output: any; }
   DateTime: { input: any; output: any; }
   JSON: { input: any; output: any; }
+  PageLeftSidebarDynamicZoneInput: { input: any; output: any; }
+  PagePageComponentsDynamicZoneInput: { input: any; output: any; }
+  PageRightSidebarDynamicZoneInput: { input: any; output: any; }
   Upload: { input: any; output: any; }
 };
 
@@ -209,6 +212,163 @@ export type ComponentHeaderSubmenu3Input = {
   readonly text: InputMaybe<Scalars['String']['input']>;
 };
 
+export type ComponentPageBlocksAccordion = {
+  readonly __typename?: 'ComponentPageBlocksAccordion';
+  readonly body: Scalars['String']['output'];
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly title: Scalars['String']['output'];
+};
+
+export type ComponentPageBlocksBody = {
+  readonly __typename?: 'ComponentPageBlocksBody';
+  readonly body: Scalars['String']['output'];
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+};
+
+export type ComponentPageBlocksButtonImage = {
+  readonly __typename?: 'ComponentPageBlocksButtonImage';
+  readonly id: Scalars['ID']['output'];
+  readonly image: UploadFileEntityResponse;
+  readonly link: Scalars['String']['output'];
+};
+
+export type ComponentPageBlocksButtonImageFiltersInput = {
+  readonly and: InputMaybe<ReadonlyArray<InputMaybe<ComponentPageBlocksButtonImageFiltersInput>>>;
+  readonly link: InputMaybe<StringFilterInput>;
+  readonly not: InputMaybe<ComponentPageBlocksButtonImageFiltersInput>;
+  readonly or: InputMaybe<ReadonlyArray<InputMaybe<ComponentPageBlocksButtonImageFiltersInput>>>;
+};
+
+export type ComponentPageBlocksButtonImages = {
+  readonly __typename?: 'ComponentPageBlocksButtonImages';
+  readonly Components: ReadonlyArray<Maybe<ComponentPageBlocksButtonImage>>;
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+};
+
+
+export type ComponentPageBlocksButtonImagesComponentsArgs = {
+  filters: InputMaybe<ComponentPageBlocksButtonImageFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentPageBlocksButtonLink = {
+  readonly __typename?: 'ComponentPageBlocksButtonLink';
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly text: Scalars['String']['output'];
+};
+
+export type ComponentPageBlocksEducationBooks = {
+  readonly __typename?: 'ComponentPageBlocksEducationBooks';
+  readonly authors: Maybe<ComponentPageBlocksAccordion>;
+  readonly component_type: Scalars['String']['output'];
+  readonly description: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly main_photo: UploadFileEntityResponse;
+};
+
+export type ComponentPageBlocksPanorama = {
+  readonly __typename?: 'ComponentPageBlocksPanorama';
+  readonly id: Scalars['ID']['output'];
+  readonly link: Scalars['String']['output'];
+  readonly poster: UploadFileEntityResponse;
+};
+
+export type ComponentPageBlocksPanoramaFiltersInput = {
+  readonly and: InputMaybe<ReadonlyArray<InputMaybe<ComponentPageBlocksPanoramaFiltersInput>>>;
+  readonly link: InputMaybe<StringFilterInput>;
+  readonly not: InputMaybe<ComponentPageBlocksPanoramaFiltersInput>;
+  readonly or: InputMaybe<ReadonlyArray<InputMaybe<ComponentPageBlocksPanoramaFiltersInput>>>;
+};
+
+export type ComponentPageBlocksPanorams = {
+  readonly __typename?: 'ComponentPageBlocksPanorams';
+  readonly Panorams: ReadonlyArray<Maybe<ComponentPageBlocksPanorama>>;
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly title: Scalars['String']['output'];
+  readonly withBackground: Scalars['Boolean']['output'];
+};
+
+
+export type ComponentPageBlocksPanoramsPanoramsArgs = {
+  filters: InputMaybe<ComponentPageBlocksPanoramaFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentPageBlocksPartner = {
+  readonly __typename?: 'ComponentPageBlocksPartner';
+  readonly id: Scalars['ID']['output'];
+  readonly name: Scalars['String']['output'];
+  readonly partner_category: Enum_Componentpageblockspartner_Partner_Category;
+  readonly partner_link: Scalars['String']['output'];
+  readonly partner_presentation_link: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentPageBlocksPartnerFiltersInput = {
+  readonly and: InputMaybe<ReadonlyArray<InputMaybe<ComponentPageBlocksPartnerFiltersInput>>>;
+  readonly name: InputMaybe<StringFilterInput>;
+  readonly not: InputMaybe<ComponentPageBlocksPartnerFiltersInput>;
+  readonly or: InputMaybe<ReadonlyArray<InputMaybe<ComponentPageBlocksPartnerFiltersInput>>>;
+  readonly partner_category: InputMaybe<StringFilterInput>;
+  readonly partner_link: InputMaybe<StringFilterInput>;
+  readonly partner_presentation_link: InputMaybe<StringFilterInput>;
+};
+
+export type ComponentPageBlocksPartnersBlock = {
+  readonly __typename?: 'ComponentPageBlocksPartnersBlock';
+  readonly Partners: ReadonlyArray<Maybe<ComponentPageBlocksPartner>>;
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+};
+
+
+export type ComponentPageBlocksPartnersBlockPartnersArgs = {
+  filters: InputMaybe<ComponentPageBlocksPartnerFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentPageBlocksPerson = {
+  readonly __typename?: 'ComponentPageBlocksPerson';
+  readonly component_type: Scalars['String']['output'];
+  readonly email: Maybe<Scalars['String']['output']>;
+  readonly id: Scalars['ID']['output'];
+  readonly name: Scalars['String']['output'];
+  readonly phone: Maybe<Scalars['String']['output']>;
+  readonly photo: Maybe<UploadFileEntityResponse>;
+  readonly position: Maybe<Scalars['String']['output']>;
+};
+
+export type ComponentPageBlocksPhotosGallery = {
+  readonly __typename?: 'ComponentPageBlocksPhotosGallery';
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly images: UploadFileRelationResponseCollection;
+  readonly title: Maybe<Scalars['String']['output']>;
+};
+
+
+export type ComponentPageBlocksPhotosGalleryImagesArgs = {
+  filters: InputMaybe<UploadFileFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type ComponentPageBlocksTwoColumnWithImage = {
+  readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage';
+  readonly body: Scalars['String']['output'];
+  readonly component_type: Scalars['String']['output'];
+  readonly id: Scalars['ID']['output'];
+  readonly image: UploadFileEntityResponse;
+  readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout;
+};
+
 export type ComponentPagesMeta = {
   readonly __typename?: 'ComponentPagesMeta';
   readonly content: Scalars['String']['output'];
@@ -332,6 +492,31 @@ export type DateTimeFilterInput = {
   readonly startsWith: InputMaybe<Scalars['DateTime']['input']>;
 };
 
+export enum Enum_Componentpageblockspartner_Partner_Category {
+  Apteka = 'Apteka',
+  NavchalnijZaklad = 'Navchalnij_zaklad',
+  Ustanova = 'Ustanova'
+}
+
+export enum Enum_Componentpageblockstwocolumnwithimage_Layout {
+  ImageText = 'image_text',
+  TextImage = 'text_image'
+}
+
+export enum Enum_Page_Layout {
+  Col_1_8_3 = 'col_1_8_3',
+  Col_2_7_4 = 'col_2_7_4',
+  Col_8_4 = 'col_8_4',
+  Col_9_3 = 'col_9_3',
+  Col_12 = 'col_12'
+}
+
+export type Error = {
+  readonly __typename?: 'Error';
+  readonly code: Scalars['String']['output'];
+  readonly message: Maybe<Scalars['String']['output']>;
+};
+
 export type FileInfoInput = {
   readonly alternativeText: InputMaybe<Scalars['String']['input']>;
   readonly caption: InputMaybe<Scalars['String']['input']>;
@@ -363,7 +548,7 @@ export type FloatFilterInput = {
   readonly startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | Header | I18NLocale | NewsTag | Novina | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImage | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksPanorama | ComponentPageBlocksPanorams | ComponentPageBlocksPartner | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | Header | I18NLocale | NewsTag | Novina | Page | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type Header = {
   readonly __typename?: 'Header';
@@ -505,6 +690,7 @@ export type Mutation = {
   readonly createAdvertisement: Maybe<AdvertisementEntityResponse>;
   readonly createNewsTag: Maybe<NewsTagEntityResponse>;
   readonly createNovina: Maybe<NovinaEntityResponse>;
+  readonly createPage: Maybe<PageEntityResponse>;
   readonly createUploadFile: Maybe<UploadFileEntityResponse>;
   readonly createUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Create a new role */
@@ -515,6 +701,7 @@ export type Mutation = {
   readonly deleteHeader: Maybe<HeaderEntityResponse>;
   readonly deleteNewsTag: Maybe<NewsTagEntityResponse>;
   readonly deleteNovina: Maybe<NovinaEntityResponse>;
+  readonly deletePage: Maybe<PageEntityResponse>;
   readonly deleteUploadFile: Maybe<UploadFileEntityResponse>;
   readonly deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Delete an existing role */
@@ -537,6 +724,7 @@ export type Mutation = {
   readonly updateHeader: Maybe<HeaderEntityResponse>;
   readonly updateNewsTag: Maybe<NewsTagEntityResponse>;
   readonly updateNovina: Maybe<NovinaEntityResponse>;
+  readonly updatePage: Maybe<PageEntityResponse>;
   readonly updateUploadFile: Maybe<UploadFileEntityResponse>;
   readonly updateUploadFolder: Maybe<UploadFolderEntityResponse>;
   /** Update an existing role */
@@ -566,6 +754,11 @@ export type MutationCreateNewsTagArgs = {
 
 export type MutationCreateNovinaArgs = {
   data: NovinaInput;
+};
+
+
+export type MutationCreatePageArgs = {
+  data: PageInput;
 };
 
 
@@ -600,6 +793,11 @@ export type MutationDeleteNewsTagArgs = {
 
 
 export type MutationDeleteNovinaArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeletePageArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -689,6 +887,12 @@ export type MutationUpdateNewsTagArgs = {
 
 export type MutationUpdateNovinaArgs = {
   data: NovinaInput;
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdatePageArgs = {
+  data: PageInput;
   id: Scalars['ID']['input'];
 };
 
@@ -839,6 +1043,70 @@ export type NovinaInput = {
   readonly video_url: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Page = {
+  readonly __typename?: 'Page';
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly layout: Enum_Page_Layout;
+  readonly left_sidebar: Maybe<ReadonlyArray<Maybe<PageLeftSidebarDynamicZone>>>;
+  readonly main_photo: Maybe<UploadFileEntityResponse>;
+  readonly meta_title: Scalars['String']['output'];
+  readonly page_components: Maybe<ReadonlyArray<Maybe<PagePageComponentsDynamicZone>>>;
+  readonly page_url: Scalars['String']['output'];
+  readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly right_sidebar: Maybe<ReadonlyArray<Maybe<PageRightSidebarDynamicZone>>>;
+  readonly title: Scalars['String']['output'];
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type PageEntity = {
+  readonly __typename?: 'PageEntity';
+  readonly attributes: Maybe<Page>;
+  readonly id: Maybe<Scalars['ID']['output']>;
+};
+
+export type PageEntityResponse = {
+  readonly __typename?: 'PageEntityResponse';
+  readonly data: Maybe<PageEntity>;
+};
+
+export type PageEntityResponseCollection = {
+  readonly __typename?: 'PageEntityResponseCollection';
+  readonly data: ReadonlyArray<PageEntity>;
+  readonly meta: ResponseCollectionMeta;
+};
+
+export type PageFiltersInput = {
+  readonly and: InputMaybe<ReadonlyArray<InputMaybe<PageFiltersInput>>>;
+  readonly createdAt: InputMaybe<DateTimeFilterInput>;
+  readonly id: InputMaybe<IdFilterInput>;
+  readonly layout: InputMaybe<StringFilterInput>;
+  readonly meta_title: InputMaybe<StringFilterInput>;
+  readonly not: InputMaybe<PageFiltersInput>;
+  readonly or: InputMaybe<ReadonlyArray<InputMaybe<PageFiltersInput>>>;
+  readonly page_url: InputMaybe<StringFilterInput>;
+  readonly publishedAt: InputMaybe<DateTimeFilterInput>;
+  readonly title: InputMaybe<StringFilterInput>;
+  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+};
+
+export type PageInput = {
+  readonly layout: InputMaybe<Enum_Page_Layout>;
+  readonly left_sidebar: InputMaybe<ReadonlyArray<Scalars['PageLeftSidebarDynamicZoneInput']['input']>>;
+  readonly main_photo: InputMaybe<Scalars['ID']['input']>;
+  readonly meta_title: InputMaybe<Scalars['String']['input']>;
+  readonly page_components: InputMaybe<ReadonlyArray<Scalars['PagePageComponentsDynamicZoneInput']['input']>>;
+  readonly page_url: InputMaybe<Scalars['String']['input']>;
+  readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  readonly right_sidebar: InputMaybe<ReadonlyArray<Scalars['PageRightSidebarDynamicZoneInput']['input']>>;
+  readonly title: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PageLeftSidebarDynamicZone = ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksPanorams | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | Error;
+
+export type PagePageComponentsDynamicZone = ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksPanorams | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | Error;
+
+export type PageRightSidebarDynamicZone = ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksPanorams | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | Error;
+
 export type Pagination = {
   readonly __typename?: 'Pagination';
   readonly page: Scalars['Int']['output'];
@@ -871,6 +1139,8 @@ export type Query = {
   readonly newsTags: Maybe<NewsTagEntityResponseCollection>;
   readonly novina: Maybe<NovinaEntityResponse>;
   readonly novinas: Maybe<NovinaEntityResponseCollection>;
+  readonly page: Maybe<PageEntityResponse>;
+  readonly pages: Maybe<PageEntityResponseCollection>;
   readonly uploadFile: Maybe<UploadFileEntityResponse>;
   readonly uploadFiles: Maybe<UploadFileEntityResponseCollection>;
   readonly uploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -925,6 +1195,19 @@ export type QueryNovinaArgs = {
 
 export type QueryNovinasArgs = {
   filters: InputMaybe<NovinaFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryPageArgs = {
+  id: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryPagesArgs = {
+  filters: InputMaybe<PageFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
@@ -1387,6 +1670,31 @@ export type GetHeaderIconsFragment = { readonly __typename?: 'ComponentHeaderHea
 
 export type GetHeaderSocialFragment = { readonly __typename?: 'ComponentHeaderHeader', readonly social: { readonly __typename?: 'ComponentUiSocial', readonly text: string, readonly icons: ReadonlyArray<{ readonly __typename?: 'ComponentUiIconButton', readonly id: string, readonly text: string, readonly link: string, readonly icon: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly formats: any } } } }> } };
 
+export type GetAccordionComponentFragment = { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string };
+
+export type GetBodyComponentFragment = { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string };
+
+export type GetButtonImagesComponentFragment = { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> };
+
+export type GetButtonLinkComponentFragment = { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly component_type: string };
+
+export type GetEducationBooksComponentFragment = { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } };
+
+export type GetBlocksPanoramsComponentFragment = { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> };
+
+export type GetPartnersBlockComponentFragment = { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> };
+
+export type GetPhotosGalleryComponentFragment = { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } };
+
+export type GetTwoColumnWithImageComponentFragment = { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } };
+
+export type GetBlocksPersonComponentFragment = { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly name: string, readonly position: string, readonly phone: string, readonly email: string, readonly component_type: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly hash: string } } } };
+
+export type GetAdvertisementQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAdvertisementQuery = { readonly __typename?: 'Query', readonly advertisements: { readonly __typename?: 'AdvertisementEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'AdvertisementEntity', readonly attributes: { readonly __typename?: 'Advertisement', readonly title: string, readonly body: string } }> } };
+
 export type GetHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -1404,6 +1712,13 @@ export type GetNewsQueryVariables = Exact<{
 
 
 export type GetNewsQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly meta: { readonly __typename?: 'ResponseCollectionMeta', readonly pagination: { readonly __typename?: 'Pagination', readonly total: number, readonly page: number, readonly pageSize: number, readonly pageCount: number } }, readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly collage_photos: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> }, readonly news_tags: { readonly __typename?: 'NewsTagRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NewsTagEntity', readonly id: string, readonly attributes: { readonly __typename?: 'NewsTag', readonly title: string } }> } } }> } };
+
+export type GetPageQueryVariables = Exact<{
+  pageUrl: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetPageQuery = { readonly __typename?: 'Query', readonly pages: { readonly __typename?: 'PageEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'PageEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Page', readonly title: string, readonly meta_title: string, readonly page_url: string, readonly layout: Enum_Page_Layout, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly page_components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly name: string, readonly position: string, readonly phone: string, readonly email: string, readonly component_type: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly hash: string } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly right_sidebar: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly name: string, readonly position: string, readonly phone: string, readonly email: string, readonly component_type: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly hash: string } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly left_sidebar: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly name: string, readonly position: string, readonly phone: string, readonly email: string, readonly component_type: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly hash: string } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }> } }> } };
 
 export const GetNavigationFragmentDoc = gql`
     fragment GetNavigation on ComponentHeaderHeader {
@@ -1456,6 +1771,159 @@ export const GetHeaderSocialFragmentDoc = gql`
             formats
           }
         }
+      }
+    }
+  }
+}
+    `;
+export const GetBodyComponentFragmentDoc = gql`
+    fragment GetBodyComponent on ComponentPageBlocksBody {
+  body
+  component_type
+}
+    `;
+export const GetButtonImagesComponentFragmentDoc = gql`
+    fragment GetButtonImagesComponent on ComponentPageBlocksButtonImages {
+  id
+  component_type
+  Components {
+    id
+    link
+    image {
+      data {
+        attributes {
+          url
+          width
+          height
+        }
+      }
+    }
+  }
+}
+    `;
+export const GetButtonLinkComponentFragmentDoc = gql`
+    fragment GetButtonLinkComponent on ComponentPageBlocksButtonLink {
+  id
+  text
+  component_type
+}
+    `;
+export const GetAccordionComponentFragmentDoc = gql`
+    fragment GetAccordionComponent on ComponentPageBlocksAccordion {
+  id
+  title
+  body
+  component_type
+}
+    `;
+export const GetEducationBooksComponentFragmentDoc = gql`
+    fragment GetEducationBooksComponent on ComponentPageBlocksEducationBooks {
+  id
+  description
+  component_type
+  main_photo {
+    data {
+      attributes {
+        url
+      }
+    }
+  }
+  authors {
+    ...GetAccordionComponent
+  }
+}
+    ${GetAccordionComponentFragmentDoc}`;
+export const GetBlocksPanoramsComponentFragmentDoc = gql`
+    fragment GetBlocksPanoramsComponent on ComponentPageBlocksPanorams {
+  id
+  title
+  component_type
+  Panorams {
+    id
+    link
+    poster {
+      data {
+        attributes {
+          url
+        }
+      }
+    }
+  }
+  withBackground
+}
+    `;
+export const GetPartnersBlockComponentFragmentDoc = gql`
+    fragment GetPartnersBlockComponent on ComponentPageBlocksPartnersBlock {
+  id
+  component_type
+  Partners {
+    id
+    name
+    partner_link
+    partner_presentation_link
+    partner_category
+  }
+}
+    `;
+export const GetPhotosGalleryComponentFragmentDoc = gql`
+    fragment GetPhotosGalleryComponent on ComponentPageBlocksPhotosGallery {
+  id
+  component_type
+  images {
+    data {
+      id
+      attributes {
+        url
+        width
+        height
+      }
+    }
+  }
+}
+    `;
+export const GetTwoColumnWithImageComponentFragmentDoc = gql`
+    fragment GetTwoColumnWithImageComponent on ComponentPageBlocksTwoColumnWithImage {
+  id
+  body
+  component_type
+  image {
+    data {
+      attributes {
+        url
+        width
+        height
+      }
+    }
+  }
+  layout
+}
+    `;
+export const GetBlocksPersonComponentFragmentDoc = gql`
+    fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
+  id
+  name
+  position
+  phone
+  email
+  component_type
+  photo {
+    data {
+      attributes {
+        url
+        width
+        hash
+      }
+    }
+  }
+}
+    `;
+export const GetAdvertisementDocument = gql`
+    query GetAdvertisement {
+  advertisements {
+    data {
+      attributes {
+        title
+        body
       }
     }
   }
@@ -1578,6 +2046,73 @@ export const GetNewsDocument = gql`
   }
 }
     `;
+export const GetPageDocument = gql`
+    query GetPage($pageUrl: String) {
+  pages(filters: {page_url: {in: [$pageUrl]}}) {
+    data {
+      id
+      attributes {
+        title
+        meta_title
+        page_url
+        main_photo {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        layout
+        page_components {
+          ...GetAccordionComponent
+          ...GetBodyComponent
+          ...GetButtonImagesComponent
+          ...GetButtonLinkComponent
+          ...GetEducationBooksComponent
+          ...GetBlocksPanoramsComponent
+          ...GetPartnersBlockComponent
+          ...GetPhotosGalleryComponent
+          ...GetTwoColumnWithImageComponent
+          ...GetBlocksPersonComponent
+        }
+        right_sidebar {
+          ...GetAccordionComponent
+          ...GetBodyComponent
+          ...GetButtonImagesComponent
+          ...GetButtonLinkComponent
+          ...GetEducationBooksComponent
+          ...GetBlocksPanoramsComponent
+          ...GetPartnersBlockComponent
+          ...GetPhotosGalleryComponent
+          ...GetTwoColumnWithImageComponent
+          ...GetBlocksPersonComponent
+        }
+        left_sidebar {
+          ...GetAccordionComponent
+          ...GetBodyComponent
+          ...GetButtonImagesComponent
+          ...GetButtonLinkComponent
+          ...GetEducationBooksComponent
+          ...GetBlocksPanoramsComponent
+          ...GetPartnersBlockComponent
+          ...GetPhotosGalleryComponent
+          ...GetTwoColumnWithImageComponent
+          ...GetBlocksPersonComponent
+        }
+      }
+    }
+  }
+}
+    ${GetAccordionComponentFragmentDoc}
+${GetBodyComponentFragmentDoc}
+${GetButtonImagesComponentFragmentDoc}
+${GetButtonLinkComponentFragmentDoc}
+${GetEducationBooksComponentFragmentDoc}
+${GetBlocksPanoramsComponentFragmentDoc}
+${GetPartnersBlockComponentFragmentDoc}
+${GetPhotosGalleryComponentFragmentDoc}
+${GetTwoColumnWithImageComponentFragmentDoc}
+${GetBlocksPersonComponentFragmentDoc}`;
 
 export type SdkFunctionWrapper = <T>(action: (requestHeaders?:Record<string, string>) => Promise<T>, operationName: string, operationType?: string) => Promise<T>;
 
@@ -1586,6 +2121,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetAdvertisement(variables?: GetAdvertisementQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAdvertisementQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAdvertisementQuery>(GetAdvertisementDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAdvertisement', 'query');
+    },
     GetHeader(variables?: GetHeaderQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHeaderQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHeaderQuery>(GetHeaderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHeader', 'query');
     },
@@ -1594,6 +2132,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetNews(variables?: GetNewsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetNewsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNewsQuery>(GetNewsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetNews', 'query');
+    },
+    GetPage(variables?: GetPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPageQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetPageQuery>(GetPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPage', 'query');
     }
   };
 }
