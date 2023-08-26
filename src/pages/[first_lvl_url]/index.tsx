@@ -1,22 +1,81 @@
 import React from 'react'
+import cn from 'classnames'
+import { remark } from 'remark'
+import html from 'remark-html'
+import { GetServerSideProps, GetStaticProps } from 'next'
 
 import styles from './Page.module.scss'
-
+import panoramsStyles from './PanoramsComponent.module.scss'
+import twoColImageStyles from './TwoColumnWithImage.module.scss'
 import { Layout } from '@/layouts/Layout'
-import { GetServerSideProps, GetStaticProps } from 'next'
 import { GetHeaderQuery, PageEntity, gql } from '@/graphql/client'
+import DynamicPageLayout from '@/utils/dynamicPageLayout'
+import EditorJsRenderer from '@/components/EditorJsRenderer'
+import { Accordion } from '@/components/ui/Accordion/Accordion'
+import { FancyboxGallery } from '@/components/FancyboxGallery'
+import Image from 'next/image'
+import PageContnet from '@/components/PageContent/PageContnet'
 
 interface IAdministrationProps {
   headerData: GetHeaderQuery
   pageData: PageEntity
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ headerData }) => {
+const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }) => {
+  // const DLayout = DynamicPageLayout({
+  //   layout: String(pageData.attributes.layout),
+  //   pageContent: pageData.attributes.page_components,
+  //   leftSidebar: pageData.attributes.left_sidebar,
+  //   rightSidebar: pageData.attributes.right_sidebar,
+  // })
+
+  console.log(pageData.attributes)
+
   return (
-    <Layout headerData={headerData} title="Адміністрація">
+    <Layout headerData={headerData} title={pageData.attributes.meta_title}>
       <div className={styles['---']}>
-        <div className={`${styles['---']} section-title`}>Page title</div>
-        <div className="container"></div>
+        <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
+
+        <div className="container">
+          <div className={'main-photo-page'}>
+            <img
+              src={`${process.env.API_URL}${pageData.attributes.main_photo.data.attributes.url}`}
+              alt="main page photo"
+            />
+          </div>
+        </div>
+
+        <div className={cn(styles['page-conent'])}>
+          {String(pageData.attributes.layout) === 'col_1_8_3' ? (
+            <div className={cn('page-row', 'container')}>
+              <PageContnet colSize="col-1-12" pageComponents={pageData.attributes.left_sidebar} />
+              <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
+              <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
+            </div>
+          ) : String(pageData.attributes.layout) === 'col_2_7_4' ? (
+            <div className={cn('page-row', 'container')}>
+              <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.left_sidebar} />
+              <PageContnet colSize="col-7-12" pageComponents={pageData.attributes.page_components} />
+              <PageContnet colSize="col-4-12" pageComponents={pageData.attributes.right_sidebar} />
+            </div>
+          ) : String(pageData.attributes.layout) === 'col_8_4' ? (
+            <div className={cn('page-row', 'container')}>
+              <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
+              <PageContnet colSize="col-4-12" pageComponents={pageData.attributes.right_sidebar} />
+            </div>
+          ) : String(pageData.attributes.layout) === 'col_9_3' ? (
+            <div className={cn('page-row', 'container')}>
+              <PageContnet colSize="col-9-12" pageComponents={pageData.attributes.page_components} />
+              <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
+            </div>
+          ) : (
+            <PageContnet colSize="col-12" pageComponents={pageData.attributes.page_components} />
+          )}
+        </div>
+
+        {/* <TestLayout size="left_sidebar" data={pageData.attributes.left_sidebar[0].body} /> */}
+        {/* <TestLayout size="main_contnet" data={pageData.attributes.page_components[4].body} /> */}
+        {/* <TestLayout size="right_sidebar" data={pageData.attributes.right_sidebar[0].body} /> */}
       </div>
     </Layout>
   )
@@ -27,16 +86,28 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const headerData = await gql.GetHeader()
 
-    if (params && typeof params.first_lvl_url === 'string') {
-      const pageData = await gql.GetPage({ pageUrl: params.first_lvl_url })
-      // console.log(pageData.pages.data[0])
+    if (params && params.first_lvl_url) {
+      const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}` })
 
-      return {
-        props: {
-          headerData,
-          pageData: pageData.pages.data[0],
-        },
-        // revalidate: 10,
+      if (pageData.pages.data[0]) {
+        return {
+          props: {
+            headerData,
+            pageData: pageData.pages.data[0],
+          },
+        }
+      } else {
+        return {
+          props: {
+            headerData: {},
+            pageData: {},
+          },
+          redirect: {
+            // redirect to notFonundPage
+            destination: '/',
+            permanent: false,
+          },
+        }
       }
     } else {
       return {

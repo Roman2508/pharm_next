@@ -5,13 +5,18 @@ import styles from './Accordion.module.scss'
 
 interface IAccordionProps {
   title: string
+  defaultOpen: boolean
   children: JSX.Element | JSX.Element[] | string | string[]
 }
 
-export const Accordion: React.FC<React.PropsWithChildren<IAccordionProps>> = ({ title, children }) => {
+export const Accordion: React.FC<React.PropsWithChildren<IAccordionProps>> = ({
+  defaultOpen = false,
+  children,
+  title,
+}) => {
   const accordionRef = React.useRef<HTMLDivElement | null>(null)
 
-  const [isOpen, setIsOpen] = React.useState(false)
+  const [isOpen, setIsOpen] = React.useState<boolean>(defaultOpen)
 
   const _slideUp = (target: HTMLDivElement, duration = 500) => {
     if (!target.classList.contains('_slide')) {
@@ -82,8 +87,14 @@ export const Accordion: React.FC<React.PropsWithChildren<IAccordionProps>> = ({ 
   }
 
   React.useEffect(() => {
-    if (accordionRef.current) {
-      _slideToggle(accordionRef.current)
+    if (!accordionRef.current) {
+      return
+    }
+
+    if (isOpen) {
+      _slideDown(accordionRef.current)
+    } else {
+      _slideUp(accordionRef.current)
     }
   }, [isOpen])
 
@@ -94,7 +105,8 @@ export const Accordion: React.FC<React.PropsWithChildren<IAccordionProps>> = ({ 
           className={cn(styles['accordion-title'], { [styles['accordion-active']]: isOpen })}
           tabIndex={-1}
           data-accordion-item
-          onClick={() => setIsOpen(!isOpen)}>
+          onClick={() => setIsOpen(!isOpen)}
+        >
           {title}
         </button>
         <div className={cn(styles['accordion-text'])} ref={accordionRef}>

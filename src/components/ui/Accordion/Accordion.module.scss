@@ -56,3 +56,36 @@
 .accordion-text {
   padding: 10px 20px 20px;
 }
+
+.accordion-text li {
+  margin-left: 20px;
+  position: relative;
+  list-style: none;
+}
+
+.accordion-text li::before {
+  content: '';
+  position: absolute;
+  left: -15px;
+  top: 8px;
+  width: 6px;
+  height: 6px;
+  background-color: var(--primary-color);
+}
+
+.accordion-text a {
+  display: inline-block;
+  color: var(--primary-color);
+}
+
+.accordion-text p + p {
+  margin-top: 5px;
+}
+
+.accordion-text a:hover {
+  text-decoration: underline;
+}
+
+.accordion-text li + li {
+  margin-top: 10px;
+}

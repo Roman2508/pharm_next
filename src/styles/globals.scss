@@ -243,6 +243,9 @@ body {
 .hand-pointer.gallery-item::before {
   background-image: url('../../public/assets/icons/hand-pointer.svg');
 }
+.scale-icon.gallery-item::before {
+  background-image: url('../../public/assets/icons/scale-icon.svg');
+}
 
 .gallery-item:hover::after,
 .hand-pointer.gallery-item:hover::before {
@@ -268,6 +271,7 @@ body {
 
 .scale-photo-hover img {
   width: 100%;
+  object-fit: cover;
   transition: all 0.3s ease-in-out;
 }
 
@@ -343,6 +347,10 @@ body {
   flex: 0 0 66.666666666%;
   max-width: calc(66.666666666% - 20px);
 }
+.col-7-12 {
+  flex: 0 0 58.3333333333%;
+  max-width: calc(58.3333333333% - 20px);
+}
 .col-4-12 {
   flex: 0 0 33.333333333%;
   max-width: calc(33.333333333% - 20px);
@@ -350,5 +358,13 @@ body {
 .col-3-12 {
   flex: 0 0 25%;
   max-width: calc(25% - 20px);
+}
+.col-2-12 {
+  flex: 0 0 16.66666666%;
+  max-width: calc(8.333333333% - 20px);
+}
+.col-1-12 {
+  flex: 0 0 8.333333333%;
+  max-width: calc(8.333333333% - 20px);
 }
 /* // layout */

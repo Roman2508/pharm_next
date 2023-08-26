@@ -105,8 +105,9 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData }) => {
         <div className="container">
           <div className={`${styles['administration__title']} section-title`}>Адміністрація</div>
           <div className={styles['administration__list']}>
-            {administrationItems.map((el) => (
+            {administrationItems.map((el, index) => (
               <AdministrationCard
+                key={index}
                 photo={el.photo}
                 position={el.position}
                 name={el.name}

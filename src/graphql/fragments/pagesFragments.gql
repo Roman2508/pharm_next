@@ -2,6 +2,7 @@ fragment GetAccordionComponent on ComponentPageBlocksAccordion {
   id
   title
   body
+  default_open
   component_type
 }
 
@@ -82,6 +83,7 @@ fragment GetPartnersBlockComponent on ComponentPageBlocksPartnersBlock {
 
 fragment GetPhotosGalleryComponent on ComponentPageBlocksPhotosGallery {
   id
+  title
   component_type
   images {
     data {
@@ -110,6 +112,7 @@ fragment GetTwoColumnWithImageComponent on ComponentPageBlocksTwoColumnWithImage
   }
   layout
 }
+
 fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
   id
   name
