@@ -115,17 +115,22 @@ fragment GetTwoColumnWithImageComponent on ComponentPageBlocksTwoColumnWithImage
 
 fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
   id
-  name
-  position
-  phone
-  email
-  component_type
-  photo {
+  worker {
     data {
       attributes {
-        url
-        width
-        hash
+        name
+        photo {
+          data {
+            attributes {
+              url
+              width
+              height
+            }
+          }
+        }
+        email
+        phone
+        slug
       }
     }
   }

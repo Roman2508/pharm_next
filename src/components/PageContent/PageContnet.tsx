@@ -19,10 +19,17 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
   return (
     <div className={colSize}>
       {pageComponents.map((component: PagePageComponentsDynamicZone) => {
+        // console.log(
+        //   component.body &&
+        //     component.body.split('<img ').map((el) => {
+        //       return el.substring(/src=/, /alt=/)
+        //     })
+        // )
+
         if (component.component_type === 'body') {
           /* body */
           return (
-            <div className={cn({ ['container']: colSize === 'col-12' })}>
+            <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
               <div className={styles['page-conent']} dangerouslySetInnerHTML={{ __html: component.body }} />
             </div>
           )
@@ -31,7 +38,7 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
           /* two_col_with_image */
           if (component.layout === 'text_image') {
             return (
-              <div className={cn({ ['container']: colSize === 'col-12' })}>
+              <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
                 <div className={twoColImageStyles['wrapper']}>
                   <div
                     className={cn(twoColImageStyles['content'], twoColImageStyles['right-image'])}
@@ -45,7 +52,7 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
             )
           } else {
             return (
-              <div className={cn({ ['container']: colSize === 'col-12' })}>
+              <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
                 <div className={twoColImageStyles['wrapper']}>
                   <div className={twoColImageStyles['image-box']}>
                     <img src={`${process.env.API_URL}${component.image.data.attributes.url}`} alt={'photo'} />
@@ -64,7 +71,11 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
           const isBg = component.withBackground
 
           return (
-            <div className={panoramsStyles['wrapper']} style={isBg ? { backgroundColor: '#1d5d9b' } : {}}>
+            <div
+              className={panoramsStyles['wrapper']}
+              style={isBg ? { backgroundColor: '#1d5d9b' } : {}}
+              key={component.id}
+            >
               <div className={cn({ ['container']: colSize === 'col-12' })}>
                 {component.title && (
                   <h3
@@ -93,7 +104,7 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
           /* // panoramas */
         } else if (component.component_type === 'accordion') {
           return (
-            <div className={cn({ ['container']: colSize === 'col-12' })}>
+            <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
               <Accordion title={component.title} defaultOpen={component.default_open}>
                 <div dangerouslySetInnerHTML={{ __html: component.body }} />
               </Accordion>
@@ -101,7 +112,7 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
           )
         } else if (component.component_type === 'photos_gallery') {
           return (
-            <div className={cn({ ['container']: colSize === 'col-12' })}>
+            <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
               <div>
                 {component.title && (
                   <h3 style={{ textAlign: 'center' }} dangerouslySetInnerHTML={{ __html: component.title }} />

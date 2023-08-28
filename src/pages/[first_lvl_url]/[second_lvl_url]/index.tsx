@@ -32,7 +32,7 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }
   console.log(pageData.attributes)
 
   return (
-    <Layout headerData={headerData} title={pageData.attributes.meta_title}>
+    <Layout headerData={headerData} title={pageData.attributes.SEO.title}>
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 

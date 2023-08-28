@@ -1,10 +1,18 @@
-query GetPage ($pageUrl: String) {
-  pages(filters:{ page_url: { in: [$pageUrl] }}) {
+query GetPage($pageUrl: String) {
+  pages(filters: { page_url: { in: [$pageUrl] } }) {
     data {
       id
       attributes {
         title
-        meta_title
+        SEO {
+          title
+          description
+          meta {
+            id
+            name
+            content
+          }
+        }
         page_url
         main_photo {
           data {
@@ -48,7 +56,7 @@ query GetPage ($pageUrl: String) {
           ...GetPartnersBlockComponent
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
-          ...GetBlocksPersonComponent          
+          ...GetBlocksPersonComponent
         }
       }
     }
