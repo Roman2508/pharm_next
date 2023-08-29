@@ -32,6 +32,7 @@ fragment GetButtonImagesComponent on ComponentPageBlocksButtonImages {
 fragment GetButtonLinkComponent on ComponentPageBlocksButtonLink {
   id
   text
+  link
   component_type
 }
 
@@ -115,6 +116,7 @@ fragment GetTwoColumnWithImageComponent on ComponentPageBlocksTwoColumnWithImage
 
 fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
   id
+  component_type
   worker {
     data {
       attributes {
@@ -128,9 +130,17 @@ fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
             }
           }
         }
+        position
         email
         phone
         slug
+        cycle_commission {
+          data {
+            attributes {
+              slug
+            }
+          }
+        }
       }
     }
   }

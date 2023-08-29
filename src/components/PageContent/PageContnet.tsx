@@ -1,14 +1,18 @@
 import React from 'react'
 import cn from 'classnames'
+import Link from 'next/link'
 import Image from 'next/image'
 
 import styles from './Page.module.scss'
+import personStyles from './PersonComponent.module.scss'
 import panoramsStyles from './PanoramsComponent.module.scss'
 import twoColImageStyles from './TwoColumnWithImage.module.scss'
+import linkStyles from './ButtonLinkComponent.module.scss'
 
 import { FancyboxGallery } from '../FancyboxGallery'
 import { Accordion } from '../ui/Accordion/Accordion'
 import { PagePageComponentsDynamicZone } from '@/graphql/__generated__'
+import ContactsItem from '../Contacts/ContactsItem'
 
 interface IPageContnetProps {
   colSize: string
@@ -19,18 +23,13 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
   return (
     <div className={colSize}>
       {pageComponents.map((component: PagePageComponentsDynamicZone) => {
-        // console.log(
-        //   component.body &&
-        //     component.body.split('<img ').map((el) => {
-        //       return el.substring(/src=/, /alt=/)
-        //     })
-        // )
-
         if (component.component_type === 'body') {
+          const componentBody = component.body.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+
           /* body */
           return (
             <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
-              <div className={styles['page-conent']} dangerouslySetInnerHTML={{ __html: component.body }} />
+              <div className={styles['page-conent']} dangerouslySetInnerHTML={{ __html: componentBody }} />
             </div>
           )
           /* // body */
@@ -139,6 +138,45 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
                 </FancyboxGallery>
               </div>
             </div>
+          )
+        } else if (component.component_type === 'person') {
+          const phone = component.worker.data.attributes.phone
+          const phoneWithoutSymbols = phone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
+
+          const personLink = component.worker.data.attributes.cycle_commission.data
+            ? `/structure/cmks/${component.worker.data.attributes.cycle_commission.data.attributes.slug}/${component.worker.data.attributes.slug}`
+            : '/'
+
+          return (
+            <div className={personStyles['wrapper']}>
+              <Link href={personLink} target="_blank">
+                <div className={personStyles['photo']}>
+                  <img src={`${process.env.API_URL}${component.worker.data.attributes.photo.data.attributes.url}`} />
+                </div>
+              </Link>
+
+              <Link href={personLink} target="_blank">
+                <h5 className={personStyles['name']}>{component.worker.data.attributes.name}</h5>
+              </Link>
+
+              <p className={personStyles['position']}>{component.worker.data.attributes.position}</p>
+              <div>
+                <a className={personStyles['tel']} href={`tel:${phoneWithoutSymbols}`}>
+                  {component.worker.data.attributes.phone}
+                </a>
+              </div>
+              <div>
+                <a className={personStyles['email']} href={`mailto:${component.worker.data.attributes.email}`}>
+                  {component.worker.data.attributes.email}
+                </a>
+              </div>
+            </div>
+          )
+        } else if (component.component_type === 'button_link') {
+          return (
+            <Link href={component.link} className={linkStyles['link']} target="_blank">
+              {component.text}
+            </Link>
           )
         }
 

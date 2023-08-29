@@ -1,18 +1,10 @@
 import React from 'react'
 import cn from 'classnames'
-import { remark } from 'remark'
-import html from 'remark-html'
 import { GetServerSideProps, GetStaticProps } from 'next'
 
 import styles from './Page.module.scss'
-import panoramsStyles from './PanoramsComponent.module.scss'
-import twoColImageStyles from './TwoColumnWithImage.module.scss'
 import { Layout } from '@/layouts/Layout'
 import { GetHeaderQuery, PageEntity, gql } from '@/graphql/client'
-import DynamicPageLayout from '@/utils/dynamicPageLayout'
-import EditorJsRenderer from '@/components/EditorJsRenderer'
-import { Accordion } from '@/components/ui/Accordion/Accordion'
-import { FancyboxGallery } from '@/components/FancyboxGallery'
 import Image from 'next/image'
 import PageContnet from '@/components/PageContent/PageContnet'
 
@@ -22,28 +14,21 @@ interface IAdministrationProps {
 }
 
 const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }) => {
-  // const DLayout = DynamicPageLayout({
-  //   layout: String(pageData.attributes.layout),
-  //   pageContent: pageData.attributes.page_components,
-  //   leftSidebar: pageData.attributes.left_sidebar,
-  //   rightSidebar: pageData.attributes.right_sidebar,
-  // })
-
-  console.log(pageData.attributes)
-
   return (
     <Layout headerData={headerData} title={pageData.attributes.SEO.title}>
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 
-        <div className="container">
-          <div className={'main-photo-page'}>
-            <img
-              src={`${process.env.API_URL}${pageData.attributes.main_photo.data.attributes.url}`}
-              alt="main page photo"
-            />
+        {pageData.attributes.main_photo.data && (
+          <div className="container">
+            <div className={'main-photo-page'}>
+              <img
+                src={`${process.env.API_URL}${pageData.attributes.main_photo.data.attributes.url}`}
+                alt="main page photo"
+              />
+            </div>
           </div>
-        </div>
+        )}
 
         <div className={cn(styles['page-conent'])}>
           {String(pageData.attributes.layout) === 'col_1_8_3' ? (
@@ -72,10 +57,6 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }
             <PageContnet colSize="col-12" pageComponents={pageData.attributes.page_components} />
           )}
         </div>
-
-        {/* <TestLayout size="left_sidebar" data={pageData.attributes.left_sidebar[0].body} /> */}
-        {/* <TestLayout size="main_contnet" data={pageData.attributes.page_components[4].body} /> */}
-        {/* <TestLayout size="right_sidebar" data={pageData.attributes.right_sidebar[0].body} /> */}
       </div>
     </Layout>
   )
