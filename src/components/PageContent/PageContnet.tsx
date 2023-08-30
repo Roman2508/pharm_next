@@ -11,17 +11,24 @@ import linkStyles from './ButtonLinkComponent.module.scss'
 
 import { FancyboxGallery } from '../FancyboxGallery'
 import { Accordion } from '../ui/Accordion/Accordion'
-import { PagePageComponentsDynamicZone } from '@/graphql/__generated__'
+import { PagePageComponentsDynamicZone, UploadFileEntity } from '@/graphql/__generated__'
 import ContactsItem from '../Contacts/ContactsItem'
 
 interface IPageContnetProps {
   colSize: string
   pageComponents: readonly PagePageComponentsDynamicZone[]
+  mainPhotoCol?: UploadFileEntity
 }
 
-const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
+const PageContnet = ({ colSize, pageComponents, mainPhotoCol }: IPageContnetProps) => {
   return (
     <div className={colSize}>
+      {/* {mainPhotoCol && (
+        <div className={'main-photo-page'}>
+          <img src={`${process.env.API_URL}${mainPhotoCol.attributes.url}`} alt="main page photo" />
+        </div>
+      )} */}
+
       {pageComponents.map((component: PagePageComponentsDynamicZone) => {
         if (component.component_type === 'body') {
           const componentBody = component.body.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
@@ -141,7 +148,9 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
           )
         } else if (component.component_type === 'person') {
           const phone = component.worker.data.attributes.phone
-          const phoneWithoutSymbols = phone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
+          const phoneWithoutSymbols = phone
+            ? phone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
+            : ''
 
           const personLink = component.worker.data.attributes.cycle_commission.data
             ? `/structure/cmks/${component.worker.data.attributes.cycle_commission.data.attributes.slug}/${component.worker.data.attributes.slug}`
@@ -160,11 +169,13 @@ const PageContnet = ({ colSize, pageComponents }: IPageContnetProps) => {
               </Link>
 
               <p className={personStyles['position']}>{component.worker.data.attributes.position}</p>
-              <div>
-                <a className={personStyles['tel']} href={`tel:${phoneWithoutSymbols}`}>
-                  {component.worker.data.attributes.phone}
-                </a>
-              </div>
+              {component.worker.data.attributes.phone && (
+                <div>
+                  <a className={personStyles['tel']} href={`tel:${phoneWithoutSymbols}`}>
+                    {component.worker.data.attributes.phone}
+                  </a>
+                </div>
+              )}
               <div>
                 <a className={personStyles['email']} href={`mailto:${component.worker.data.attributes.email}`}>
                   {component.worker.data.attributes.email}

@@ -4,13 +4,21 @@ import Image from 'next/image'
 import styles from './SubHeader.module.scss'
 import logoIcon from '../../../public/assets/icons/logo_white.svg'
 import Link from 'next/link'
+import { GetMainScreenQuery } from '@/graphql/__generated__'
 
-const SubHeader = () => {
+interface ISubHeaderProps {
+  mainScreenData: GetMainScreenQuery
+}
+
+const SubHeader: React.FC<ISubHeaderProps> = ({ mainScreenData }) => {
   return (
     <div className={styles['sub-header']}>
       <div className={styles['sub-header__video']}>
         <video autoPlay muted loop playsInline>
-          <source src="../assets/videos/main-screen-bg.mp4" type="video/mp4" />
+          <source
+            src={`${process.env.API_URL}${mainScreenData.header.data.attributes.Header.background.data.attributes.url}`}
+            type="video/mp4"
+          />
         </video>
       </div>
 
@@ -19,7 +27,7 @@ const SubHeader = () => {
           <Link className={styles['sub-header__logo-box']} href="/">
             <Image className={styles['sub-header__logo']} src={logoIcon} alt="cloud icon" width={140} />
           </Link>
-          <h1 className={styles['sub-header__title']}>ЖИТОМИРСЬКИЙ БАЗОВИЙ ФАРМАЦЕВТИЧНИЙ ФАХОВИЙ КОЛЕДЖ</h1>
+          <h1 className={styles['sub-header__title']}>{mainScreenData.header.data.attributes.Header.title}</h1>
         </div>
       </div>
     </div>

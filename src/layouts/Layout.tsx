@@ -4,12 +4,13 @@ import Header from '@/components/Header/Header'
 import SubHeader from '@/components/SubHeader/SubHeader'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
 import { Footer } from '@/components/Footer/Footer'
-import { GetHeaderQuery } from '@/graphql/__generated__'
+import { GetHeaderQuery, GetMainScreenQuery } from '@/graphql/__generated__'
 
 interface ILayoutProps {
   title?: string
   description?: string
   headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
 export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
@@ -17,6 +18,7 @@ export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
   title = '',
   description = 'ЖБФФК',
   headerData,
+  mainScreenData,
 }) => {
   return (
     <>
@@ -33,7 +35,7 @@ export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
       </Head>
       <main>
         <Header headerData={headerData} />
-        <SubHeader />
+        <SubHeader mainScreenData={mainScreenData} />
         <Breadcrumbs />
         {children}
         <Footer />
