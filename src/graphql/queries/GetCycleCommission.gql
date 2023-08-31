@@ -25,6 +25,26 @@ query GetCycleCommission($pageUrl: String) {
         }
         page_url
         layout
+        headOfCommission {
+          data {
+            attributes {
+              name
+              slug
+              photo {
+                data {
+                  attributes {
+                    url
+                    width
+                    height
+                  }
+                }
+              }
+              position
+              phone
+              email
+            }
+          }
+        }
         page_components {
           ...GetAccordionComponent
           ...GetBodyComponent
@@ -70,6 +90,13 @@ query GetCycleCommission($pageUrl: String) {
                 data {
                   attributes {
                     url
+                  }
+                }
+              }
+              lessons {
+                data {
+                  attributes {
+                    name
                   }
                 }
               }

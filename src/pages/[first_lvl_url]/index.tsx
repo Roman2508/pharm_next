@@ -4,18 +4,18 @@ import { GetServerSideProps, GetStaticProps } from 'next'
 
 import styles from './Page.module.scss'
 import { Layout } from '@/layouts/Layout'
-import { GetHeaderQuery, PageEntity, gql } from '@/graphql/client'
-import Image from 'next/image'
+import { GetHeaderQuery, GetMainScreenQuery, PageEntity, gql } from '@/graphql/client'
 import PageContnet from '@/components/PageContent/PageContnet'
 
 interface IAdministrationProps {
-  headerData: GetHeaderQuery
   pageData: PageEntity
+  headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }) => {
+const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreenData, pageData }) => {
   return (
-    <Layout headerData={headerData} title={pageData.attributes.SEO.title}>
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title={pageData.attributes.SEO.title}>
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 
@@ -65,8 +65,42 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }
 // export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
-    const headerData = await gql.GetHeader()
+    const returnData = {
+      props: { headerData: {}, mainScreenData: {}, cmkData: {} },
+      redirect: { destination: '/404', permanent: false },
+    }
 
+    if (!params || !params.first_lvl_url) {
+      return returnData
+    }
+
+    const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}` })
+
+    if (!pageData.pages.data[0]) {
+      return returnData
+    }
+
+    const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
+
+    return {
+      props: {
+        headerData,
+        mainScreenData,
+        pageData: pageData.pages.data[0],
+      },
+    }
+  } catch (error) {
+    console.log(error, 'ERROR!')
+    return { props: { headerData: {}, mainScreenData: {}, pageData: {} } }
+  }
+}
+
+export default Administration
+// const headerData = await gql.GetHeader()
+// const mainScreenData = await gql.GetMainScreen()
+
+/* 
     if (params && params.first_lvl_url) {
       const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}` })
 
@@ -74,14 +108,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         return {
           props: {
             headerData,
+            mainScreenData,
             pageData: pageData.pages.data[0],
           },
         }
       } else {
         return {
           props: {
-            headerData: {},
             pageData: {},
+            mainScreenData: {},
+            headerData: {},
           },
           redirect: {
             // redirect to notFonundPage
@@ -94,6 +130,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return {
         props: {
           headerData: {},
+          mainScreenData: {},
           pageData: {},
         },
         redirect: {
@@ -102,11 +139,5 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         },
       }
     }
-    //
-  } catch (error) {
-    console.log(error, 'default page error')
-    return { props: { headerData: {}, pageData: {} } }
-  }
-}
-
-export default Administration
+   */
+//

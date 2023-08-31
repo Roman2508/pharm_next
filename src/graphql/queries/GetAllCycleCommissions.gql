@@ -1,0 +1,20 @@
+query GetAllCycleCommissions {
+  cycleCommissions {
+    data {
+      id
+      attributes {
+        name
+        slug
+        main_photo {
+          data {
+            attributes {
+              url
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}

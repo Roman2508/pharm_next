@@ -11,23 +11,125 @@ import linkStyles from './ButtonLinkComponent.module.scss'
 
 import { FancyboxGallery } from '../FancyboxGallery'
 import { Accordion } from '../ui/Accordion/Accordion'
-import { PagePageComponentsDynamicZone, UploadFileEntity } from '@/graphql/__generated__'
-import ContactsItem from '../Contacts/ContactsItem'
+import { PagePageComponentsDynamicZone, UploadFileEntity, Worker, WorkerEntity } from '@/graphql/__generated__'
 
 interface IPageContnetProps {
   colSize: string
-  pageComponents: readonly PagePageComponentsDynamicZone[]
+  cmkHead?: Worker
+  cmkSlug?: string
   mainPhotoCol?: UploadFileEntity
+  cmkTeachers?: readonly WorkerEntity[]
+  pageComponents: readonly PagePageComponentsDynamicZone[]
 }
 
-const PageContnet = ({ colSize, pageComponents, mainPhotoCol }: IPageContnetProps) => {
+const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeachers, cmkSlug }: IPageContnetProps) => {
+  const cmkHeadPhone = cmkHead?.phone
+  const cmkHeadphoneWithoutSymbols = cmkHeadPhone
+    ? cmkHeadPhone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
+    : ''
+  const cmkHeadLink = cmkHead ? `/structure/cmks/${cmkSlug}/${cmkHead.slug}` : '/'
+  const teachersOnPage = 4
+  const pagesCount = cmkTeachers ? Math.ceil(cmkTeachers.length / teachersOnPage) : 1
+
+  const [teachersRange, setTeachersRange] = React.useState([0, teachersOnPage])
+  const [currentPage, setCurrentPage] = React.useState(1)
+
+  const handleChangeTeachersRange = (currentPage: number) => {
+    setCurrentPage(currentPage)
+    setTeachersRange((prev) => {
+      return [currentPage * teachersOnPage - teachersOnPage, currentPage * teachersOnPage]
+    })
+  }
+
   return (
     <div className={colSize}>
-      {/* {mainPhotoCol && (
-        <div className={'main-photo-page'}>
+      {mainPhotoCol && (
+        <div className={'cmk-main-photo'}>
           <img src={`${process.env.API_URL}${mainPhotoCol.attributes.url}`} alt="main page photo" />
         </div>
-      )} */}
+      )}
+
+      {cmkHead && (
+        <div className={personStyles['wrapper']}>
+          <Link href={cmkHeadLink} target="_blank">
+            <div className={personStyles['photo']}>
+              <img src={`${process.env.API_URL}${cmkHead.photo.data.attributes.url}`} />
+            </div>
+          </Link>
+
+          <Link href={cmkHeadLink} target="_blank">
+            <h5 className={personStyles['name']}>{cmkHead.name}</h5>
+          </Link>
+
+          <p className={personStyles['position']}>{cmkHead.position}</p>
+          {cmkHead.phone && (
+            <div>
+              <a className={personStyles['tel']} href={`tel:${cmkHeadphoneWithoutSymbols}`}>
+                {cmkHead.phone}
+              </a>
+            </div>
+          )}
+          {cmkHead.email && (
+            <div>
+              <a className={personStyles['email']} href={`mailto:${cmkHead.email}`}>
+                {cmkHead.email}
+              </a>
+            </div>
+          )}
+        </div>
+      )}
+
+      {cmkTeachers && <div className={styles['cmk-teachers-title']}>Склад комісії</div>}
+
+      {cmkTeachers &&
+        cmkTeachers
+          .filter((teacher) => teacher.attributes.name !== cmkHead?.name)
+          .slice(teachersRange[0], teachersRange[1])
+          .map((teacher) => {
+            const nameArray = teacher.attributes.name.split(' ')
+            const teacherLink = `/structure/cmks/${cmkSlug}/${teacher.attributes.slug}`
+
+            return (
+              <div className={styles['teacher-wrapper']}>
+                <div className={styles['teacher-row']}>
+                  <Link className={styles['teacher-photo']} href={teacherLink}>
+                    <img src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`} />
+                  </Link>
+                  <Link className={styles['teacher-name']} href={teacherLink}>
+                    {nameArray.map((el) => {
+                      if (!el.length) return
+                      return (
+                        <>
+                          {el}
+                          <br />
+                        </>
+                      )
+                    })}
+                  </Link>
+                </div>
+                <ul className={styles['teacher-lessons']}>
+                  {teacher.attributes.lessons.data.map((lesson) => (
+                    <li className={styles['teacher-lesson']}>«{lesson.attributes.name}»</li>
+                  ))}
+                </ul>
+              </div>
+            )
+          })}
+
+      {cmkTeachers && (
+        <div className={styles['cmk-teacher-pagination']}>
+          {Array(pagesCount)
+            .fill(null)
+            .map((el, index) => (
+              <span
+                className={cn(styles['cmk-teacher-page'], { [styles['active-page']]: currentPage === index + 1 })}
+                onClick={() => handleChangeTeachersRange(index + 1)}
+              >
+                {index + 1}
+              </span>
+            ))}
+        </div>
+      )}
 
       {pageComponents.map((component: PagePageComponentsDynamicZone) => {
         if (component.component_type === 'body') {

@@ -65,6 +65,10 @@
   margin-bottom: 5px;
 }
 
+.page-conent hr {
+  margin: 25px 0 20px;
+}
+
 .page-conent th,
 .page-conent tr:first-of-type {
   background-color: var(--primary-color) !important;
@@ -97,3 +101,66 @@
 }
 
 /* // table */
+
+/* smk */
+
+.cmk-teachers-title {
+  font-size: 24px;
+  font-family: 'GilroyBold', sans-serif;
+  background-color: var(--gray-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+.teacher-wrapper {
+  padding-bottom: 20px;
+  border-bottom: 1px solid #939393;
+  margin-bottom: 20px;
+}
+
+.teacher-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+.teacher-photo {
+  margin-right: 10px;
+}
+.teacher-photo img {
+  object-fit: cover;
+  width: 90px;
+  height: 130px;
+}
+.teacher-name {
+  font-family: 'GilroyBold', sans-serif;
+  font-size: 24px;
+}
+.teacher-lessons {
+  list-style: none;
+}
+.teacher-lesson {
+  margin-bottom: 5px;
+}
+
+.cmk-teacher-pagination {
+  text-align: center;
+}
+.cmk-teacher-page {
+  width: 35px;
+  padding: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  display: inline-block;
+  color: var(--primary-color);
+  background-color: var(--gray-color);
+  border: 1px solid var(--primary-color);
+}
+.cmk-teacher-page.active-page {
+  background-color: var(--primary-color);
+  color: #fff;
+}
+.cmk-teacher-page + .cmk-teacher-page {
+  margin-left: 5px;
+}
+/* // smk */

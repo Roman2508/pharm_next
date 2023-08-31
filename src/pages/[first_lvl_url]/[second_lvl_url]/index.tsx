@@ -1,29 +1,21 @@
 import React from 'react'
 import cn from 'classnames'
-import { remark } from 'remark'
-import html from 'remark-html'
 import { GetServerSideProps, GetStaticProps } from 'next'
 
 import styles from '../Page.module.scss'
-import panoramsStyles from '../PanoramsComponent.module.scss'
-import twoColImageStyles from '../TwoColumnWithImage.module.scss'
-
 import { Layout } from '@/layouts/Layout'
-import { GetHeaderQuery, PageEntity, gql } from '@/graphql/client'
-import DynamicPageLayout from '@/utils/dynamicPageLayout'
-import EditorJsRenderer from '@/components/EditorJsRenderer'
-import { FancyboxGallery } from '@/components/FancyboxGallery'
-import Image from 'next/image'
 import PageContnet from '@/components/PageContent/PageContnet'
+import { GetHeaderQuery, GetMainScreenQuery, PageEntity, gql } from '@/graphql/client'
 
 interface IAdministrationProps {
-  headerData: GetHeaderQuery
   pageData: PageEntity
+  headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }) => {
+const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreenData, pageData }) => {
   return (
-    <Layout headerData={headerData} title={pageData.attributes.SEO.title}>
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title={pageData.attributes.SEO.title}>
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 
@@ -73,9 +65,40 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, pageData }
 // export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
-    const headerData = await gql.GetHeader()
+    const returnData = {
+      props: { headerData: {}, mainScreenData: {}, cmkData: {} },
+      redirect: { destination: '/404', permanent: false },
+    }
 
-    if (params && params.first_lvl_url && params.second_lvl_url) {
+    if (!params || !params.first_lvl_url || !params.second_lvl_url) {
+      return returnData
+    }
+
+    const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}/${params.second_lvl_url}` })
+
+    if (!pageData.pages.data[0]) {
+      return returnData
+    }
+
+    const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
+
+    return {
+      props: {
+        headerData,
+        mainScreenData,
+        pageData: pageData.pages.data[0],
+      },
+    }
+  } catch (error) {
+    console.log(error, 'default page error')
+    return { props: { headerData: {}, pageData: {} } }
+  }
+}
+
+export default Administration
+/* 
+ if (params && params.first_lvl_url && params.second_lvl_url) {
       const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}/${params.second_lvl_url}` })
 
       if (pageData.pages.data[0]) {
@@ -110,11 +133,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         },
       }
     }
-    //
-  } catch (error) {
-    console.log(error, 'default page error')
-    return { props: { headerData: {}, pageData: {} } }
-  }
-}
-
-export default Administration
+*/

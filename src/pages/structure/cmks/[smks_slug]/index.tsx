@@ -4,13 +4,8 @@ import { GetServerSideProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../CmksPage.module.scss'
-import {
-  CycleCommissionEntity,
-  GetHeaderQuery,
-  GetMainScreenQuery,
-  gql,
-} from '@/graphql/client'
 import PageContnet from '@/components/PageContent/PageContnet'
+import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
 
 interface ISmksPageProps {
   headerData: GetHeaderQuery
@@ -19,13 +14,11 @@ interface ISmksPageProps {
 }
 
 const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenData }) => {
-  console.log(mainScreenData)
-
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title={cmkData.attributes.SEO.title}>
       <h1 className={`${styles['main-title']} section-title`}>{cmkData.attributes.name}</h1>
 
-      {cmkData.attributes.main_photo.data && (
+      {/* {cmkData.attributes.main_photo.data && (
         <div className="container">
           <div className={'main-photo-page'}>
             <img
@@ -34,7 +27,7 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenDat
             />
           </div>
         </div>
-      )}
+      )} */}
 
       <div className={cn(styles['page-conent'])}>
         {String(cmkData.attributes.layout) === 'col_1_8_3' ? (
@@ -44,6 +37,9 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenDat
               colSize="col-8-12"
               pageComponents={cmkData.attributes.page_components}
               mainPhotoCol={cmkData.attributes.main_photo.data}
+              cmkHead={cmkData.attributes.headOfCommission.data.attributes}
+              cmkTeachers={cmkData.attributes.workers.data}
+              cmkSlug={cmkData.attributes.slug}
             />
             <PageContnet colSize="col-3-12" pageComponents={cmkData.attributes.right_sidebar} />
           </div>
@@ -55,7 +51,13 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenDat
               pageComponents={cmkData.attributes.page_components}
               mainPhotoCol={cmkData.attributes.main_photo.data}
             />
-            <PageContnet colSize="col-4-12" pageComponents={cmkData.attributes.right_sidebar} />
+            <PageContnet
+              colSize="col-4-12"
+              pageComponents={cmkData.attributes.right_sidebar}
+              cmkHead={cmkData.attributes.headOfCommission.data.attributes}
+              cmkTeachers={cmkData.attributes.workers.data}
+              cmkSlug={cmkData.attributes.slug}
+            />
           </div>
         ) : String(cmkData.attributes.layout) === 'col_8_4' ? (
           <div className={cn('page-row', 'container')}>
@@ -64,7 +66,13 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenDat
               pageComponents={cmkData.attributes.page_components}
               mainPhotoCol={cmkData.attributes.main_photo.data}
             />
-            <PageContnet colSize="col-4-12" pageComponents={cmkData.attributes.right_sidebar} />
+            <PageContnet
+              colSize="col-4-12"
+              pageComponents={cmkData.attributes.right_sidebar}
+              cmkHead={cmkData.attributes.headOfCommission.data.attributes}
+              cmkTeachers={cmkData.attributes.workers.data}
+              cmkSlug={cmkData.attributes.slug}
+            />
           </div>
         ) : String(cmkData.attributes.layout) === 'col_9_3' ? (
           <div className={cn('page-row', 'container')}>
@@ -73,7 +81,13 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenDat
               pageComponents={cmkData.attributes.page_components}
               mainPhotoCol={cmkData.attributes.main_photo.data}
             />
-            <PageContnet colSize="col-3-12" pageComponents={cmkData.attributes.right_sidebar} />
+            <PageContnet
+              colSize="col-3-12"
+              pageComponents={cmkData.attributes.right_sidebar}
+              cmkHead={cmkData.attributes.headOfCommission.data.attributes}
+              cmkTeachers={cmkData.attributes.workers.data}
+              cmkSlug={cmkData.attributes.slug}
+            />
           </div>
         ) : (
           <PageContnet colSize="col-12" pageComponents={cmkData.attributes.page_components} />
