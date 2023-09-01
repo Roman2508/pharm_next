@@ -1,9 +1,19 @@
-query GetPage($pageUrl: String) {
-  pages(filters: { page_url: { in: [$pageUrl] } }) {
+query GetSubdiv($subdivSlug: String) {
+  subdivisions(filters: { slug: { in: [$subdivSlug] } }) {
     data {
       id
       attributes {
-        title
+        name
+        slug
+        main_photo {
+          data {
+            attributes {
+              url
+              width
+              height
+            }
+          }
+        }
         SEO {
           title
           description
@@ -14,13 +24,6 @@ query GetPage($pageUrl: String) {
           }
         }
         page_url
-        main_photo {
-          data {
-            attributes {
-              url
-            }
-          }
-        }
         layout
         page_components {
           ...GetAccordionComponent
@@ -33,7 +36,6 @@ query GetPage($pageUrl: String) {
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
-          ...GetPageCardsComponent
         }
         right_sidebar {
           ...GetAccordionComponent
@@ -46,7 +48,6 @@ query GetPage($pageUrl: String) {
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
-          ...GetPageCardsComponent
         }
         left_sidebar {
           ...GetAccordionComponent
@@ -59,7 +60,6 @@ query GetPage($pageUrl: String) {
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
-          ...GetPageCardsComponent
         }
       }
     }

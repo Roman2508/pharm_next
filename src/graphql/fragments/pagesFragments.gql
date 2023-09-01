@@ -145,3 +145,21 @@ fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
     }
   }
 }
+
+fragment GetPageCardsComponent on ComponentPageBlocksPageCards {
+  component_type
+  cards {
+    id
+    name
+    photo {
+      data {
+        attributes {
+          url
+          width
+          height
+        }
+      }
+    }
+    link
+  }
+}

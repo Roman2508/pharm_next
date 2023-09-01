@@ -1,0 +1,21 @@
+query GetAllSubdivision {
+  subdivisions {
+    data {
+      id
+      attributes {
+        name
+        slug
+        main_photo {
+          data {
+            attributes {
+              url
+              width
+              height
+            }
+          }
+        }
+        page_url
+      }
+    }
+  }
+}

@@ -5,10 +5,11 @@ import { gql } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from './VideoAnd3d.module.scss'
 import { Videos } from '@/components/Videos/Videos'
-import { GetHeaderQuery } from '@/graphql/__generated__'
+import { GetHeaderQuery, GetMainScreenQuery } from '@/graphql/__generated__'
 
 interface IMTBazaPageProps {
   headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
 const panoramaItems = [
@@ -86,9 +87,9 @@ const panoramaItems = [
   },
 ]
 
-const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ headerData }) => {
+const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ headerData, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} title="Відео і 3D-панорами">
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Відео і 3D-панорами">
       <div className={styles['subdivisions']}>
         <h1 className="section-title" style={{ marginBottom: '50px' }}>
           Відео і 3D-панорами
@@ -118,10 +119,12 @@ const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ headerData }) => {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
         headerData,
+        mainScreenData,
       },
       revalidate: 10,
     }

@@ -10,9 +10,10 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 
 interface INewsProps {
   newsData: GetNewsQuery
+  showTitle?: boolean
 }
 
-export const News: React.FC<INewsProps> = ({ newsData }) => {
+export const News: React.FC<INewsProps> = ({ newsData, showTitle }) => {
   const firstRender = React.useRef(false)
 
   const [news, setNews] = React.useState([])
@@ -42,7 +43,7 @@ export const News: React.FC<INewsProps> = ({ newsData }) => {
     <div className={styles['news']}>
       <div className={'container'}>
         <div className={styles['news__inner']}>
-          <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>
+          {showTitle && <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>}
           <div className={cn(styles['news__items'], { [styles['news__items--loading']]: isLoading })}>
             {(news.length ? news : newsData?.novinas.data).map((news) => (
               <NewsItem

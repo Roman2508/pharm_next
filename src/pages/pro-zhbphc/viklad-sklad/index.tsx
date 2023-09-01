@@ -5,7 +5,7 @@ import { GetStaticProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from './VidladSklad.module.scss'
-import { GetHeaderQuery, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
 
 import photo from '../../../../public/assets/images/administration/bolukh-vira-andriivna_1.jpg'
 import photo1 from '../../../../public/assets/images/administration/dunaevska-oksana-feliksivna.jpg'
@@ -14,11 +14,12 @@ import Select from '@/components/ui/Select/Select'
 
 interface ITeachingStaffPageProps {
   headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
-const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({ headerData }) => {
+const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({ headerData, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} title="Викладацький склад">
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Викладацький склад">
       <div className="container">
         <div className={cn(styles['teachers__title'], 'section-title')}>Викладацький склад</div>
 
@@ -279,10 +280,12 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({ headerData }) => {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
         headerData,
+        mainScreenData,
       },
       revalidate: 10,
     }

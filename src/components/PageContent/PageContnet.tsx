@@ -12,6 +12,7 @@ import linkStyles from './ButtonLinkComponent.module.scss'
 import { FancyboxGallery } from '../FancyboxGallery'
 import { Accordion } from '../ui/Accordion/Accordion'
 import { PagePageComponentsDynamicZone, UploadFileEntity, Worker, WorkerEntity } from '@/graphql/__generated__'
+import PageCard from '../PageCard/PageCard'
 
 interface IPageContnetProps {
   colSize: string
@@ -290,6 +291,16 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
             <Link href={component.link} className={linkStyles['link']} target="_blank">
               {component.text}
             </Link>
+          )
+        } else if (component.component_type === 'page_cards') {
+          return (
+            <div className="container">
+              <div className={styles['page-cards-wrapper']}>
+                {component.cards.map((card) => (
+                  <PageCard id={card.id} slug={card.link} photo={card.photo.data.attributes.url} name={card.name} />
+                ))}
+              </div>
+            </div>
           )
         }
 

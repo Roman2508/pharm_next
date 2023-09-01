@@ -25,7 +25,7 @@ const videosItems = [
 ]
 
 interface IVideoProps {
-  test: boolean
+  test?: boolean
 }
 
 export const Videos: React.FC<IVideoProps> = ({ test }) => {

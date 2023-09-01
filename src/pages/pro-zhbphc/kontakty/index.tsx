@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from '../ProZhbphc.module.scss'
 import { Layout } from '@/layouts/Layout'
-import { GetHeaderQuery } from '@/graphql/__generated__'
+import { GetHeaderQuery, GetMainScreenQuery } from '@/graphql/__generated__'
 import { GetStaticProps, NextPage } from 'next'
 import { gql } from '@/graphql/client'
 import ContactsItem from '@/components/Contacts/ContactsItem'
@@ -12,6 +12,7 @@ import Select from '@/components/ui/Select/Select'
 
 interface IContactsPageProps {
   headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
 const contactsItems = [
@@ -101,11 +102,11 @@ const contactsItems = [
   },
 ]
 
-const Contacts: NextPage<IContactsPageProps> = ({ headerData }) => {
+const Contacts: NextPage<IContactsPageProps> = ({ headerData, mainScreenData }) => {
   const [inputValue, setInputValue] = React.useState('')
 
   return (
-    <Layout headerData={headerData} title="Контакти">
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Контакти">
       <div className="contacts">
         <div className="container">
           <h1 className="section-title">Контакти</h1>
@@ -116,7 +117,8 @@ const Contacts: NextPage<IContactsPageProps> = ({ headerData }) => {
             height="250"
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3034.243123431151!2d28.64189402690805!3d50.245541009318345!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x472c648aed44e5cf%3A0x8c8080cc023799b!2z0JbQuNGC0L7QvNC40YDRgdC60LjQuSDQkdCw0LfQvtCy0YvQuSDQpNCw0YDQvNCw0YbQtdCy0YLQuNGH0LXRgdC60LjQuSDQmtC-0LvQu9C10LTQtiDQuNC8LiDQky7QoS7Qn9GA0L7RgtCw0YHQtdCy0LjRh9Cw!5e0!3m2!1sru!2sua!4v1545820629782"
             style={{ border: 0, margin: '40px 0' }}
-            width="100%"></iframe>
+            width="100%"
+          ></iframe>
 
           <div className="page-row">
             <div className="col-8-12">
@@ -149,10 +151,12 @@ const Contacts: NextPage<IContactsPageProps> = ({ headerData }) => {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
         headerData,
+        mainScreenData,
       },
       revalidate: 10,
     }

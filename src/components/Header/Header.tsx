@@ -77,7 +77,8 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
           <Link
             className={styles['header__top-link']}
             href={headerData.header?.data?.attributes?.Header?.headerIcons[2].link}
-            target="_blank">
+            target="_blank"
+          >
             <Image
               src={`${process.env.API_URL}${headerData.header?.data?.attributes?.Header?.headerIcons[2].icon.data.attributes.url}`}
               alt="ENG icon"
@@ -148,14 +149,16 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
                   <ul
                     className={cn(styles['header__nav-submenu'], {
                       [styles['header__nav-submenu--open']]: openSubmenuName === mainEl.text,
-                    })}>
+                    })}
+                  >
                     <li className={styles['header__nav-list-back']} onClick={() => setOpenSubmenuName('')}>
                       <svg
                         width="30px"
                         height="30px"
                         viewBox="0 0 1024 1024"
                         version="1.1"
-                        xmlns="http://www.w3.org/2000/svg">
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
                         <path
                           d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z"
                           fill="#ffffff"
@@ -174,7 +177,8 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
                           <>
                             <div
                               className={styles['main-menu-triangle']}
-                              onClick={() => setOpenLoverLevelMenuName(submenuEl.text)}>
+                              onClick={() => setOpenLoverLevelMenuName(submenuEl.text)}
+                            >
                               <svg viewBox="0 0 76 88" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M75.8809 43.8807L0.880859 87.1819V0.579391L75.8809 43.8807Z" fill="white" />
                               </svg>
@@ -186,16 +190,19 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
                                   MainMenuIndex + 1 === headerData.header?.data?.attributes?.Header?.navigation.length,
                                 [styles['header__nav-submenu-lover-level--open']]:
                                   openLoverLevelMenuName === submenuEl.text,
-                              })}>
+                              })}
+                            >
                               <li
                                 className={styles['header__nav-list-back']}
-                                onClick={() => setOpenLoverLevelMenuName('')}>
+                                onClick={() => setOpenLoverLevelMenuName('')}
+                              >
                                 <svg
                                   width="30px"
                                   height="30px"
                                   viewBox="0 0 1024 1024"
                                   version="1.1"
-                                  xmlns="http://www.w3.org/2000/svg">
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
                                   <path
                                     d="M768 903.232l-50.432 56.768L256 512l461.568-448 50.432 56.768L364.928 512z"
                                     fill="#ffffff"

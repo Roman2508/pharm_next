@@ -4,24 +4,24 @@ import { GetServerSideProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
-import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, SubdivisionEntity, gql } from '@/graphql/client'
 import Link from 'next/link'
 import PageCard from '@/components/PageCard/PageCard'
 
-interface ISmksPageProps {
+interface SubdivPageProps {
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
-  cmkList: CycleCommissionEntity[]
+  subdivList: SubdivisionEntity[]
 }
 
-const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkList, mainScreenData }) => {
+const SubdivPage: NextPage<SubdivPageProps> = ({ headerData, subdivList, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title={'Циклові комісії'}>
-      <h1 className={`${styles['main-title']} section-title`}>Циклові комісії</h1>
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title={'Підрозділи'}>
+      <h1 className={`${styles['main-title']} section-title`}>Підрозділи</h1>
 
       <div className="container">
         <div className={styles['smk-list']}>
-          {cmkList.map((el) => (
+          {subdivList.map((el) => (
             <PageCard
               id={el.id}
               slug={el.attributes.slug}
@@ -35,20 +35,9 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkList, mainScreenDat
   )
 }
 
-/* 
-            <Link key={el.id} className={styles['item']} href={`cmks/${el.attributes.slug}`}>
-              <div className={cn(styles['photo'], 'scale-photo-hover', 'hand-pointer')}>
-                <img src={`${process.env.API_URL}${el.attributes.main_photo.data.attributes.url}`} alt="subdivisions" />
-              </div>
-              <div className={styles['text-box']}>
-                <p className={styles['text']}>{el.attributes.name}</p>
-              </div>
-            </Link>
-*/
-
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
-    const cmkList = await gql.GetAllCycleCommissions()
+    const subdivList = await gql.GetAllSubdivision()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
@@ -56,7 +45,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       props: {
         headerData,
         mainScreenData,
-        cmkList: cmkList.cycleCommissions.data,
+        subdivList: subdivList.subdivisions.data,
       },
     }
   } catch (error) {
@@ -65,4 +54,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 }
 
-export default SmksPage
+export default SubdivPage

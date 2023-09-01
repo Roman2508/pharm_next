@@ -1,9 +1,19 @@
-query GetPage($pageUrl: String) {
-  pages(filters: { page_url: { in: [$pageUrl] } }) {
+query GetVidilenya($vidilenyaSlug: String) {
+  vidilenyas(filters: { slug: { in: [$vidilenyaSlug] } }) {
     data {
       id
       attributes {
-        title
+        name
+        slug
+        main_photo {
+          data {
+            attributes {
+              url
+              width
+              height
+            }
+          }
+        }
         SEO {
           title
           description
@@ -11,14 +21,6 @@ query GetPage($pageUrl: String) {
             id
             name
             content
-          }
-        }
-        page_url
-        main_photo {
-          data {
-            attributes {
-              url
-            }
           }
         }
         layout
@@ -33,7 +35,6 @@ query GetPage($pageUrl: String) {
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
-          ...GetPageCardsComponent
         }
         right_sidebar {
           ...GetAccordionComponent
@@ -46,7 +47,6 @@ query GetPage($pageUrl: String) {
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
-          ...GetPageCardsComponent
         }
         left_sidebar {
           ...GetAccordionComponent
@@ -59,7 +59,6 @@ query GetPage($pageUrl: String) {
           ...GetPhotosGalleryComponent
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
-          ...GetPageCardsComponent
         }
       }
     }

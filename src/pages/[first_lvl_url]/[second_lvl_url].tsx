@@ -2,7 +2,7 @@ import React from 'react'
 import cn from 'classnames'
 import { GetServerSideProps, GetStaticProps } from 'next'
 
-import styles from '../Page.module.scss'
+import styles from './Page.module.scss'
 import { Layout } from '@/layouts/Layout'
 import PageContnet from '@/components/PageContent/PageContnet'
 import { GetHeaderQuery, GetMainScreenQuery, PageEntity, gql } from '@/graphql/client'

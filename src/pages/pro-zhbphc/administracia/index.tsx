@@ -5,7 +5,7 @@ import styles from '../ProZhbphc.module.scss'
 import { Layout } from '@/layouts/Layout'
 import AdministrationCard from '@/components/AdministrationCard/AdministrationCard'
 import { GetStaticProps } from 'next'
-import { GetHeaderQuery, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
 
 const administrationItems = [
   {
@@ -96,11 +96,12 @@ const administrationItems = [
 
 interface IAdministrationProps {
   headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ headerData }) => {
+const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} title="Адміністрація">
+    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Адміністрація">
       <div className={styles['administration']}>
         <div className="container">
           <div className={`${styles['administration__title']} section-title`}>Адміністрація</div>
@@ -125,10 +126,12 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData }) => {
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
         headerData,
+        mainScreenData,
       },
       revalidate: 10,
     }

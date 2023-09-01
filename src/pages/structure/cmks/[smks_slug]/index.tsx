@@ -3,7 +3,7 @@ import cn from 'classnames'
 import { GetServerSideProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
-import styles from '../CmksPage.module.scss'
+import styles from '../../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
 import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
 
