@@ -1,0 +1,10 @@
+query GetAllNewsDates {
+  novinas {
+    data {
+      id
+      attributes {
+        date
+      }
+    }
+  }
+}

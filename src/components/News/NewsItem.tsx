@@ -2,6 +2,7 @@ import React from 'react'
 
 import styles from './News.module.scss'
 import convertMonthName from '@/utils/convertMonthName'
+import Link from 'next/link'
 
 interface INewsItemProps {
   id: string
@@ -16,6 +17,10 @@ interface INewsItemProps {
 export const NewsItem: React.FC<INewsItemProps> = ({ id, title, mainPhoto, date, body, photosForCollage }) => {
   const { day, month, year } = convertMonthName(date)
 
+  const dateArray = date.split('-')
+
+  const newsUrl = `/novina/${dateArray[0]}/${dateArray[1]}/${dateArray[2]}/${id}`
+
   return (
     <div className={styles['news__item']}>
       <div className={styles['news__img-wrapper']}>
@@ -24,14 +29,18 @@ export const NewsItem: React.FC<INewsItemProps> = ({ id, title, mainPhoto, date,
           <span>{month}</span>
           <span>{year}</span>
         </p>
-        <img className={styles['news__item-img']} src={`${process.env.API_URL}${mainPhoto}`} alt="news" />
+        <Link href={newsUrl}>
+          <img className={styles['news__item-img']} src={`${process.env.API_URL}${mainPhoto}`} alt="news" />
+        </Link>
       </div>
       <div className={styles['news__item-col']}>
         <div className={styles['news__item-content']}>
           <h4 className={styles['news__item-title']}>
-            <span className={styles['underline-animation']}>{title}</span>
+            <Link href={newsUrl}>
+              <span className={styles['underline-animation']}>{title}</span>
+            </Link>
           </h4>
-          <p className={styles['news__item-text']}>{body}</p>
+          <p className={styles['news__item-text']} dangerouslySetInnerHTML={{ __html: body }} />
         </div>
         <div className={styles['news__read-more']}>
           <div className={styles['news__read-more-icon']}>
@@ -44,7 +53,9 @@ export const NewsItem: React.FC<INewsItemProps> = ({ id, title, mainPhoto, date,
               />
             </svg>
           </div>
-          <p className={styles['news__read-more-text']}>Читати далі</p>
+          <Link href={newsUrl}>
+            <p className={styles['news__read-more-text']}>Читати далі</p>
+          </Link>
         </div>
       </div>
     </div>

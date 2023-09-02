@@ -2329,6 +2329,11 @@ export type GetAllCycleCommissionsQueryVariables = Exact<{ [key: string]: never;
 
 export type GetAllCycleCommissionsQuery = { readonly __typename?: 'Query', readonly cycleCommissions: { readonly __typename?: 'CycleCommissionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'CycleCommissionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } }> } };
 
+export type GetAllNewsDatesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllNewsDatesQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly date: any } }> } };
+
 export type GetAllSubdivisionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2647,6 +2652,18 @@ export const GetAllCycleCommissionsDocument = gql`
             }
           }
         }
+      }
+    }
+  }
+}
+    `;
+export const GetAllNewsDatesDocument = gql`
+    query GetAllNewsDates {
+  novinas {
+    data {
+      id
+      attributes {
+        date
       }
     }
   }
@@ -3184,6 +3201,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetAllCycleCommissions(variables?: GetAllCycleCommissionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllCycleCommissionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllCycleCommissionsQuery>(GetAllCycleCommissionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllCycleCommissions', 'query');
+    },
+    GetAllNewsDates(variables?: GetAllNewsDatesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllNewsDatesQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllNewsDatesQuery>(GetAllNewsDatesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllNewsDates', 'query');
     },
     GetAllSubdivision(variables?: GetAllSubdivisionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllSubdivisionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllSubdivisionQuery>(GetAllSubdivisionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllSubdivision', 'query');

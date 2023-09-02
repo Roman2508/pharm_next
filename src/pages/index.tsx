@@ -23,7 +23,9 @@ const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData, newsData }) =>
       <Announcement />
       <About />
       <Stats />
-      <News newsData={newsData} showTitle />
+      <div className="container">
+        <News newsData={newsData} showTitle />
+      </div>
       <Events />
       <Gallery />
       <Videos />

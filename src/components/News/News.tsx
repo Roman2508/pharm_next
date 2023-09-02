@@ -11,9 +11,10 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
 interface INewsProps {
   newsData: GetNewsQuery
   showTitle?: boolean
+  pageSize?: number
 }
 
-export const News: React.FC<INewsProps> = ({ newsData, showTitle }) => {
+export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3 }) => {
   const firstRender = React.useRef(false)
 
   const [news, setNews] = React.useState([])
@@ -25,7 +26,7 @@ export const News: React.FC<INewsProps> = ({ newsData, showTitle }) => {
       const fetchNewsItems = async () => {
         try {
           setIsLoading(true)
-          const data = await gql.GetNews({ currentPage })
+          const data = await gql.GetNews({ currentPage, pageSize })
           setNews(data.novinas.data)
         } catch (error) {
           alert('Помилка при отриманні даних!')
@@ -41,33 +42,33 @@ export const News: React.FC<INewsProps> = ({ newsData, showTitle }) => {
 
   return (
     <div className={styles['news']}>
-      <div className={'container'}>
-        <div className={styles['news__inner']}>
-          {showTitle && <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>}
-          <div className={cn(styles['news__items'], { [styles['news__items--loading']]: isLoading })}>
-            {(news.length ? news : newsData?.novinas.data).map((news) => (
-              <NewsItem
-                key={news.id}
-                id={news.id}
-                title={news.attributes.title}
-                body={news.attributes.body}
-                date={news.attributes.date}
-                mainPhoto={news.attributes.main_photo.data.attributes.url}
-                photosForCollage={news.attributes.collage_photos.data}
-                videoUrl={news.attributes.video_url}
-              />
-            ))}
-          </div>
-
-          {isLoading && <LoadingSpinner />}
-
-          <Pagination
-            pagesCount={newsData.novinas.meta.pagination.pageCount}
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-          />
+      {/* <div className={'container'}> */}
+      <div className={styles['news__inner']}>
+        {showTitle && <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>}
+        <div className={cn(styles['news__items'], { [styles['news__items--loading']]: isLoading })}>
+          {(news.length ? news : newsData?.novinas.data).map((news) => (
+            <NewsItem
+              key={news.id}
+              id={news.id}
+              title={news.attributes.title}
+              body={news.attributes.body}
+              date={news.attributes.date}
+              mainPhoto={news.attributes.main_photo.data.attributes.url}
+              photosForCollage={news.attributes.collage_photos.data}
+              videoUrl={news.attributes.video_url}
+            />
+          ))}
         </div>
+
+        {isLoading && <LoadingSpinner />}
+
+        <Pagination
+          pagesCount={newsData.novinas.meta.pagination.pageCount}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
       </div>
+      {/* </div> */}
     </div>
   )
 }

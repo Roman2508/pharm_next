@@ -2,19 +2,23 @@ import React from 'react'
 
 import { Layout } from '@/layouts/Layout'
 import { GetStaticProps } from 'next'
-import { GetHeaderQuery, GetMainScreenQuery, GetNewsQuery, gql } from '@/graphql/client'
+import { GetAllNewsDatesQuery, GetHeaderQuery, GetMainScreenQuery, GetNewsQuery, gql } from '@/graphql/client'
 import { News } from '@/components/News/News'
+import groupNewsByYearsAndMonths from '@/utils/groupNewsByYearsAndMonths'
+import { Accordion } from '@/components/ui/Accordion/Accordion'
+import Link from 'next/link'
 
 interface INewsPageProps {
   newsData: GetNewsQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  newsDates: GetAllNewsDatesQuery
 }
 
-const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsData }) => {
-  const data = newsData.novinas.data.map((el) => el.attributes.date)
+const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsData, newsDates }) => {
+  const newsYears = groupNewsByYearsAndMonths(newsDates)
 
-  console.log(data)
+  console.log(newsYears)
 
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
@@ -24,10 +28,24 @@ const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsDa
         </div>
 
         <div className="page-row">
-          <div className="col-9-12">
-            <News newsData={newsData} />
+          <div className="col-news-9-12">
+            <News newsData={newsData} pageSize={6} />
           </div>
-          <div className="col-3-12">2</div>
+          <div className="col-news-3-12">
+            {newsYears.map((yearData) => (
+              <Accordion title={yearData.year} defaultOpen={false}>
+                <ul>
+                  {yearData.months.map((monthData) => (
+                    <li>
+                      <Link
+                        href={`novina/${yearData.year}/${monthData.monthNum}`}
+                      >{`${monthData.monthName} (${monthData.count})`}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </Accordion>
+            ))}
+          </div>
         </div>
       </div>
     </Layout>
@@ -38,11 +56,13 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
-    const newsData = await gql.GetNews({ pageSize: 9 })
+    const newsData = await gql.GetNews({ pageSize: 6 })
+    const newsDates = await gql.GetAllNewsDates()
 
     return {
       props: {
         newsData,
+        newsDates,
         headerData,
         mainScreenData,
       },

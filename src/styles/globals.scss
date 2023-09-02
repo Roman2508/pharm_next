@@ -350,6 +350,16 @@ body {
   display: flex;
   flex-wrap: wrap;
 }
+.col-news-9-12 {
+  flex: 0 0 75%;
+  max-width: 75%;
+}
+.col-news-3-12 {
+  flex: 0 0 25%;
+  margin-left: 30px;
+  max-width: calc(25% - 30px);
+}
+
 .col-9-12 {
   flex: 0 0 75%;
   max-width: calc(75% - 30px);
