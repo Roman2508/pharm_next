@@ -12,9 +12,10 @@ interface INewsProps {
   newsData: GetNewsQuery
   showTitle?: boolean
   pageSize?: number
+  addMarginBottom?: boolean
 }
 
-export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3 }) => {
+export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3, addMarginBottom = false }) => {
   const firstRender = React.useRef(false)
 
   const [news, setNews] = React.useState([])
@@ -41,7 +42,7 @@ export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3 }
   }, [currentPage])
 
   return (
-    <div className={styles['news']}>
+    <div className={cn(styles['news'], { [styles['news--indent']]: addMarginBottom })}>
       {/* <div className={'container'}> */}
       <div className={styles['news__inner']}>
         {showTitle && <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>}

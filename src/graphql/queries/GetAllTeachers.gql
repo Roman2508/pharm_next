@@ -1,0 +1,10 @@
+query GetAllTeachers {
+  workers(filters: { category: { in: ["teacher"] } }, sort: "name:asc", pagination: { pageSize: 200 }) {
+    data {
+      attributes {
+        name
+        slug
+      }
+    }
+  }
+}

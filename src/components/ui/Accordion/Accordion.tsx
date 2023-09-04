@@ -5,7 +5,7 @@ import styles from './Accordion.module.scss'
 
 interface IAccordionProps {
   title: string
-  defaultOpen: boolean
+  defaultOpen?: boolean
   children: JSX.Element | JSX.Element[] | string | string[]
 }
 

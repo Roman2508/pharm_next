@@ -39,14 +39,14 @@ export const Footer = () => {
             </div>
           </div>
 
-          <a className={styles['footer__logo']} href="#">
+          <a className={styles['footer__logo']} href="/">
             <Image className={styles['social__list-icon']} src={logoIcon} alt="logo" width={140} />
           </a>
 
           <div className={styles['footer__right-col']}>
             <div className={styles['footer__contacts']}>
-              <a href="tel:0412242547">Тел.: (0412) 24-25-47</a>
-              <a href="tel:0412242545">Факс: (0412) 24-25-45</a>
+              {/* <a href="tel:0412242547">Тел.: (0412) 24-25-47</a> */}
+              <a href="tel:0412242545">Тел: (0412) 24-25-45</a>
               <a href="mailto:college@pharm.zt.ua">college@pharm.zt.ua</a>
             </div>
 

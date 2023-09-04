@@ -651,6 +651,24 @@ export enum Enum_Cyclecommission_Layout {
   Col_12 = 'col_12'
 }
 
+export enum Enum_Group_Course_Number {
+  Kurs_1 = 'kurs_1',
+  Kurs_2 = 'kurs_2',
+  Kurs_3 = 'kurs_3'
+}
+
+export enum Enum_Group_Educationaldegree {
+  OpsFahovijMolodshijBakalavr = 'OPS_Fahovij_molodshij_bakalavr',
+  OpsFahovijMolodshijBakalavrNaBazi_9Klasiv = 'OPS_Fahovij_molodshij_bakalavr_na_bazi_9_klasiv',
+  OpsFahovijMolodshijBakalavrNaBazi_11Klasiv = 'OPS_Fahovij_molodshij_bakalavr_na_bazi_11_klasiv',
+  OrPershijBakalavrskij = 'OR_pershij_bakalavrskij'
+}
+
+export enum Enum_Group_Specialty {
+  FarmacziyaPromislovaFarmacziya_226 = 'Farmacziya_promislova_farmacziya_226',
+  TehnologiyiMedichnoyiDiagnostikiTaLikuvannya_224 = 'Tehnologiyi_medichnoyi_diagnostiki_ta_likuvannya_224'
+}
+
 export enum Enum_Page_Layout {
   Col_1_8_3 = 'col_1_8_3',
   Col_2_7_3 = 'col_2_7_3',
@@ -730,7 +748,63 @@ export type FloatFilterInput = {
   readonly startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImage | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksPageCard | ComponentPageBlocksPageCards | ComponentPageBlocksPanorama | ComponentPageBlocksPanorams | ComponentPageBlocksPartner | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | CycleCommission | Header | I18NLocale | Lesson | NewsTag | Novina | Page | Subdivision | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vidilenya | Worker;
+export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImage | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksPageCard | ComponentPageBlocksPageCards | ComponentPageBlocksPanorama | ComponentPageBlocksPanorams | ComponentPageBlocksPartner | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | CycleCommission | Group | Header | I18NLocale | Lesson | NewsTag | Novina | Page | Subdivision | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Vidilenya | Worker;
+
+export type Group = {
+  readonly __typename?: 'Group';
+  readonly calendar_id: Maybe<Scalars['String']['output']>;
+  readonly course_number: Enum_Group_Course_Number;
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly educationalDegree: Enum_Group_Educationaldegree;
+  readonly name: Scalars['String']['output'];
+  readonly publishedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly specialty: Enum_Group_Specialty;
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+  readonly vidilenya: Maybe<VidilenyaEntityResponse>;
+};
+
+export type GroupEntity = {
+  readonly __typename?: 'GroupEntity';
+  readonly attributes: Maybe<Group>;
+  readonly id: Maybe<Scalars['ID']['output']>;
+};
+
+export type GroupEntityResponse = {
+  readonly __typename?: 'GroupEntityResponse';
+  readonly data: Maybe<GroupEntity>;
+};
+
+export type GroupEntityResponseCollection = {
+  readonly __typename?: 'GroupEntityResponseCollection';
+  readonly data: ReadonlyArray<GroupEntity>;
+  readonly meta: ResponseCollectionMeta;
+};
+
+export type GroupFiltersInput = {
+  readonly and: InputMaybe<ReadonlyArray<InputMaybe<GroupFiltersInput>>>;
+  readonly calendar_id: InputMaybe<StringFilterInput>;
+  readonly course_number: InputMaybe<StringFilterInput>;
+  readonly createdAt: InputMaybe<DateTimeFilterInput>;
+  readonly educationalDegree: InputMaybe<StringFilterInput>;
+  readonly id: InputMaybe<IdFilterInput>;
+  readonly name: InputMaybe<StringFilterInput>;
+  readonly not: InputMaybe<GroupFiltersInput>;
+  readonly or: InputMaybe<ReadonlyArray<InputMaybe<GroupFiltersInput>>>;
+  readonly publishedAt: InputMaybe<DateTimeFilterInput>;
+  readonly specialty: InputMaybe<StringFilterInput>;
+  readonly updatedAt: InputMaybe<DateTimeFilterInput>;
+  readonly vidilenya: InputMaybe<VidilenyaFiltersInput>;
+};
+
+export type GroupInput = {
+  readonly calendar_id: InputMaybe<Scalars['String']['input']>;
+  readonly course_number: InputMaybe<Enum_Group_Course_Number>;
+  readonly educationalDegree: InputMaybe<Enum_Group_Educationaldegree>;
+  readonly name: InputMaybe<Scalars['String']['input']>;
+  readonly publishedAt: InputMaybe<Scalars['DateTime']['input']>;
+  readonly specialty: InputMaybe<Enum_Group_Specialty>;
+  readonly vidilenya: InputMaybe<Scalars['ID']['input']>;
+};
 
 export type Header = {
   readonly __typename?: 'Header';
@@ -917,6 +991,7 @@ export type Mutation = {
   readonly changePassword: Maybe<UsersPermissionsLoginPayload>;
   readonly createAdvertisement: Maybe<AdvertisementEntityResponse>;
   readonly createCycleCommission: Maybe<CycleCommissionEntityResponse>;
+  readonly createGroup: Maybe<GroupEntityResponse>;
   readonly createLesson: Maybe<LessonEntityResponse>;
   readonly createNewsTag: Maybe<NewsTagEntityResponse>;
   readonly createNovina: Maybe<NovinaEntityResponse>;
@@ -932,6 +1007,7 @@ export type Mutation = {
   readonly createWorker: Maybe<WorkerEntityResponse>;
   readonly deleteAdvertisement: Maybe<AdvertisementEntityResponse>;
   readonly deleteCycleCommission: Maybe<CycleCommissionEntityResponse>;
+  readonly deleteGroup: Maybe<GroupEntityResponse>;
   readonly deleteHeader: Maybe<HeaderEntityResponse>;
   readonly deleteLesson: Maybe<LessonEntityResponse>;
   readonly deleteNewsTag: Maybe<NewsTagEntityResponse>;
@@ -960,6 +1036,7 @@ export type Mutation = {
   readonly updateAdvertisement: Maybe<AdvertisementEntityResponse>;
   readonly updateCycleCommission: Maybe<CycleCommissionEntityResponse>;
   readonly updateFileInfo: UploadFileEntityResponse;
+  readonly updateGroup: Maybe<GroupEntityResponse>;
   readonly updateHeader: Maybe<HeaderEntityResponse>;
   readonly updateLesson: Maybe<LessonEntityResponse>;
   readonly updateNewsTag: Maybe<NewsTagEntityResponse>;
@@ -992,6 +1069,11 @@ export type MutationCreateAdvertisementArgs = {
 
 export type MutationCreateCycleCommissionArgs = {
   data: CycleCommissionInput;
+};
+
+
+export type MutationCreateGroupArgs = {
+  data: GroupInput;
 };
 
 
@@ -1056,6 +1138,11 @@ export type MutationDeleteAdvertisementArgs = {
 
 
 export type MutationDeleteCycleCommissionArgs = {
+  id: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteGroupArgs = {
   id: Scalars['ID']['input'];
 };
 
@@ -1170,6 +1257,12 @@ export type MutationUpdateCycleCommissionArgs = {
 export type MutationUpdateFileInfoArgs = {
   id: Scalars['ID']['input'];
   info: InputMaybe<FileInfoInput>;
+};
+
+
+export type MutationUpdateGroupArgs = {
+  data: GroupInput;
+  id: Scalars['ID']['input'];
 };
 
 
@@ -1456,6 +1549,8 @@ export type Query = {
   readonly advertisements: Maybe<AdvertisementEntityResponseCollection>;
   readonly cycleCommission: Maybe<CycleCommissionEntityResponse>;
   readonly cycleCommissions: Maybe<CycleCommissionEntityResponseCollection>;
+  readonly group: Maybe<GroupEntityResponse>;
+  readonly groups: Maybe<GroupEntityResponseCollection>;
   readonly header: Maybe<HeaderEntityResponse>;
   readonly i18NLocale: Maybe<I18NLocaleEntityResponse>;
   readonly i18NLocales: Maybe<I18NLocaleEntityResponseCollection>;
@@ -1504,6 +1599,19 @@ export type QueryCycleCommissionArgs = {
 
 export type QueryCycleCommissionsArgs = {
   filters: InputMaybe<CycleCommissionFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  publicationState?: InputMaybe<PublicationState>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type QueryGroupArgs = {
+  id: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+export type QueryGroupsArgs = {
+  filters: InputMaybe<GroupFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   publicationState?: InputMaybe<PublicationState>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
@@ -2329,6 +2437,11 @@ export type GetAllCycleCommissionsQueryVariables = Exact<{ [key: string]: never;
 
 export type GetAllCycleCommissionsQuery = { readonly __typename?: 'Query', readonly cycleCommissions: { readonly __typename?: 'CycleCommissionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'CycleCommissionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } }> } };
 
+export type GetAllGroupsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllGroupsQuery = { readonly __typename?: 'Query', readonly groups: { readonly __typename?: 'GroupEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'GroupEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Group', readonly name: string, readonly specialty: Enum_Group_Specialty, readonly educationalDegree: Enum_Group_Educationaldegree, readonly course_number: Enum_Group_Course_Number, readonly vidilenya: { readonly __typename?: 'VidilenyaEntityResponse', readonly data: { readonly __typename?: 'VidilenyaEntity', readonly attributes: { readonly __typename?: 'Vidilenya', readonly name: string } } } } }> } };
+
 export type GetAllNewsDatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2338,6 +2451,11 @@ export type GetAllSubdivisionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllSubdivisionQuery = { readonly __typename?: 'Query', readonly subdivisions: { readonly __typename?: 'SubdivisionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'SubdivisionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Subdivision', readonly name: string, readonly slug: string, readonly page_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } }> } };
+
+export type GetAllTeachersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllTeachersQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string } }> } };
 
 export type GetAllVidilenyasQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2350,6 +2468,20 @@ export type GetCycleCommissionQueryVariables = Exact<{
 
 
 export type GetCycleCommissionQuery = { readonly __typename?: 'Query', readonly cycleCommissions: { readonly __typename?: 'CycleCommissionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'CycleCommissionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string, readonly page_url: string, readonly layout: Enum_Cyclecommission_Layout, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly SEO: { readonly __typename?: 'ComponentPagesSeo', readonly title: string, readonly description: string, readonly meta: ReadonlyArray<{ readonly __typename?: 'ComponentPagesMeta', readonly id: string, readonly name: string, readonly content: string }> }, readonly headOfCommission: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string, readonly position: string, readonly phone: string, readonly email: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } } }, readonly page_components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly link: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly component_type: string, readonly worker: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly position: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly title: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly right_sidebar: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly link: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly component_type: string, readonly worker: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly position: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly title: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly left_sidebar: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly link: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly component_type: string, readonly worker: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly position: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly title: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly workers: { readonly __typename?: 'WorkerRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string, readonly email: string, readonly phone: string, readonly position: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly lessons: { readonly __typename?: 'LessonRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'LessonEntity', readonly attributes: { readonly __typename?: 'Lesson', readonly name: string } }> } } }> } } }> } };
+
+export type GetFullNewsQueryVariables = Exact<{
+  newsId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type GetFullNewsQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly name: string, readonly width: number, readonly height: number } } }, readonly collage_photos: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly name: string, readonly width: number, readonly height: number } }> }, readonly news_tags: { readonly __typename?: 'NewsTagRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NewsTagEntity', readonly attributes: { readonly __typename?: 'NewsTag', readonly title: string } }> } } }> } };
+
+export type GetGroupScheduleQueryVariables = Exact<{
+  groupName?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetGroupScheduleQuery = { readonly __typename?: 'Query', readonly groups: { readonly __typename?: 'GroupEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'GroupEntity', readonly attributes: { readonly __typename?: 'Group', readonly name: string, readonly calendar_id: string } }> } };
 
 export type GetHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2382,6 +2514,18 @@ export type GetSubdivQueryVariables = Exact<{
 
 
 export type GetSubdivQuery = { readonly __typename?: 'Query', readonly subdivisions: { readonly __typename?: 'SubdivisionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'SubdivisionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Subdivision', readonly name: string, readonly slug: string, readonly page_url: string, readonly layout: Enum_Subdivision_Layout, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly SEO: { readonly __typename?: 'ComponentPagesSeo', readonly title: string, readonly description: string, readonly meta: ReadonlyArray<{ readonly __typename?: 'ComponentPagesMeta', readonly id: string, readonly name: string, readonly content: string }> }, readonly page_components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly link: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly component_type: string, readonly worker: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly position: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly title: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly right_sidebar: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly link: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly component_type: string, readonly worker: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly position: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly title: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }>, readonly left_sidebar: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksBody', readonly body: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksButtonImages', readonly id: string, readonly component_type: string, readonly Components: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksButtonImage', readonly id: string, readonly link: string, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> } | { readonly __typename?: 'ComponentPageBlocksButtonLink', readonly id: string, readonly text: string, readonly link: string, readonly component_type: string } | { readonly __typename?: 'ComponentPageBlocksEducationBooks', readonly id: string, readonly description: string, readonly component_type: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly authors: { readonly __typename?: 'ComponentPageBlocksAccordion', readonly id: string, readonly title: string, readonly body: string, readonly default_open: boolean, readonly component_type: string } } | { readonly __typename?: 'ComponentPageBlocksPanorams', readonly id: string, readonly title: string, readonly component_type: string, readonly withBackground: boolean, readonly Panorams: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPanorama', readonly id: string, readonly link: string, readonly poster: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } } }> } | { readonly __typename?: 'ComponentPageBlocksPartnersBlock', readonly id: string, readonly component_type: string, readonly Partners: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPartner', readonly id: string, readonly name: string, readonly partner_link: string, readonly partner_presentation_link: string, readonly partner_category: Enum_Componentpageblockspartner_Partner_Category }> } | { readonly __typename?: 'ComponentPageBlocksPerson', readonly id: string, readonly component_type: string, readonly worker: { readonly __typename?: 'WorkerEntityResponse', readonly data: { readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly position: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } } } } | { readonly __typename?: 'ComponentPageBlocksPhotosGallery', readonly id: string, readonly title: string, readonly component_type: string, readonly images: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> } } | { readonly __typename?: 'ComponentPageBlocksTwoColumnWithImage', readonly id: string, readonly body: string, readonly component_type: string, readonly layout: Enum_Componentpageblockstwocolumnwithimage_Layout, readonly image: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } | { readonly __typename?: 'Error' }> } }> } };
+
+export type GetTeacherScheduleQueryVariables = Exact<{
+  teacherSlug?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetTeacherScheduleQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly calendar_id: string } }> } };
+
+export type GetAllCycleCommissionsTeachersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCycleCommissionsTeachersQuery = { readonly __typename?: 'Query', readonly cycleCommissions: { readonly __typename?: 'CycleCommissionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly workers: { readonly __typename?: 'WorkerRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string } }> } } }> } };
 
 export type GetVidilenyaQueryVariables = Exact<{
   vidilenyaSlug: InputMaybe<Scalars['String']['input']>;
@@ -2657,6 +2801,28 @@ export const GetAllCycleCommissionsDocument = gql`
   }
 }
     `;
+export const GetAllGroupsDocument = gql`
+    query GetAllGroups {
+  groups {
+    data {
+      id
+      attributes {
+        name
+        vidilenya {
+          data {
+            attributes {
+              name
+            }
+          }
+        }
+        specialty
+        educationalDegree
+        course_number
+      }
+    }
+  }
+}
+    `;
 export const GetAllNewsDatesDocument = gql`
     query GetAllNewsDates {
   novinas {
@@ -2687,6 +2853,22 @@ export const GetAllSubdivisionDocument = gql`
           }
         }
         page_url
+      }
+    }
+  }
+}
+    `;
+export const GetAllTeachersDocument = gql`
+    query GetAllTeachers {
+  workers(
+    filters: {category: {in: ["teacher"]}}
+    sort: "name:asc"
+    pagination: {pageSize: 200}
+  ) {
+    data {
+      attributes {
+        name
+        slug
       }
     }
   }
@@ -2837,6 +3019,59 @@ ${GetPartnersBlockComponentFragmentDoc}
 ${GetPhotosGalleryComponentFragmentDoc}
 ${GetTwoColumnWithImageComponentFragmentDoc}
 ${GetBlocksPersonComponentFragmentDoc}`;
+export const GetFullNewsDocument = gql`
+    query GetFullNews($newsId: ID = "3") {
+  novinas(filters: {id: {in: [$newsId]}}) {
+    data {
+      attributes {
+        title
+        body
+        date
+        main_photo {
+          data {
+            attributes {
+              url
+              name
+              width
+              height
+            }
+          }
+        }
+        collage_photos {
+          data {
+            attributes {
+              url
+              name
+              width
+              height
+            }
+          }
+        }
+        video_url
+        news_tags {
+          data {
+            attributes {
+              title
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
+export const GetGroupScheduleDocument = gql`
+    query GetGroupSchedule($groupName: String = "101") {
+  groups(filters: {name: {in: [$groupName]}}) {
+    data {
+      attributes {
+        name
+        calendar_id
+      }
+    }
+  }
+}
+    `;
 export const GetHeaderDocument = gql`
     query GetHeader {
   header {
@@ -3111,6 +3346,41 @@ ${GetPartnersBlockComponentFragmentDoc}
 ${GetPhotosGalleryComponentFragmentDoc}
 ${GetTwoColumnWithImageComponentFragmentDoc}
 ${GetBlocksPersonComponentFragmentDoc}`;
+export const GetTeacherScheduleDocument = gql`
+    query GetTeacherSchedule($teacherSlug: String = "stelmakh-im") {
+  workers(filters: {slug: {in: [$teacherSlug]}}) {
+    data {
+      attributes {
+        name
+        calendar_id
+      }
+    }
+  }
+}
+    `;
+export const GetAllCycleCommissionsTeachersDocument = gql`
+    query GetAllCycleCommissionsTeachers {
+  cycleCommissions {
+    data {
+      attributes {
+        name
+        workers(
+          filters: {category: {in: ["teacher"]}}
+          sort: "name:asc"
+          pagination: {pageSize: 100}
+        ) {
+          data {
+            attributes {
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
 export const GetVidilenyaDocument = gql`
     query GetVidilenya($vidilenyaSlug: String) {
   vidilenyas(filters: {slug: {in: [$vidilenyaSlug]}}) {
@@ -3202,17 +3472,29 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     GetAllCycleCommissions(variables?: GetAllCycleCommissionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllCycleCommissionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllCycleCommissionsQuery>(GetAllCycleCommissionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllCycleCommissions', 'query');
     },
+    GetAllGroups(variables?: GetAllGroupsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllGroupsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllGroupsQuery>(GetAllGroupsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllGroups', 'query');
+    },
     GetAllNewsDates(variables?: GetAllNewsDatesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllNewsDatesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllNewsDatesQuery>(GetAllNewsDatesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllNewsDates', 'query');
     },
     GetAllSubdivision(variables?: GetAllSubdivisionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllSubdivisionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllSubdivisionQuery>(GetAllSubdivisionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllSubdivision', 'query');
     },
+    GetAllTeachers(variables?: GetAllTeachersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllTeachersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllTeachersQuery>(GetAllTeachersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllTeachers', 'query');
+    },
     GetAllVidilenyas(variables?: GetAllVidilenyasQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllVidilenyasQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllVidilenyasQuery>(GetAllVidilenyasDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllVidilenyas', 'query');
     },
     GetCycleCommission(variables?: GetCycleCommissionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCycleCommissionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetCycleCommissionQuery>(GetCycleCommissionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetCycleCommission', 'query');
+    },
+    GetFullNews(variables?: GetFullNewsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetFullNewsQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetFullNewsQuery>(GetFullNewsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetFullNews', 'query');
+    },
+    GetGroupSchedule(variables?: GetGroupScheduleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetGroupScheduleQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetGroupScheduleQuery>(GetGroupScheduleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetGroupSchedule', 'query');
     },
     GetHeader(variables?: GetHeaderQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHeaderQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHeaderQuery>(GetHeaderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHeader', 'query');
@@ -3228,6 +3510,12 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetSubdiv(variables?: GetSubdivQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSubdivQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSubdivQuery>(GetSubdivDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSubdiv', 'query');
+    },
+    GetTeacherSchedule(variables?: GetTeacherScheduleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetTeacherScheduleQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetTeacherScheduleQuery>(GetTeacherScheduleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetTeacherSchedule', 'query');
+    },
+    GetAllCycleCommissionsTeachers(variables?: GetAllCycleCommissionsTeachersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllCycleCommissionsTeachersQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllCycleCommissionsTeachersQuery>(GetAllCycleCommissionsTeachersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllCycleCommissionsTeachers', 'query');
     },
     GetVidilenya(variables?: GetVidilenyaQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetVidilenyaQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetVidilenyaQuery>(GetVidilenyaDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetVidilenya', 'query');

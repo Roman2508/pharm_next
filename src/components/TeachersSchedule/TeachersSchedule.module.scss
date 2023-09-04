@@ -1,0 +1,30 @@
+.teachers-box {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+}
+
+.teacher {
+  margin-bottom: 10px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.schedule-box {
+  text-align: center;
+}
+
+.section-name {
+  font-size: 24px;
+  font-family: 'GilroyBold', sans-serif;
+  background-color: var(--gray-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+.section-items {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  margin-bottom: 30px;
+}

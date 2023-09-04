@@ -18,8 +18,6 @@ interface INewsPageProps {
 const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsData, newsDates }) => {
   const newsYears = groupNewsByYearsAndMonths(newsDates)
 
-  console.log(newsYears)
-
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
       <div className="container">

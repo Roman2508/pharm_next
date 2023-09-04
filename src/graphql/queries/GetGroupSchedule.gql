@@ -1,0 +1,10 @@
+query GetGroupSchedule($groupName: String = "101") {
+  groups(filters: { name: { in: [$groupName] } }) {
+    data {
+      attributes {
+        name
+        calendar_id
+      }
+    }
+  }
+}
