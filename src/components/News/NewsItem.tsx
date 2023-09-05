@@ -40,7 +40,7 @@ export const NewsItem: React.FC<INewsItemProps> = ({ id, title, mainPhoto, date,
               <span className={styles['underline-animation']}>{title}</span>
             </Link>
           </h4>
-          <p className={styles['news__item-text']} dangerouslySetInnerHTML={{ __html: body }} />
+          <div className={styles['news__item-text']} dangerouslySetInnerHTML={{ __html: body }} />
         </div>
         <div className={styles['news__read-more']}>
           <div className={styles['news__read-more-icon']}>

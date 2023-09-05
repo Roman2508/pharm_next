@@ -80,7 +80,17 @@ const groupNewsByYearsAndMonths = (data: GetAllNewsDatesQuery) => {
       }
     })
 
-    return { ...r, months: newMonths }
+    const sortedMonth = newMonths.sort((a, b) => {
+      if (a.monthNum < b.monthNum) {
+        return -1
+      }
+      if (a.monthNum > b.monthNum) {
+        return 1
+      }
+      return 0
+    })
+
+    return { ...r, months: sortedMonth }
   })
 
   return res2

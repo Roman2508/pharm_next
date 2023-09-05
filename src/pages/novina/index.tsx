@@ -7,6 +7,7 @@ import { News } from '@/components/News/News'
 import groupNewsByYearsAndMonths from '@/utils/groupNewsByYearsAndMonths'
 import { Accordion } from '@/components/ui/Accordion/Accordion'
 import Link from 'next/link'
+import NewsArchive from '@/components/News/NewsArchive'
 
 interface INewsPageProps {
   newsData: GetNewsQuery
@@ -16,7 +17,7 @@ interface INewsPageProps {
 }
 
 const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsData, newsDates }) => {
-  const newsYears = groupNewsByYearsAndMonths(newsDates)
+  // const newsYears = groupNewsByYearsAndMonths(newsDates)
 
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
@@ -30,19 +31,7 @@ const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsDa
             <News newsData={newsData} pageSize={6} />
           </div>
           <div className="col-news-3-12">
-            {newsYears.map((yearData) => (
-              <Accordion title={yearData.year} defaultOpen={false}>
-                <ul>
-                  {yearData.months.map((monthData) => (
-                    <li>
-                      <Link
-                        href={`novina/${yearData.year}/${monthData.monthNum}`}
-                      >{`${monthData.monthName} (${monthData.count})`}</Link>
-                    </li>
-                  ))}
-                </ul>
-              </Accordion>
-            ))}
+            <NewsArchive newsDates={newsDates} />
           </div>
         </div>
       </div>

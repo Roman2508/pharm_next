@@ -72,6 +72,12 @@ body {
   text-align: center;
 }
 
+@media (max-width: 950px) {
+  .title-md {
+    font-size: 28px;
+  }
+}
+
 .title-sm {
   position: relative;
   font-size: 28px;
@@ -394,3 +400,27 @@ body {
   max-width: calc(8.333333333% - 30px);
 }
 /* // layout */
+
+@media (max-width: 1250px) {
+  .col-news-9-12 {
+    flex: 0 0 75%;
+    max-width: 75%;
+  }
+  .col-news-3-12 {
+    flex: 0 0 25%;
+    margin-left: 10px;
+    max-width: calc(25% - 10px);
+  }
+}
+
+@media (max-width: 1150px) {
+  .col-news-9-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+  .col-news-3-12 {
+    flex: 0 0 100%;
+    margin-left: 0px;
+    max-width: 100%;
+  }
+}

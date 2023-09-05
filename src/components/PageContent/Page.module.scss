@@ -91,6 +91,15 @@
   list-style: disc;
 }
 
+.page-conent td a,
+.page-conent ul li a {
+  color: var(--primary-color);
+}
+.page-conent td a:hover,
+.page-conent ul li a:hover {
+  text-decoration: underline;
+}
+
 .page-conent tr:nth-child(odd) {
   background-color: var(--gray-color);
 }
