@@ -132,7 +132,8 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
         </div>
       )}
 
-      {pageComponents.map((component: PagePageComponentsDynamicZone) => {
+      {/* {pageComponents.map((component: PagePageComponentsDynamicZone) => { */}
+      {pageComponents.map((component: any) => {
         if (component.component_type === 'body') {
           const componentBody = component.body.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
 

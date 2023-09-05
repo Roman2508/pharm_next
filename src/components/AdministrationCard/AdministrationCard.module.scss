@@ -4,7 +4,7 @@
   align-items: flex-start;
   margin: 0 10px;
   flex: 0 0 calc(25% - 20px);
-  max-width: calc(25% - 20px);
+  width: calc(25% - 20px);
   font-family: GilroyRegular, sans-serif;
   color: #353f4f;
   font-size: 16px;
@@ -16,6 +16,7 @@
 }
 
 .administration__item-top {
+  width: 100%;
   position: relative;
   margin-bottom: 10px;
   overflow: hidden;
@@ -24,7 +25,7 @@
 .administration__item-position {
   background-color: var(--primary-color);
   width: 100%;
-  min-height: 60px;
+  min-height: 80px;
   display: flex;
   align-items: center;
   color: #fff;
@@ -39,6 +40,7 @@
 
 .administration__item-top img {
   transition: all 0.3s ease-in-out;
+  object-fit: cover;
   cursor: pointer;
   display: block;
   width: 100%;

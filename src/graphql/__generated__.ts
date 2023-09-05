@@ -2427,6 +2427,11 @@ export type GetBlocksPersonComponentFragment = { readonly __typename?: 'Componen
 
 export type GetPageCardsComponentFragment = { readonly __typename?: 'ComponentPageBlocksPageCards', readonly component_type: string, readonly cards: ReadonlyArray<{ readonly __typename?: 'ComponentPageBlocksPageCard', readonly id: string, readonly name: string, readonly link: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } }> };
 
+export type GetAdministrationQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAdministrationQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly email: string, readonly phone: string, readonly position: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly lessons: { readonly __typename?: 'LessonRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'LessonEntity', readonly attributes: { readonly __typename?: 'Lesson', readonly name: string } }> }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string } } } } }> } };
+
 export type GetAdvertisementQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2456,6 +2461,13 @@ export type GetAllTeachersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllTeachersQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string } }> } };
+
+export type GetAllTeachersFullInfoQueryVariables = Exact<{
+  cmkName?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetAllTeachersFullInfoQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly email: string, readonly phone: string, readonly slug: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly lessons: { readonly __typename?: 'LessonRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'LessonEntity', readonly attributes: { readonly __typename?: 'Lesson', readonly name: string } }> }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string } } } } }> } };
 
 export type GetAllVidilenyasQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -2784,6 +2796,48 @@ export const GetPageCardsComponentFragmentDoc = gql`
   }
 }
     `;
+export const GetAdministrationDocument = gql`
+    query GetAdministration {
+  workers(
+    filters: {is_administration: {in: true}}
+    sort: ["weight:desc", "name:asc"]
+    pagination: {pageSize: 200}
+  ) {
+    data {
+      id
+      attributes {
+        name
+        photo {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        email
+        phone
+        position
+        lessons {
+          data {
+            attributes {
+              name
+            }
+          }
+        }
+        slug
+        cycle_commission {
+          data {
+            attributes {
+              name
+              slug
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `;
 export const GetAdvertisementDocument = gql`
     query GetAdvertisement {
   advertisements {
@@ -2886,6 +2940,47 @@ export const GetAllTeachersDocument = gql`
       attributes {
         name
         slug
+      }
+    }
+  }
+}
+    `;
+export const GetAllTeachersFullInfoDocument = gql`
+    query GetAllTeachersFullInfo($cmkName: String = "") {
+  workers(
+    filters: {category: {in: ["teacher"]}, cycle_commission: {name: {contains: $cmkName}}}
+    sort: "name:asc"
+    pagination: {pageSize: 200}
+  ) {
+    data {
+      id
+      attributes {
+        name
+        photo {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        email
+        phone
+        lessons {
+          data {
+            attributes {
+              name
+            }
+          }
+        }
+        slug
+        cycle_commission {
+          data {
+            attributes {
+              name
+              slug
+            }
+          }
+        }
       }
     }
   }
@@ -3550,6 +3645,9 @@ const defaultWrapper: SdkFunctionWrapper = (action, _operationName, _operationTy
 
 export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = defaultWrapper) {
   return {
+    GetAdministration(variables?: GetAdministrationQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAdministrationQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAdministrationQuery>(GetAdministrationDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAdministration', 'query');
+    },
     GetAdvertisement(variables?: GetAdvertisementQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAdvertisementQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAdvertisementQuery>(GetAdvertisementDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAdvertisement', 'query');
     },
@@ -3567,6 +3665,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetAllTeachers(variables?: GetAllTeachersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllTeachersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllTeachersQuery>(GetAllTeachersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllTeachers', 'query');
+    },
+    GetAllTeachersFullInfo(variables?: GetAllTeachersFullInfoQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllTeachersFullInfoQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllTeachersFullInfoQuery>(GetAllTeachersFullInfoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllTeachersFullInfo', 'query');
     },
     GetAllVidilenyas(variables?: GetAllVidilenyasQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllVidilenyasQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllVidilenyasQuery>(GetAllVidilenyasDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllVidilenyas', 'query');

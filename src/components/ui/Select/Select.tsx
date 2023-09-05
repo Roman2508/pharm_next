@@ -6,17 +6,20 @@ import styles from './Select.module.scss'
 import searchIcon from '../../../../public/assets/icons/select-arrow.svg'
 
 interface ISelectProps {
-  items?: number
+  activeItem: string
+  setActiveItem: React.Dispatch<React.SetStateAction<string>>
+  items: any
+  testItems?: number
   width?: string
 }
 
 const items1 = [
   { id: 1, text: '- Виберіть -' },
-  { id: 1, text: 'ЦМК фармацевтичних дисциплін' },
-  { id: 2, text: 'ЦМК соціально-економічних дисциплін' },
-  { id: 3, text: 'ЦМК філологічних дисциплін' },
-  { id: 4, text: 'ЦМК загальноосвітніх дисциплін' },
-  { id: 5, text: 'ЦМК хімічних дисциплін' },
+  { id: 1, text: 'ЦК фармацевтичних дисциплін' },
+  { id: 2, text: 'ЦК соціально-економічних дисциплін' },
+  { id: 3, text: 'ЦК філологічних дисциплін' },
+  { id: 4, text: 'ЦК загальноосвітніх дисциплін' },
+  { id: 5, text: 'ЦК хімічних дисциплін' },
 ]
 
 const items2 = [
@@ -26,10 +29,9 @@ const items2 = [
   { id: 4, text: 'Питання про вступ' },
 ]
 
-const Select: React.FC<ISelectProps> = ({ items = 2, width = '100%' }) => {
+const Select: React.FC<ISelectProps> = ({ activeItem, setActiveItem, items, testItems = 2, width = '100%' }) => {
   const selectRef = React.useRef<HTMLDivElement | null>(null)
 
-  const [activeItem, setActiveItem] = React.useState(items2[0].text)
   const [isOpen, setIsOpen] = React.useState(false)
 
   const onClose = React.useCallback((event: MouseEvent) => {
@@ -42,6 +44,8 @@ const Select: React.FC<ISelectProps> = ({ items = 2, width = '100%' }) => {
 
   React.useEffect(() => {
     document.body.addEventListener('click', onClose)
+
+    setActiveItem(items2[0].text)
 
     return () => {
       document.body.removeEventListener('click', onClose)
@@ -58,7 +62,18 @@ const Select: React.FC<ISelectProps> = ({ items = 2, width = '100%' }) => {
       </div>
 
       <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })}>
-        {items === 1
+        <li className={styles['select__item']} key={'- Виберіть -'} onClick={() => setActiveItem('- Виберіть -')}>
+          - Виберіть -
+        </li>
+        {items.cycleCommissions.data.map((el) => (
+          <li className={styles['select__item']} key={el.id} onClick={() => setActiveItem(el.attributes.name)}>
+            {el.attributes.name}
+          </li>
+        ))}
+      </ul>
+
+      {/* <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })}>
+        {testItems === 1
           ? items1.map((el) => (
               <li className={styles['select__item']} key={el.id} onClick={() => setActiveItem(el.text)}>
                 {el.text}
@@ -69,7 +84,7 @@ const Select: React.FC<ISelectProps> = ({ items = 2, width = '100%' }) => {
                 {el.text}
               </li>
             ))}
-      </ul>
+      </ul> */}
     </div>
   )
 }

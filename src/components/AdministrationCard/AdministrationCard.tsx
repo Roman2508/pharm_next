@@ -2,6 +2,7 @@ import React from 'react'
 
 import styles from './AdministrationCard.module.scss'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface IAdministrationCardProps {
   photo: string
@@ -15,7 +16,7 @@ const AdministrationCard: React.FC<IAdministrationCardProps> = ({ photo, positio
   return (
     <div className={styles['administration__item']}>
       <div className={styles['administration__item-top']}>
-        <img src={photo} alt="administration" />
+        <Image src={`${process.env.API_URL}${photo}`} width={300} height={400} alt="administration" />
         <p className={styles['administration__item-position']}>{position}</p>
       </div>
       <Link className={styles['administration__item-name']} href="#">

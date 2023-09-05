@@ -5,19 +5,57 @@ import { GetStaticProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from './VidladSklad.module.scss'
-import { GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
+import {
+  GetAllCycleCommissionsQuery,
+  GetAllTeachersFullInfoQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  WorkerEntity,
+  gql,
+} from '@/graphql/client'
 
 import photo from '../../../../public/assets/images/administration/bolukh-vira-andriivna_1.jpg'
 import photo1 from '../../../../public/assets/images/administration/dunaevska-oksana-feliksivna.jpg'
 import photo2 from '../../../../public/assets/images/administration/kozachenko-galina-viktorivna_1.jpg'
 import Select from '@/components/ui/Select/Select'
+import { Worker } from 'cluster'
 
 interface ITeachingStaffPageProps {
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  teachers: GetAllTeachersFullInfoQuery
+  cycleCommissions: GetAllCycleCommissionsQuery
 }
 
-const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({ headerData, mainScreenData }) => {
+const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
+  headerData,
+  mainScreenData,
+  teachers,
+  cycleCommissions,
+}) => {
+  const [selectedCmk, setSelectedCmk] = React.useState('')
+  const [cmkTeachers, setCmkTeachers] = React.useState<readonly WorkerEntity[]>([])
+  const [allTeachers, setAllTeachers] = React.useState<readonly WorkerEntity[]>([])
+
+  React.useEffect(() => {
+    setCmkTeachers(teachers.workers.data)
+    setAllTeachers(teachers.workers.data)
+  }, [])
+
+  React.useEffect(() => {
+    if (!selectedCmk) return
+
+    setCmkTeachers(() => {
+      const filtred = allTeachers.filter((el) => el.attributes.cycle_commission.data.attributes.name === selectedCmk)
+
+      if (filtred.length === 0) {
+        return allTeachers
+      }
+
+      return filtred
+    })
+  }, [selectedCmk])
+
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title="Викладацький склад">
       <div className="container">
@@ -25,252 +63,40 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({ headerData, mainScre
 
         <div className={styles['teachers__filter']}>
           <span className={styles['teachers__filter-text']}>ЦМК:</span>
-          <Select width="360px" items={1} />
+          <Select width="360px" items={cycleCommissions} activeItem={selectedCmk} setActiveItem={setSelectedCmk} />
         </div>
 
         <div className={styles['teachers__list']}>
           {/* <!-- teachers --> */}
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Бойчук Ірина Дмитрівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК Фармацевтичних дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Біологічна фізика з фізичними методами дослідження», «Вища математика та статистика», «Математика»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo1} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Болух Віра Андріївна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>«Аналітична хімія», «Техніка лабораторних робіт»</p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo2} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Дунаєвська Оксана Феліксівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК медико-біологічних дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Гігієна з основами екології», «Гігієна з основами мікробіології», «Мікробіологія з основами
-                імунології», «Мікробіологія з основами імунології та технікою мікробіологічних досліджень»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Козаченко Галина Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Організація та економіка фармації», «Основи менеджменту та маркетингу у фармації», «Фармацевтичний
-                менеджмент і маркетинг», «Фармацевтичне право та законодавство»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo1} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Болух Віра Андріївна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>«Аналітична хімія», «Техніка лабораторних робіт»</p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo2} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Бур’янова Вікторія Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК медико-біологічних дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Гігієна з основами екології», «Гігієна з основами мікробіології», «Мікробіологія з основами
-                імунології», «Мікробіологія з основами імунології та технікою мікробіологічних досліджень»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo2} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Козаченко Галина Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Організація та економіка фармації», «Основи менеджменту та маркетингу у фармації», «Фармацевтичний
-                менеджмент і маркетинг», «Фармацевтичне право та законодавство»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo1} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Бур’янова Вікторія Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК медико-біологічних дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Гігієна з основами екології», «Гігієна з основами мікробіології», «Мікробіологія з основами
-                імунології», «Мікробіологія з основами імунології та технікою мікробіологічних досліджень»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Козаченко Галина Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Організація та економіка фармації», «Основи менеджменту та маркетингу у фармації», «Фармацевтичний
-                менеджмент і маркетинг», «Фармацевтичне право та законодавство»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo1} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Луцак Ірина Василівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК філологічних дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Неорганічна хімія», «Органічна хімія», «Техніка лабораторних робіт», «Фізична та колоїдна хімія»,
-                «Хімія»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo2} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Козаченко Галина Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Організація та економіка фармації», «Основи менеджменту та маркетингу у фармації», «Фармацевтичний
-                менеджмент і маркетинг», «Фармацевтичне право та законодавство»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Болух Віра Андріївна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>«Аналітична хімія», «Техніка лабораторних робіт»</p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo2} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Бур’янова Вікторія Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК медико-біологічних дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Гігієна з основами екології», «Гігієна з основами мікробіології», «Мікробіологія з основами
-                імунології», «Мікробіологія з основами імунології та технікою мікробіологічних досліджень»
-              </p>
-            </div>
-          </div>
-
-          <div className={styles['teachers__item']}>
-            <div className={styles['teachers__image-box']}>
-              <Image src={photo} alt="teachers" />
-            </div>
-            <div className={styles['teachers__item-info']}>
-              <a className={styles['teachers__item-name']} href="#">
-                Козаченко Галина Вікторівна
-              </a>
-              <a className={styles['teachers__item-division']} href="#">
-                ЦК загальноосвітніх дисциплін
-              </a>
-              <p className={styles['teachers__item-subjects']}>
-                «Організація та економіка фармації», «Основи менеджменту та маркетингу у фармації», «Фармацевтичний
-                менеджмент і маркетинг», «Фармацевтичне право та законодавство»
-              </p>
-            </div>
-          </div>
+          {(cmkTeachers?.length ? cmkTeachers : teachers.workers.data).map((teacher) => {
+            return (
+              <div className={styles['teachers__item']} key={teacher.id}>
+                <div className={styles['teachers__image-box']}>
+                  <Image
+                    src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
+                    width={100}
+                    height={200}
+                    alt="teachers"
+                  />
+                </div>
+                <div className={styles['teachers__item-info']}>
+                  <a className={styles['teachers__item-name']} href="#">
+                    {teacher.attributes.name}
+                  </a>
+                  <a className={styles['teachers__item-division']} href="#">
+                    {teacher.attributes.cycle_commission.data.attributes.name}
+                  </a>
+                  <p className={styles['teachers__item-subjects']}>
+                    {teacher.attributes.lessons.data.map((lesson, index) => (
+                      <React.Fragment key={lesson.attributes.name}>
+                        «{lesson.attributes.name}»{teacher.attributes.lessons.data.length === index + 1 ? '. ' : ', '}
+                      </React.Fragment>
+                    ))}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
         </div>
       </div>
     </Layout>
@@ -281,17 +107,21 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const teachers = await gql.GetAllTeachersFullInfo()
+    const cycleCommissions = await gql.GetAllCycleCommissions()
 
     return {
       props: {
+        teachers,
         headerData,
         mainScreenData,
+        cycleCommissions,
       },
       revalidate: 10,
     }
   } catch (error) {
-    console.log(error, 'about page error')
-    return { props: { headerData: {} } }
+    console.log(error, 'teachers page error')
+    return { props: { headerData: {}, mainScreenData: {}, teachers: {}, cycleCommissions: {} } }
   }
 }
 

@@ -8,7 +8,7 @@ const Stats = () => {
         <div className={styles['stats__inner']}>
           <div className={styles['stats__item']}>
             <div className={styles['stats__item-inner']}>
-              <h3 className={styles['stats__number']}>10000+</h3>
+              <h3 className={styles['stats__number']}>30000+</h3>
               <p className={styles['stats__text']}>Випускників</p>
             </div>
           </div>
@@ -26,8 +26,8 @@ const Stats = () => {
           </div>
           <div className={styles['stats__item']}>
             <div className={styles['stats__item-inner']}>
-              <h3 className={styles['stats__number']}>10</h3>
-              <p className={styles['stats__text']}>Освітніх програм</p>
+              <h3 className={styles['stats__number']}>2</h3>
+              <p className={styles['stats__text']}>Освітніх програми</p>
             </div>
           </div>
         </div>
