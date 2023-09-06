@@ -48,6 +48,8 @@ export const Footer = () => {
               {/* <a href="tel:0412242547">Тел.: (0412) 24-25-47</a> */}
               <a href="tel:0412242545">Тел: (0412) 24-25-45</a>
               <a href="mailto:college@pharm.zt.ua">college@pharm.zt.ua</a>
+
+              {/* <button className={styles['footer__button']}>Скринька довіри</button> */}
             </div>
 
             <div className={styles['footer__social']}>

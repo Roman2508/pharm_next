@@ -9,26 +9,37 @@ import { Videos } from '@/components/Videos/Videos'
 import { Contacts } from '@/components/Contacts/Contacts'
 import { Partners } from '@/components/Partners/Partners'
 import { GetStaticProps, NextPage } from 'next'
-import { GetHeaderQuery, GetMainScreenQuery, GetNewsQuery, gql } from '@/graphql/client'
+import {
+  GetAdvertisementsQuery,
+  GetAllEventsQuery,
+  GetAllVideosQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  GetNewsQuery,
+  gql,
+} from '@/graphql/client'
 
 interface IHomeProps {
+  newsData: GetNewsQuery
+  videos: GetAllVideosQuery
+  events: GetAllEventsQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
-  newsData: GetNewsQuery
+  advertisments: GetAdvertisementsQuery
 }
 
-const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData, newsData }) => {
+const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData, newsData, advertisments, events, videos }) => {
   return (
     <HomePageLayout title="Головна сторінка | ЖБФК" headerData={headerData} mainScreenData={mainScreenData}>
-      <Announcement />
+      <Announcement advertisments={advertisments} />
       <About />
       <Stats />
       <div className="container">
         <News newsData={newsData} showTitle addMarginBottom />
       </div>
-      <Events />
+      <Events events={events} />
       <Gallery />
-      <Videos />
+      <Videos videos={videos} />
       <Contacts />
       <Partners />
     </HomePageLayout>
@@ -40,18 +51,24 @@ export const getStaticProps: GetStaticProps = async () => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const newsData = await gql.GetNews()
+    const advertisments = await gql.GetAdvertisements()
+    const events = await gql.GetAllEvents()
+    const videos = await gql.GetAllVideos()
 
     return {
       props: {
-        headerData,
-        mainScreenData,
+        videos,
+        events,
         newsData,
+        headerData,
+        advertisments,
+        mainScreenData,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'home page error')
-    return { props: { headerData: {} } }
+    return { props: { newsData: {}, headerData: {}, advertisments: {}, mainScreenData: {}, events: {}, videos: {} } }
   }
 }
 

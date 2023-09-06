@@ -1,0 +1,21 @@
+query GetAllEvents {
+  events {
+    data {
+      id
+      attributes {
+        title
+        date
+        image {
+          data {
+            attributes {
+              name
+              url
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
-query GetAdvertisement {
+query GetAdvertisements {
   advertisements {
     data {
+      id
       attributes {
         title
         body

@@ -1,0 +1,21 @@
+query GetAllVideos {
+  videos {
+    data {
+      id
+      attributes {
+        title
+        video_url
+        video_poster {
+          data {
+            attributes {
+              url
+              name
+              width
+              height
+            }
+          }
+        }
+      }
+    }
+  }
+}

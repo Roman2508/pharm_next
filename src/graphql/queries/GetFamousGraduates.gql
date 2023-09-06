@@ -1,0 +1,21 @@
+query GetFamousGraduates {
+  famousGraduates {
+    data {
+      id
+      attributes {
+        name
+        photo {
+          data {
+            attributes {
+              name
+              width
+              height
+              url
+            }
+          }
+        }
+        description
+      }
+    }
+  }
+}

@@ -19,6 +19,7 @@ import NewsArchive from '@/components/News/NewsArchive'
 import convertMonthName from '@/utils/convertMonthName'
 import { ResentNews } from '@/components/News/ResentNews'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
+import { getVideoUrl } from '@/utils/getVideoUrl'
 
 interface IFullNewsPageProps {
   fullNews: NovinaEntity
@@ -35,14 +36,7 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
   newsDates,
   resentNews,
 }) => {
-  let videoUrl = ''
-
-  fullNews.attributes
-
-  if (fullNews.attributes.video_url) {
-    videoUrl = fullNews.attributes.video_url.replace('https://www.youtube.com/', 'https://www.youtube.com/embed/')
-    videoUrl = videoUrl.replace('watch?v=', '')
-  }
+  const videoUrl = getVideoUrl(fullNews.attributes.video_url)
 
   const { day, month, year } = convertMonthName(fullNews.attributes.date)
 
