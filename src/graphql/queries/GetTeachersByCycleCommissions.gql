@@ -1,5 +1,5 @@
 query GetAllCycleCommissionsTeachers {
-  cycleCommissions {
+  cycleCommissions(pagination: { pageSize: 100 }) {
     data {
       attributes {
         name

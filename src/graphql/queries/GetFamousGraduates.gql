@@ -1,5 +1,5 @@
 query GetFamousGraduates {
-  famousGraduates {
+  famousGraduates(pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

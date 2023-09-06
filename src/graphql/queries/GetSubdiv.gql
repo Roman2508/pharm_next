@@ -1,5 +1,5 @@
 query GetSubdiv($subdivSlug: String) {
-  subdivisions(filters: { slug: { in: [$subdivSlug] } }) {
+  subdivisions(filters: { slug: { in: [$subdivSlug] } }, pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

@@ -1,5 +1,5 @@
 query GetAllVideos {
-  videos {
+  videos(pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

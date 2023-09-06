@@ -16,6 +16,7 @@ import {
   GetHeaderQuery,
   GetMainScreenQuery,
   GetNewsQuery,
+  GetPartnersQuery,
   gql,
 } from '@/graphql/client'
 
@@ -23,12 +24,21 @@ interface IHomeProps {
   newsData: GetNewsQuery
   videos: GetAllVideosQuery
   events: GetAllEventsQuery
+  partners: GetPartnersQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   advertisments: GetAdvertisementsQuery
 }
 
-const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData, newsData, advertisments, events, videos }) => {
+const Home: NextPage<IHomeProps> = ({
+  headerData,
+  mainScreenData,
+  newsData,
+  advertisments,
+  events,
+  videos,
+  partners,
+}) => {
   return (
     <HomePageLayout title="Головна сторінка | ЖБФК" headerData={headerData} mainScreenData={mainScreenData}>
       <Announcement advertisments={advertisments} />
@@ -41,7 +51,7 @@ const Home: NextPage<IHomeProps> = ({ headerData, mainScreenData, newsData, adve
       <Gallery />
       <Videos videos={videos} />
       <Contacts />
-      <Partners />
+      <Partners partners={partners} />
     </HomePageLayout>
   )
 }
@@ -54,11 +64,13 @@ export const getStaticProps: GetStaticProps = async () => {
     const advertisments = await gql.GetAdvertisements()
     const events = await gql.GetAllEvents()
     const videos = await gql.GetAllVideos()
+    const partners = await gql.GetPartners()
 
     return {
       props: {
         videos,
         events,
+        partners,
         newsData,
         headerData,
         advertisments,

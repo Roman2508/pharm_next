@@ -1,5 +1,5 @@
 query GetAllCycleCommissions {
-  cycleCommissions {
+  cycleCommissions(pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

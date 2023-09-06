@@ -3196,7 +3196,7 @@ export const GetAdministrationDocument = gql`
     `;
 export const GetAdvertisementsDocument = gql`
     query GetAdvertisements {
-  advertisements {
+  advertisements(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3209,7 +3209,7 @@ export const GetAdvertisementsDocument = gql`
     `;
 export const GetAllCycleCommissionsDocument = gql`
     query GetAllCycleCommissions {
-  cycleCommissions {
+  cycleCommissions(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3231,7 +3231,7 @@ export const GetAllCycleCommissionsDocument = gql`
     `;
 export const GetAllEventsDocument = gql`
     query GetAllEvents {
-  events {
+  events(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3254,7 +3254,7 @@ export const GetAllEventsDocument = gql`
     `;
 export const GetAllGroupsDocument = gql`
     query GetAllGroups {
-  groups {
+  groups(pagination: {pageSize: 200}) {
     data {
       id
       attributes {
@@ -3276,7 +3276,7 @@ export const GetAllGroupsDocument = gql`
     `;
 export const GetAllNewsDatesDocument = gql`
     query GetAllNewsDates {
-  novinas {
+  novinas(pagination: {pageSize: 200000}) {
     data {
       id
       attributes {
@@ -3288,7 +3288,7 @@ export const GetAllNewsDatesDocument = gql`
     `;
 export const GetAllSubdivisionDocument = gql`
     query GetAllSubdivision {
-  subdivisions {
+  subdivisions(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3368,7 +3368,7 @@ export const GetAllTeachersFullInfoDocument = gql`
     `;
 export const GetAllVideosDocument = gql`
     query GetAllVideos {
-  videos {
+  videos(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3391,7 +3391,7 @@ export const GetAllVideosDocument = gql`
     `;
 export const GetAllVidilenyasDocument = gql`
     query GetAllVidilenyas {
-  vidilenyas {
+  vidilenyas(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3413,7 +3413,10 @@ export const GetAllVidilenyasDocument = gql`
     `;
 export const GetCycleCommissionDocument = gql`
     query GetCycleCommission($pageUrl: String) {
-  cycleCommissions(filters: {page_url: {in: [$pageUrl]}}) {
+  cycleCommissions(
+    filters: {page_url: {in: [$pageUrl]}}
+    pagination: {pageSize: 100}
+  ) {
     data {
       id
       attributes {
@@ -3536,7 +3539,7 @@ ${GetTwoColumnWithImageComponentFragmentDoc}
 ${GetBlocksPersonComponentFragmentDoc}`;
 export const GetFamousGraduatesDocument = gql`
     query GetFamousGraduates {
-  famousGraduates {
+  famousGraduates(pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3862,7 +3865,7 @@ ${GetBlocksPersonComponentFragmentDoc}
 ${GetPageCardsComponentFragmentDoc}`;
 export const GetPartnersDocument = gql`
     query GetPartners {
-  partners {
+  partners(sort: "weight:desc", pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3901,7 +3904,7 @@ export const GetSomeLastNewsDocument = gql`
     `;
 export const GetSubdivDocument = gql`
     query GetSubdiv($subdivSlug: String) {
-  subdivisions(filters: {slug: {in: [$subdivSlug]}}) {
+  subdivisions(filters: {slug: {in: [$subdivSlug]}}, pagination: {pageSize: 100}) {
     data {
       id
       attributes {
@@ -3991,7 +3994,7 @@ export const GetTeacherScheduleDocument = gql`
     `;
 export const GetAllCycleCommissionsTeachersDocument = gql`
     query GetAllCycleCommissionsTeachers {
-  cycleCommissions {
+  cycleCommissions(pagination: {pageSize: 100}) {
     data {
       attributes {
         name
@@ -4014,7 +4017,7 @@ export const GetAllCycleCommissionsTeachersDocument = gql`
     `;
 export const GetVidilenyaDocument = gql`
     query GetVidilenya($vidilenyaSlug: String) {
-  vidilenyas(filters: {slug: {in: [$vidilenyaSlug]}}) {
+  vidilenyas(filters: {slug: {in: [$vidilenyaSlug]}}, pagination: {pageSize: 100}) {
     data {
       id
       attributes {

@@ -1,5 +1,5 @@
 query GetAdvertisements {
-  advertisements {
+  advertisements(pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

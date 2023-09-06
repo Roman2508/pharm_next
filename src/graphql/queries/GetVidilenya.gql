@@ -1,5 +1,5 @@
 query GetVidilenya($vidilenyaSlug: String) {
-  vidilenyas(filters: { slug: { in: [$vidilenyaSlug] } }) {
+  vidilenyas(filters: { slug: { in: [$vidilenyaSlug] } }, pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

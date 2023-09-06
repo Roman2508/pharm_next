@@ -2,24 +2,28 @@ import React from 'react'
 import cn from 'classnames'
 
 import styles from './Partners.module.scss'
+import { GetPartnersQuery } from '@/graphql/__generated__'
+import PartnerItems from './PartnerItems'
 
-export const Partners = () => {
+interface IPartnersProps {
+  partners: GetPartnersQuery
+}
+
+export const Partners: React.FC<IPartnersProps> = ({ partners }) => {
   return (
     <div className={styles['partners']}>
       <h2 className={cn(styles['partners__title'], 'section-title')}>Наші партнери</h2>
       <p className={styles['partners__descr']}>
         Ми співпрацюємо з багатьма закладами освіти та роботодавцями. Завжди відкриті для нових пропозицій
       </p>
-      <div className={styles['partners__items-wrap']}>
-        <div className={cn(styles['partners__items'], styles['marquee'])}>
-          <a href="#" className={styles['item']}>
-            <img
-              className={styles['partners__item-img']}
-              src="./assets/images/partners/partners-1.jpg"
-              alt="partner logo"
-            />
-          </a>
-          <a href="#" className={styles['item']}>
+
+      <PartnerItems partners={partners} />
+    </div>
+  )
+}
+
+{
+  /* <a href="#" className={styles['item']}>
             <img
               className={styles['partners__item-img']}
               src="./assets/images/partners/partners-2.jpg"
@@ -53,10 +57,11 @@ export const Partners = () => {
               src="./assets/images/partners/partners-6.jpg"
               alt="partner logo"
             />
-          </a>
-        </div>
-        <div className={cn(styles['partners__items'], styles['marquee'])}>
-          <a href="#" className={styles['item']}>
+          </a> */
+}
+
+{
+  /* <a href="#" className={styles['item']}>
             <img
               className={styles['partners__item-img']}
               src="./assets/images/partners/partners-7.jpg"
@@ -90,13 +95,11 @@ export const Partners = () => {
               src="./assets/images/partners/partners-11.png"
               alt="partner logo"
             />
-          </a>
-        </div>
-      </div>
+          </a> */
+}
 
-      <div className={styles['partners__items-wrap']}>
-        <div className={cn(styles['partners__items'], styles['marquee'], styles['reverce'])}>
-          <a href="#" className={styles['item']}>
+{
+  /* <a href="#" className={styles['item']}>
             <img
               className={styles['partners__item-img']}
               src="./assets/images/partners/partners-12.jpg"
@@ -130,10 +133,11 @@ export const Partners = () => {
               src="./assets/images/partners/partners-18.jpg"
               alt="partner logo"
             />
-          </a>
-        </div>
-        <div className={cn(styles['partners__items'], styles['marquee'], styles['reverce'])}>
-          <a href="#" className={styles['item']}>
+          </a> */
+}
+
+{
+  /* <a href="#" className={styles['item']}>
             <img
               className={styles['partners__item-img']}
               src="./assets/images/partners/partners-19.jpg"
@@ -167,9 +171,5 @@ export const Partners = () => {
               src="./assets/images/partners/partners-14.png"
               alt="partner logo"
             />
-          </a>
-        </div>
-      </div>
-    </div>
-  )
+          </a> */
 }

@@ -1,5 +1,5 @@
 query GetAllGroups {
-  groups {
+  groups(pagination: { pageSize: 200 }) {
     data {
       id
       attributes {

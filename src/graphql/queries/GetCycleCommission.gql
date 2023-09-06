@@ -1,5 +1,5 @@
 query GetCycleCommission($pageUrl: String) {
-  cycleCommissions(filters: { page_url: { in: [$pageUrl] } }) {
+  cycleCommissions(filters: { page_url: { in: [$pageUrl] } }, pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

@@ -1,5 +1,5 @@
 query GetAllVidilenyas {
-  vidilenyas {
+  vidilenyas(pagination: { pageSize: 100 }) {
     data {
       id
       attributes {
