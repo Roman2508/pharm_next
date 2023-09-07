@@ -24,6 +24,7 @@ const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkList, mainScreenDat
           {cmkList.map((el) => (
             <PageCard
               id={el.id}
+              department={'cmks'}
               slug={el.attributes.slug}
               photo={el.attributes.main_photo.data.attributes.url}
               name={el.attributes.name}

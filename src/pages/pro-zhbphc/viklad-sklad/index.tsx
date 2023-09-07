@@ -19,6 +19,7 @@ import photo1 from '../../../../public/assets/images/administration/dunaevska-ok
 import photo2 from '../../../../public/assets/images/administration/kozachenko-galina-viktorivna_1.jpg'
 import Select from '@/components/ui/Select/Select'
 import { Worker } from 'cluster'
+import SelectItem from '@/components/ui/Select/SelectItem'
 
 interface ITeachingStaffPageProps {
   headerData: GetHeaderQuery
@@ -38,7 +39,9 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
   const [allTeachers, setAllTeachers] = React.useState<readonly WorkerEntity[]>([])
 
   React.useEffect(() => {
+    //@ts-ignore
     setCmkTeachers(teachers.workers.data)
+    //@ts-ignore
     setAllTeachers(teachers.workers.data)
   }, [])
 
@@ -63,7 +66,23 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
 
         <div className={styles['teachers__filter']}>
           <span className={styles['teachers__filter-text']}>ЦМК:</span>
-          <Select width="360px" items={cycleCommissions} activeItem={selectedCmk} setActiveItem={setSelectedCmk} />
+          <Select width="360px" activeItem={selectedCmk}>
+            <>
+              <SelectItem
+                key={'- Виберіть -'}
+                value="- Виберіть -"
+                onClick={() => setSelectedCmk('- Виберіть -')}
+              />
+
+              {cycleCommissions.cycleCommissions.data.map((el) => (
+                <SelectItem
+                  key={el.id}
+                  onClick={() => setSelectedCmk(el.attributes.name)}
+                  value={el.attributes.name}
+                />
+              ))}
+            </>
+          </Select>
         </div>
 
         <div className={styles['teachers__list']}>

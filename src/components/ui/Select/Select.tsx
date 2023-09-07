@@ -6,10 +6,9 @@ import styles from './Select.module.scss'
 import searchIcon from '../../../../public/assets/icons/select-arrow.svg'
 
 interface ISelectProps {
+  children: string | JSX.Element | JSX.Element[]
   activeItem: string
-  setActiveItem: React.Dispatch<React.SetStateAction<string>>
-  items: any
-  testItems?: number
+
   width?: string
 }
 
@@ -29,7 +28,7 @@ const items2 = [
   { id: 4, text: 'Питання про вступ' },
 ]
 
-const Select: React.FC<ISelectProps> = ({ activeItem, setActiveItem, items, testItems = 2, width = '100%' }) => {
+const Select: React.FC<ISelectProps> = ({ children, activeItem, width = '100%' }) => {
   const selectRef = React.useRef<HTMLDivElement | null>(null)
 
   const [isOpen, setIsOpen] = React.useState(false)
@@ -45,8 +44,6 @@ const Select: React.FC<ISelectProps> = ({ activeItem, setActiveItem, items, test
   React.useEffect(() => {
     document.body.addEventListener('click', onClose)
 
-    setActiveItem(items2[0].text)
-
     return () => {
       document.body.removeEventListener('click', onClose)
     }
@@ -61,30 +58,7 @@ const Select: React.FC<ISelectProps> = ({ activeItem, setActiveItem, items, test
         </div>
       </div>
 
-      <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })}>
-        <li className={styles['select__item']} key={'- Виберіть -'} onClick={() => setActiveItem('- Виберіть -')}>
-          - Виберіть -
-        </li>
-        {items.cycleCommissions.data.map((el) => (
-          <li className={styles['select__item']} key={el.id} onClick={() => setActiveItem(el.attributes.name)}>
-            {el.attributes.name}
-          </li>
-        ))}
-      </ul>
-
-      {/* <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })}>
-        {testItems === 1
-          ? items1.map((el) => (
-              <li className={styles['select__item']} key={el.id} onClick={() => setActiveItem(el.text)}>
-                {el.text}
-              </li>
-            ))
-          : items2.map((el) => (
-              <li className={styles['select__item']} key={el.id} onClick={() => setActiveItem(el.text)}>
-                {el.text}
-              </li>
-            ))}
-      </ul> */}
+      <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })}>{children}</ul>
     </div>
   )
 }

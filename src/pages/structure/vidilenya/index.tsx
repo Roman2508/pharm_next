@@ -24,6 +24,7 @@ const ViddilenyaPage: NextPage<ViddilenyaPageProps> = ({ headerData, vidilenyaLi
           {vidilenyaList.map((el) => (
             <PageCard
               id={el.id}
+              department={'vidilenya'}
               slug={el.attributes.slug}
               photo={el.attributes.main_photo.data.attributes.url}
               name={el.attributes.name}

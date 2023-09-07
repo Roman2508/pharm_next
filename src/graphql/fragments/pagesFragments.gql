@@ -56,14 +56,20 @@ fragment GetBlocksPanoramsComponent on ComponentPageBlocksPanorams {
   id
   title
   component_type
-  Panorams {
-    id
-    link
-    poster {
-      data {
-        attributes {
-          url
+  panoramas {
+    data {
+      id
+      attributes {
+        title
+        link
+        poster {
+          data {
+            attributes {
+              url
+            }
+          }
         }
+        weight
       }
     }
   }
@@ -73,12 +79,28 @@ fragment GetBlocksPanoramsComponent on ComponentPageBlocksPanorams {
 fragment GetPartnersBlockComponent on ComponentPageBlocksPartnersBlock {
   id
   component_type
-  Partners {
-    id
-    name
-    partner_link
-    partner_presentation_link
-    partner_category
+  title
+  partners(sort: ["weight:desc", "name:asc"]) {
+    data {
+      id
+      attributes {
+        name
+        logo {
+          data {
+            attributes {
+              url
+              name
+              width
+              height
+            }
+          }
+        }
+        link
+        presentation_link
+        type
+        weight
+      }
+    }
   }
 }
 

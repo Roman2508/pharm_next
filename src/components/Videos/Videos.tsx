@@ -7,24 +7,7 @@ import stylesSlider from '../Slider/Slider.module.scss'
 import { SliderArrow } from '../Slider/SliderArrows'
 import { GetAllVideosQuery } from '@/graphql/__generated__'
 import { getVideoUrl } from '@/utils/getVideoUrl'
-
-const videosItems = [
-  {
-    id: 1,
-    title: 'Фарм Коледж - День Вчителя',
-    photo: ['./assets/images/video-posters/1.png', '../assets/images/video-posters/1.png'],
-  },
-  {
-    id: 2,
-    title: 'ЖБФК запрошує на навчання',
-    photo: ['./assets/images/video-posters/2.png', '../assets/images/video-posters/2.png'],
-  },
-  {
-    id: 3,
-    title: 'Наш коледж',
-    photo: ['./assets/images/video-posters/3.jpg', '../assets/images/video-posters/3.jpg'],
-  },
-]
+import FullScreenFrame from '../FullScreenFrame/FullScreenFrame'
 
 interface IVideoProps {
   test?: boolean
@@ -50,39 +33,17 @@ export const Videos: React.FC<IVideoProps> = ({ test, videos }) => {
 
   return (
     <>
-      <div className={cn(styles['full-screen'], { [styles.layoutClose]: !openFullScreenVideo })}>
-        <div className={styles['full-screen__inner']}>
-          <div
-            className={cn(styles['full-screen__content'], {
-              [styles.openModal]: openFullScreenVideo,
-              [styles.closeModal]: !openFullScreenVideo,
-            })}
-          >
-            <iframe
-              id="ytplayer"
-              width="60%"
-              height="70%"
-              allow="fullscreen"
-              src={`${videoUrl}?controls=2`}
-              allowFullScreen
-              frameBorder="0"
-            />
-
-            <svg
-              className={styles.closeIcon}
-              onClick={() => setOpenFullScreenVideo(false)}
-              width="30px"
-              height="30px"
-              viewBox="0 0 1024 1024"
-            >
-              <path
-                fill="#ffffff"
-                d="M195.2 195.2a64 64 0 0 1 90.496 0L512 421.504 738.304 195.2a64 64 0 0 1 90.496 90.496L602.496 512 828.8 738.304a64 64 0 0 1-90.496 90.496L512 602.496 285.696 828.8a64 64 0 0 1-90.496-90.496L421.504 512 195.2 285.696a64 64 0 0 1 0-90.496z"
-              />
-            </svg>
-          </div>
-        </div>
-      </div>
+      <FullScreenFrame setOpenFullScreen={setOpenFullScreenVideo} isOpenFullScreen={openFullScreenVideo}>
+        <iframe
+          id="ytplayer"
+          width="60%"
+          height="70%"
+          allow="fullscreen"
+          src={`${videoUrl}?controls=2`}
+          allowFullScreen
+          frameBorder="0"
+        />
+      </FullScreenFrame>
 
       <div className={styles['videos']} style={!test ? { marginBottom: '140px' } : {}}>
         <h2 className={cn(styles['videos__title'], 'section-title')}>Відео</h2>

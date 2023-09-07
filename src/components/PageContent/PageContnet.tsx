@@ -13,6 +13,7 @@ import { FancyboxGallery } from '../FancyboxGallery'
 import { Accordion } from '../ui/Accordion/Accordion'
 import { PagePageComponentsDynamicZone, UploadFileEntity, Worker, WorkerEntity } from '@/graphql/__generated__'
 import PageCard from '../PageCard/PageCard'
+import FullScreenFrame from '../FullScreenFrame/FullScreenFrame'
 
 interface IPageContnetProps {
   colSize: string
@@ -180,36 +181,54 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
           /* panoramas */
           const isBg = component.withBackground
 
-          return (
-            <div
-              className={panoramsStyles['wrapper']}
-              style={isBg ? { backgroundColor: '#1d5d9b' } : {}}
-              key={component.id}
-            >
-              <div className={cn({ ['container']: colSize === 'col-12' })}>
-                {component.title && (
-                  <h3
-                    className={cn(panoramsStyles['title'], {
-                      [panoramsStyles['with-backgrount']]: isBg,
-                    })}
-                  >
-                    {component.title}
-                  </h3>
-                )}
+          const [isOpenFullScreen, setOpenFullScreen] = React.useState(false)
+          const [frameUrl, setFrameUrl] = React.useState('')
 
-                <div className={panoramsStyles['items']}>
-                  {component.Panorams.map((el) => (
-                    <div className={cn(panoramsStyles['item'], 'scale-photo-hover', 'scale-icon')}>
-                      <img
-                        className={panoramsStyles['panorama-img']}
-                        src={`${process.env.API_URL}${el.poster.data.attributes.url}`}
-                        alt="panorama"
-                      />
-                    </div>
-                  ))}
+          const handleOpenFullScreenFrame = (url: string) => {
+            setFrameUrl(url)
+            setOpenFullScreen(true)
+          }
+
+          return (
+            <>
+              <FullScreenFrame isOpenFullScreen={isOpenFullScreen} setOpenFullScreen={setOpenFullScreen}>
+                <iframe frameBorder="0" width="90%" height="90%" src={frameUrl} allowFullScreen />
+              </FullScreenFrame>
+
+              <div
+                className={panoramsStyles['wrapper']}
+                style={isBg ? { backgroundColor: '#1d5d9b' } : {}}
+                key={component.id}
+              >
+                <div className={cn({ ['container']: colSize === 'col-12' })}>
+                  {component.title && (
+                    <h3
+                      className={cn(panoramsStyles['title'], {
+                        [panoramsStyles['with-backgrount']]: isBg,
+                      })}
+                    >
+                      {component.title}
+                    </h3>
+                  )}
+
+                  <div className={panoramsStyles['items']}>
+                    {component.panoramas.data.map((el) => (
+                      <a
+                        key={el.id}
+                        className={cn(panoramsStyles['item'], 'scale-photo-hover', 'scale-icon')}
+                        onClick={() => handleOpenFullScreenFrame(el.attributes.link)}
+                      >
+                        <img
+                          className={panoramsStyles['panorama-img']}
+                          src={`${process.env.API_URL}${el.attributes.poster.data.attributes.url}`}
+                          alt="panorama"
+                        />
+                      </a>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
+            </>
           )
           /* // panoramas */
         } else if (component.component_type === 'accordion') {
@@ -300,6 +319,28 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
                 {component.cards.map((card) => (
                   <PageCard id={card.id} slug={card.link} photo={card.photo.data.attributes.url} name={card.name} />
                 ))}
+              </div>
+            </div>
+          )
+        } else if (component.component_type === 'partners') {
+          return (
+            <div>
+              <div className={styles['section-name']}>{component.title}</div>
+              <div className={styles['partners-wrapper']}>
+                {component.partners.data.map((el) => {
+                  const partnerLink = el.attributes.presentation_link
+                    ? el.attributes.presentation_link
+                    : el.attributes.link
+
+                  return (
+                    <a className={styles['partner-item']} title={el.attributes.name} href={partnerLink} target="_blank">
+                      <img
+                        src={`${process.env.API_URL}${el.attributes.logo.data.attributes.url}`}
+                        alt={el.attributes.logo.data.attributes.name}
+                      />
+                    </a>
+                  )
+                })}
               </div>
             </div>
           )

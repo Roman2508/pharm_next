@@ -9,7 +9,7 @@ interface IInputProps {
   label?: string
   value?: string
   width?: string
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: React.Dispatch<React.SetStateAction<string>> | ((val: string) => void)
 }
 
 const Textarea: React.FC<IInputProps> = ({
@@ -44,7 +44,8 @@ const Textarea: React.FC<IInputProps> = ({
           [styles.outlinedLabel]: true,
           [styles.focusLabelLight]: isFocus,
           [styles.focusOutlinedLabel]: isFocus,
-        })}>
+        })}
+      >
         {label}
       </label>
 
@@ -53,7 +54,8 @@ const Textarea: React.FC<IInputProps> = ({
           [styles.focusInput]: isFocusLabel,
           [styles.errorBottomLine]: isError,
         })}
-        style={{ width: width }}>
+        style={{ width: width }}
+      >
         {/*  */}
         <textarea
           value={value}

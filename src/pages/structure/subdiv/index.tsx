@@ -24,6 +24,7 @@ const SubdivPage: NextPage<SubdivPageProps> = ({ headerData, subdivList, mainScr
           {subdivList.map((el) => (
             <PageCard
               id={el.id}
+              department={'subdiv'}
               slug={el.attributes.slug}
               photo={el.attributes.main_photo.data.attributes.url}
               name={el.attributes.name}

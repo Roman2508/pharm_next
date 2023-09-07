@@ -10,7 +10,7 @@ interface IInputProps {
   value?: string
   width?: string
   inputType?: 'text' | 'email'
-  setValue: React.Dispatch<React.SetStateAction<string>>
+  setValue: React.Dispatch<React.SetStateAction<string>> | ((val: string) => void)
 }
 
 const Input: React.FC<IInputProps> = ({
@@ -49,7 +49,8 @@ const Input: React.FC<IInputProps> = ({
           [styles.focusLabelLight]: isFocus,
           [styles.focusStandartLabel]: isFocus && variant === 'standart',
           [styles.focusOutlinedLabel]: isFocus && variant === 'outlined',
-        })}>
+        })}
+      >
         {label}
       </label>
 
@@ -59,7 +60,8 @@ const Input: React.FC<IInputProps> = ({
           [styles.focusInput]: isFocusLabel,
           [styles.errorBottomLine]: isError,
         })}
-        style={{ width: width }}>
+        style={{ width: width }}
+      >
         {/*  */}
         <input
           value={value}

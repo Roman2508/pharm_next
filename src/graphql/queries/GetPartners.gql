@@ -1,5 +1,5 @@
 query GetPartners {
-  partners(sort: "weight:desc", pagination: { pageSize: 100 }) {
+  partners(filters: { not: { type: { eq: "Other" } } }, sort: "weight:desc", pagination: { pageSize: 100 }) {
     data {
       id
       attributes {

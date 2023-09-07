@@ -9,6 +9,7 @@ import Input from '@/components/ui/Input/Input'
 import { Textarea } from '@/components/ui/Textarea/Textarea'
 import Button from '@/components/ui/Button/Button'
 import Select from '@/components/ui/Select/Select'
+import SelectItem from '@/components/ui/Select/SelectItem'
 
 interface IContactsPageProps {
   headerData: GetHeaderQuery
@@ -102,8 +103,59 @@ const contactsItems = [
   },
 ]
 
+const topicList = [
+  { id: 1, text: '- Виберіть -' },
+  { id: 2, text: 'Загальне питання' },
+  { id: 3, text: 'Питання до адміністрації' },
+  { id: 4, text: 'Питання про вступ' },
+]
+
 const Contacts: NextPage<IContactsPageProps> = ({ headerData, mainScreenData }) => {
-  const [inputValue, setInputValue] = React.useState('')
+  const [formData, setFormData] = React.useState({
+    name: '',
+    email: '',
+    body: '',
+    topic: topicList[0].text,
+  })
+
+  const handleChangeTopic = (topic: string) => {
+    setFormData((prev) => ({ ...prev, topic }))
+  }
+  const handleChangeName = (name: string) => {
+    setFormData((prev) => ({ ...prev, name }))
+  }
+  const handleChangeEmail = (email: string) => {
+    setFormData((prev) => ({ ...prev, email }))
+  }
+  const handleChangeBody = (body: string) => {
+    setFormData((prev) => ({ ...prev, body }))
+  }
+
+  const handleSubmit = async (e: React.FormEventHandler<HTMLFormElement>) => {
+    e.preventDefault()
+
+    // let isValidForm = handleValidation()
+
+    const res = await fetch('/api/sendgrid', {
+      body: JSON.stringify({
+        email: formData.email,
+        fullname: formData.name,
+        subject: formData.topic,
+        message: formData.body,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      method: 'POST',
+    })
+
+    const { error } = await res.json()
+
+    if (error) {
+      console.log(error)
+      return
+    }
+  }
 
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title="Контакти">
@@ -123,21 +175,31 @@ const Contacts: NextPage<IContactsPageProps> = ({ headerData, mainScreenData }) 
           <div className="page-row">
             <div className="col-8-12">
               <div className={styles['contacts__items']}>
-                {contactsItems.map((el) => (
-                  <ContactsItem key={el.id} name={el.name} email={el.email} phone={el.phone} position={el.position} />
+                {contactsItems.map((el, index) => (
+                  <ContactsItem key={index} name={el.name} email={el.email} phone={el.phone} position={el.position} />
                 ))}
               </div>
             </div>
             <div className="col-4-12">
               <h3 className="title-md">Задати питання</h3>
 
-              <form className={styles['form']}>
-                <Input setValue={setInputValue} width="100%" label="Ваше ім`я" />
-                <Input setValue={setInputValue} width="100%" inputType="email" label="Ваш E-mail" />
+              <form className={styles['form']} onSubmit={handleSubmit}>
+                <Input setValue={handleChangeName} width="100%" label="Ваше ім`я" value={formData.name} />
+                <Input
+                  setValue={handleChangeEmail}
+                  width="100%"
+                  inputType="email"
+                  label="Ваш E-mail"
+                  value={formData.email}
+                />
 
-                <Select />
+                <Select activeItem={formData.topic}>
+                  {topicList.map((el) => (
+                    <SelectItem value={el.text} key={el.id} onClick={() => handleChangeTopic(el.text)} />
+                  ))}
+                </Select>
 
-                <Textarea setValue={setInputValue} width="100%" label="Текст повідомлення" />
+                <Textarea setValue={handleChangeBody} width="100%" label="Текст повідомлення" value={formData.body} />
                 <Button>Відправити повідомлення</Button>
               </form>
             </div>
