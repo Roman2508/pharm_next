@@ -104,7 +104,9 @@
   color: var(--primary-color);
 }
 .page-conent td a:hover,
-.page-conent ul li a:hover {
+.page-conent p a:hover,
+.page-conent ul li a:hover,
+.page-conent ol li a:hover {
   text-decoration: underline;
 }
 
@@ -221,3 +223,41 @@
   cursor: pointer;
   transform: scale(1.1);
 }
+
+/* full size person */
+.full-size__wrapper {
+  display: flex;
+  margin: 40px 0;
+}
+
+.full-size__img {
+  position: relative;
+  top: -15px;
+  margin-right: 20px;
+  width: 200px;
+}
+
+.full-size__img img {
+  max-width: 200px;
+  height: auto;
+  object-fit: cover;
+}
+/* // full size person */
+
+/* edication books */
+.books__wrapper {
+  border-top: 1px solid rgb(196, 196, 196);
+  display: flex;
+  margin: 20px 0 0 0;
+  padding: 30px 0 0;
+}
+.books__img {
+  width: 200px;
+  margin-right: 20px;
+  position: relative;
+  top: -20px;
+}
+.books__desc {
+  margin-bottom: 20px;
+}
+/* // edication books */

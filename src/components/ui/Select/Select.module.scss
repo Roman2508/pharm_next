@@ -28,6 +28,11 @@
   transition: all 0.3s ease-in-out;
 }
 
+.select__head.error {
+  border-color: #ca4240;
+  color: #ca4240;
+}
+
 .select__current,
 .select__item {
   overflow: hidden;
@@ -67,4 +72,10 @@
 
 .select__item:hover {
   background-color: rgba(29, 93, 155, 0.1);
+}
+
+.error-message {
+  margin-top: 5px;
+  font-size: 14px;
+  color: #ca4240;
 }

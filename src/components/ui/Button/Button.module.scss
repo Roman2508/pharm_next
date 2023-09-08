@@ -16,3 +16,11 @@
   background-color: var(--primary-color);
   color: #fff;
 }
+.button:disabled {
+  opacity: 0.5;
+}
+.button:disabled:hover {
+  cursor: default;
+  background-color: transparent;
+  color: var(--primary-color);
+}

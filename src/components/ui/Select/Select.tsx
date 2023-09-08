@@ -4,31 +4,19 @@ import Image from 'next/image'
 
 import styles from './Select.module.scss'
 import searchIcon from '../../../../public/assets/icons/select-arrow.svg'
+import { RefCallBack } from 'react-hook-form'
 
 interface ISelectProps {
   children: string | JSX.Element | JSX.Element[]
+  error?: boolean
+  inputRef?: RefCallBack
+  label?: string
   activeItem: string
-
   width?: string
+  isSubmitting?: boolean
 }
 
-const items1 = [
-  { id: 1, text: '- Виберіть -' },
-  { id: 1, text: 'ЦК фармацевтичних дисциплін' },
-  { id: 2, text: 'ЦК соціально-економічних дисциплін' },
-  { id: 3, text: 'ЦК філологічних дисциплін' },
-  { id: 4, text: 'ЦК загальноосвітніх дисциплін' },
-  { id: 5, text: 'ЦК хімічних дисциплін' },
-]
-
-const items2 = [
-  { id: 1, text: '- Виберіть -' },
-  { id: 2, text: 'Загальне питання' },
-  { id: 3, text: 'Питання до адміністрації' },
-  { id: 4, text: 'Питання про вступ' },
-]
-
-const Select: React.FC<ISelectProps> = ({ children, activeItem, width = '100%' }) => {
+const Select: React.FC<ISelectProps> = ({ children, activeItem, error, label, inputRef, width = '100%' }) => {
   const selectRef = React.useRef<HTMLDivElement | null>(null)
 
   const [isOpen, setIsOpen] = React.useState(false)
@@ -51,14 +39,22 @@ const Select: React.FC<ISelectProps> = ({ children, activeItem, width = '100%' }
 
   return (
     <div className={cn(styles['select'], { [styles['is-active']]: isOpen })} style={{ width }}>
-      <div className={styles['select__head']} onClick={() => setIsOpen(!isOpen)} ref={selectRef}>
-        <span className={styles['select__current']}>{activeItem}</span>
+      <div
+        className={cn(styles['select__head'], { [styles['error']]: error })}
+        onClick={() => setIsOpen(!isOpen)}
+        ref={selectRef}
+      >
+        <span className={styles['select__current']}>{activeItem || label}</span>
         <div className={styles['select__icon']}>
           <Image src={searchIcon} width={20} height={20} alt="arrow icon" />
         </div>
       </div>
 
-      <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })}>{children}</ul>
+      {error && <p className={styles['error-message']}>Виберіть тему повідомлення</p>}
+
+      <ul className={cn(styles['select__body'], { [styles['is-active']]: isOpen })} ref={inputRef}>
+        {children}
+      </ul>
     </div>
   )
 }

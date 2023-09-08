@@ -2,18 +2,18 @@ import React from 'react'
 import cn from 'classnames'
 import { GetServerSideProps, GetStaticProps } from 'next'
 
-import styles from './Page.module.scss'
+import styles from '../Page.module.scss'
 import { Layout } from '@/layouts/Layout'
 import PageContnet from '@/components/PageContent/PageContnet'
 import { GetHeaderQuery, GetMainScreenQuery, PageEntity, gql } from '@/graphql/client'
 
-interface IAdministrationProps {
+interface IPageProps {
   pageData: PageEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreenData, pageData }) => {
+const Page: React.FC<IPageProps> = ({ headerData, mainScreenData, pageData }) => {
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title={pageData.attributes.SEO.title}>
       <div className={styles['---']}>
@@ -37,11 +37,11 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreen
               <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
               <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
             </div>
-          ) : String(pageData.attributes.layout) === 'col_2_7_4' ? (
+          ) : String(pageData.attributes.layout) === 'col_2_7_3' ? (
             <div className={cn('page-row', 'container')}>
               <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.left_sidebar} />
               <PageContnet colSize="col-7-12" pageComponents={pageData.attributes.page_components} />
-              <PageContnet colSize="col-4-12" pageComponents={pageData.attributes.right_sidebar} />
+              <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
             </div>
           ) : String(pageData.attributes.layout) === 'col_8_4' ? (
             <div className={cn('page-row', 'container')}>
@@ -96,4 +96,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   }
 }
 
-export default Administration
+export default Page

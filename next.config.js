@@ -8,7 +8,7 @@ const nextConfig = {
   env: {
     API_URL: 'http://localhost:1337',
     GRAPHQL_API_URL: 'http://localhost:1337/graphql',
-    SENDGRID_API_KEY: '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',
+    SENDGRID_API_KEY: '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',
   },
 }
 

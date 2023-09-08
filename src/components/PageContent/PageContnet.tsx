@@ -307,10 +307,15 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
             </div>
           )
         } else if (component.component_type === 'button_link') {
+          const isNeedContainer =
+            colSize === 'col-12' || colSize === 'col-7-12' || colSize === 'col-8-12' || colSize === 'col-9-12'
+
           return (
-            <Link href={component.link} className={linkStyles['link']} target="_blank">
-              {component.text}
-            </Link>
+            <div className={isNeedContainer ? 'container' : ''}>
+              <Link href={component.link} className={linkStyles['link']} target="_blank">
+                {component.text}
+              </Link>
+            </div>
           )
         } else if (component.component_type === 'page_cards') {
           return (
@@ -341,6 +346,67 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
                     </a>
                   )
                 })}
+              </div>
+            </div>
+          )
+        } else if (component.component_type === 'full-size-person') {
+          const componentBody = component.body.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+
+          return (
+            <div className="container">
+              <div className={styles['full-size__wrapper']}>
+                <FancyboxGallery className={'page-gallery'}>
+                  <a
+                    data-fancybox="gallery"
+                    href={`${process.env.API_URL}${component.photo.data.attributes.url}`}
+                    className={cn(styles['full-size__img'], 'gallery-item', 'hand-pointer', 'scale-icon')}
+                    style={{ maxWidth: '200px' }}
+                  >
+                    <Image
+                      src={`${process.env.API_URL}${component.photo.data.attributes.url}`}
+                      alt="gallery photo"
+                      width={200}
+                      height={250}
+                    />
+                  </a>
+                </FancyboxGallery>
+                {/* <img src={`${process.env.API_URL}${component.photo.data.attributes.url}`} /> */}
+                <div className={styles['full-size__content']}>
+                  <h3 className={styles['full-size__title']}>{component.name}</h3>
+                  <div className={styles['full-size__text']} dangerouslySetInnerHTML={{ __html: componentBody }} />
+                </div>
+              </div>
+            </div>
+          )
+        } else if (component.component_type === 'education_books') {
+          const componentBody = component.description.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+          const accordionBody = component.authors.body.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+
+          return (
+            <div className="container">
+              <div className={styles['books__wrapper']}>
+                <FancyboxGallery className={'page-gallery'}>
+                  <a
+                    data-fancybox="gallery"
+                    href={`${process.env.API_URL}${component.main_photo.data.attributes.url}`}
+                    className={cn(styles['books__img'], 'gallery-item', 'hand-pointer', 'scale-icon')}
+                    style={{ maxWidth: '200px' }}
+                  >
+                    <Image
+                      src={`${process.env.API_URL}${component.main_photo.data.attributes.url}`}
+                      alt="gallery photo"
+                      width={200}
+                      height={250}
+                    />
+                  </a>
+                </FancyboxGallery>
+
+                <div>
+                  <div className={styles['books__desc']} dangerouslySetInnerHTML={{ __html: componentBody }} />
+                  <Accordion title={component.authors.title}>
+                    <div dangerouslySetInnerHTML={{ __html: accordionBody }} />
+                  </Accordion>
+                </div>
               </div>
             </div>
           )

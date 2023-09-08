@@ -185,3 +185,20 @@ fragment GetPageCardsComponent on ComponentPageBlocksPageCards {
     link
   }
 }
+
+fragment GetFullSizePersonComponent on ComponentPageBlocksFullSizePerson {
+  component_type
+  id
+  name
+  body
+  photo {
+    data {
+      attributes {
+        url
+        name
+        width
+        height
+      }
+    }
+  }
+}

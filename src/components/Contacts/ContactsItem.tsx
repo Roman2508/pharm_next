@@ -10,7 +10,7 @@ interface IContactsItemProps {
 }
 
 const ContactsItem: React.FC<IContactsItemProps> = ({ position, name, phone, email }) => {
-  const phoneWithoutSymbols = phone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
+  const phoneWithoutSymbols = phone ? phone.replace('(', '').replace(')', '').replace('-', '').replace('_', '') : phone
 
   return (
     <div className={styles['contact__item']}>

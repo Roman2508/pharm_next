@@ -378,6 +378,7 @@ body {
 .col-8-12 {
   flex: 0 0 66.666666666%;
   max-width: calc(66.666666666% - 30px);
+  margin-right: 60px;
 }
 .col-7-12 {
   flex: 0 0 58.3333333333%;
@@ -393,7 +394,7 @@ body {
 }
 .col-2-12 {
   flex: 0 0 16.66666666%;
-  max-width: calc(8.333333333% - 30px);
+  max-width: calc(16.66666666% - 30px);
 }
 .col-1-12 {
   flex: 0 0 8.333333333%;

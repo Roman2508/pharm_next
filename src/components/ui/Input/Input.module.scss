@@ -4,6 +4,9 @@
   margin-bottom: 20px;
   z-index: 1;
 }
+.wrapper.errorWrapper {
+  margin-bottom: 40px;
+}
 
 /* label */
 
@@ -142,8 +145,8 @@
 /* errorMessage */
 
 .errorMessage {
-  bottom: -18px;
-  font-size: 12px;
+  bottom: -20px;
+  font-size: 14px;
   color: #ca4240;
   overflow: hidden;
   position: absolute;
