@@ -2874,6 +2874,13 @@ export type GetNewsByMonthQueryVariables = Exact<{
 
 export type GetNewsByMonthQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly meta: { readonly __typename?: 'ResponseCollectionMeta', readonly pagination: { readonly __typename?: 'Pagination', readonly total: number, readonly page: number, readonly pageSize: number, readonly pageCount: number } }, readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly collage_photos: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> }, readonly news_tags: { readonly __typename?: 'NewsTagRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NewsTagEntity', readonly id: string, readonly attributes: { readonly __typename?: 'NewsTag', readonly title: string } }> } } }> } };
 
+export type GetOneTeacherQueryVariables = Exact<{
+  teacherSlug: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type GetOneTeacherQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly email: string, readonly phone: string, readonly slug: string, readonly category: Enum_Worker_Category, readonly is_administration: boolean, readonly position: string, readonly additional_information: string, readonly printed_works: string, readonly calendar_id: string, readonly photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string } } }, readonly lessons: { readonly __typename?: 'LessonRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'LessonEntity', readonly attributes: { readonly __typename?: 'Lesson', readonly name: string } }> }, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string } } } } }> } };
+
 export type GetPageQueryVariables = Exact<{
   pageUrl: InputMaybe<Scalars['String']['input']>;
 }>;
@@ -3818,6 +3825,49 @@ export const GetNewsByMonthDocument = gql`
   }
 }
     `;
+export const GetOneTeacherDocument = gql`
+    query GetOneTeacher($teacherSlug: String) {
+  workers(filters: {category: {in: ["teacher"]}, slug: {contains: $teacherSlug}}) {
+    data {
+      id
+      attributes {
+        name
+        photo {
+          data {
+            attributes {
+              url
+            }
+          }
+        }
+        email
+        phone
+        lessons {
+          data {
+            attributes {
+              name
+            }
+          }
+        }
+        slug
+        cycle_commission {
+          data {
+            attributes {
+              name
+              slug
+            }
+          }
+        }
+        category
+        is_administration
+        position
+        additional_information
+        printed_works
+        calendar_id
+      }
+    }
+  }
+}
+    `;
 export const GetPageDocument = gql`
     query GetPage($pageUrl: String) {
   pages(filters: {page_url: {in: [$pageUrl]}}) {
@@ -4212,6 +4262,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetNewsByMonth(variables?: GetNewsByMonthQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetNewsByMonthQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNewsByMonthQuery>(GetNewsByMonthDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetNewsByMonth', 'query');
+    },
+    GetOneTeacher(variables?: GetOneTeacherQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetOneTeacherQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetOneTeacherQuery>(GetOneTeacherDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetOneTeacher', 'query');
     },
     GetPage(variables?: GetPageQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPageQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPageQuery>(GetPageDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPage', 'query');

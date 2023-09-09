@@ -1,14 +1,14 @@
-import { HomePageLayout } from '@/layouts/HomePageLayout'
-import About from '@/components/About/About'
-import Announcement from '@/components/Announcement/Announcement'
-import Stats from '@/components/Stats/Stats'
-import { News } from '@/components/News/News'
-import { Events } from '@/components/Events/Events'
-import { Gallery } from '@/components/Gallery/Gallery'
-import { Videos } from '@/components/Videos/Videos'
-import { Contacts } from '@/components/Contacts/Contacts'
-import { Partners } from '@/components/Partners/Partners'
-import { GetStaticProps, NextPage } from 'next'
+import { HomePageLayout } from "@/layouts/HomePageLayout"
+import About from "@/components/About/About"
+import Announcement from "@/components/Announcement/Announcement"
+import Stats from "@/components/Stats/Stats"
+import { News } from "@/components/News/News"
+import { Events } from "@/components/Events/Events"
+import { Gallery } from "@/components/Gallery/Gallery"
+import { Videos } from "@/components/Videos/Videos"
+import { Contacts } from "@/components/Contacts/Contacts"
+import { Partners } from "@/components/Partners/Partners"
+import { GetStaticProps, NextPage } from "next"
 import {
   GetAdvertisementsQuery,
   GetAllEventsQuery,
@@ -18,7 +18,7 @@ import {
   GetNewsQuery,
   GetPartnersQuery,
   gql,
-} from '@/graphql/client'
+} from "@/graphql/client"
 
 interface IHomeProps {
   newsData: GetNewsQuery
@@ -40,7 +40,11 @@ const Home: NextPage<IHomeProps> = ({
   partners,
 }) => {
   return (
-    <HomePageLayout title="Головна сторінка | ЖБФК" headerData={headerData} mainScreenData={mainScreenData}>
+    <HomePageLayout
+      title="Головна сторінка | ЖБФК"
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+    >
       <Announcement advertisments={advertisments} />
       <About />
       <Stats />
@@ -79,8 +83,17 @@ export const getStaticProps: GetStaticProps = async () => {
       revalidate: 10,
     }
   } catch (error) {
-    console.log(error, 'home page error')
-    return { props: { newsData: {}, headerData: {}, advertisments: {}, mainScreenData: {}, events: {}, videos: {} } }
+    console.log(error, "home page error")
+    return {
+      props: {
+        newsData: {},
+        headerData: {},
+        advertisments: {},
+        mainScreenData: {},
+        events: {},
+        videos: {},
+      },
+    }
   }
 }
 

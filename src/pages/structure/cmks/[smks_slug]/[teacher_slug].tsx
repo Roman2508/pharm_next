@@ -1,9 +1,196 @@
-import { gql } from '@/graphql/client'
-import { GetServerSideProps } from 'next'
-import React from 'react'
+import React from "react"
+import Link from "next/link"
+import { GetServerSideProps } from "next"
+import cn from "classnames"
 
-const TeacherPage = () => {
-  return <div>TeacherPage</div>
+import {
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  WorkerEntity,
+  gql,
+} from "@/graphql/client"
+import { Layout } from "@/layouts/Layout"
+import styles from "./Teacher.module.scss"
+import pageStyles from "../../../../components/PageContent/Page.module.scss"
+import { FancyboxGallery } from "@/components/FancyboxGallery"
+import Image from "next/image"
+
+interface ITeacherPageProps {
+  teacher: WorkerEntity
+  headerData: GetHeaderQuery
+  mainScreenData: GetMainScreenQuery
+}
+
+const tabs = [
+  { id: 1, text: "Загальна інформація" },
+  { id: 2, text: "Додаткова інформація" },
+  { id: 3, text: "Друковані праці" },
+]
+
+const TeacherPage: React.FC<ITeacherPageProps> = ({
+  teacher,
+  headerData,
+  mainScreenData,
+}) => {
+  const [activeTab, setActiveTab] = React.useState(1)
+
+  return (
+    <Layout
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      title={teacher.attributes.name}
+    >
+      <div className="container">
+        <h1 className="section-title">{teacher.attributes.name}</h1>
+
+        <div className={styles.wrapper}>
+          <div className={styles["tabs-wrapper"]}>
+            <div className={styles.tabs}>
+              {tabs.map((el) => (
+                <div
+                  className={cn(styles.tab, {
+                    [styles["active-tab"]]: activeTab === el.id,
+                  })}
+                  onClick={() => setActiveTab(el.id)}
+                  key={el.id}
+                >
+                  {el.text}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {activeTab === 1 && (
+            <div className={styles.content}>
+              <div className={styles.img}>
+                <FancyboxGallery>
+                  <a
+                    data-fancybox="gallery"
+                    href={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
+                    style={{ maxWidth: "200px" }}
+                  >
+                    <Image
+                      src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
+                      alt={teacher.attributes.name}
+                      width={150}
+                      height={200}
+                    />
+                  </a>
+                </FancyboxGallery>
+                {/* <img
+                  src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
+                  alt={teacher.attributes.name}
+                /> */}
+              </div>
+              <div className={pageStyles["page-conent"]}>
+                <Link
+                  className={styles["mb-10"]}
+                  href={`/structure/cmks/${teacher.attributes.cycle_commission.data.attributes.slug}`}
+                >
+                  {teacher.attributes.cycle_commission.data.attributes.name}
+                </Link>
+
+                {teacher.attributes.email && (
+                  <>
+                    <span className={styles["mb-10"]}>
+                      <b>Електронна пошта:</b>
+                    </span>
+                    <Link
+                      className={styles["mb-10"]}
+                      href={`mailto:${teacher.attributes.email}`}
+                    >
+                      {teacher.attributes.email}
+                    </Link>
+                  </>
+                )}
+
+                <span className={styles["mb-10"]}>
+                  <b>Навчальні предмети, які викладає:</b>
+                </span>
+
+                <ul style={{ marginBottom: "10px" }}>
+                  {teacher.attributes.lessons.data.map((lesson) => (
+                    <li key={lesson.id}>«{lesson.attributes.name}»</li>
+                  ))}
+                </ul>
+
+                <span className={styles["mb-10"]}>
+                  <b>
+                    Посада, науковий ступінь, вчене звання, кваліфікаційна
+                    категорія:
+                  </b>
+                </span>
+                <p>
+                  {teacher.attributes.status
+                    ? teacher.attributes.status
+                    : teacher.attributes.position}
+                </p>
+
+                <Link href={`/rozklad/vikladach/${teacher.attributes.slug}`}>
+                  Переглянути розклад викладача
+                </Link>
+              </div>
+            </div>
+          )}
+
+          {activeTab === 2 && (
+            <div className={cn(styles.content, pageStyles["page-conent"])}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: teacher.attributes.additional_information,
+                }}
+              />
+            </div>
+          )}
+
+          {activeTab === 3 && (
+            <div className={cn(styles.content, pageStyles["page-conent"])}>
+              <div
+                dangerouslySetInnerHTML={{
+                  __html: teacher.attributes.printed_works,
+                }}
+              />
+            </div>
+          )}
+        </div>
+      </div>
+    </Layout>
+  )
+}
+
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+  try {
+    const returnData = {
+      props: { headerData: {}, mainScreenData: {}, teacher: {} },
+      redirect: { destination: "/404", permanent: false },
+    }
+
+    if (!params || !params.teacher_slug) {
+      return returnData
+    }
+
+    const teacher = await gql.GetOneTeacher({
+      teacherSlug: `${params.teacher_slug}`,
+    })
+
+    if (!teacher.workers.data.length) {
+      return returnData
+    }
+
+    const headerData = await gql.GetHeader()
+    const mainScreenData = await gql.GetMainScreen()
+
+    return {
+      props: {
+        headerData,
+        mainScreenData,
+        teacher: teacher.workers.data[0],
+      },
+    }
+  } catch (error) {
+    console.log(error, "cmks page error")
+    return { props: { headerData: {}, mainScreenData: {}, cmkData: {} } }
+  }
 }
 
 export default TeacherPage

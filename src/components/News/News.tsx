@@ -1,12 +1,12 @@
-import React from 'react'
-import cn from 'classnames'
+import React from "react"
+import cn from "classnames"
 
-import { NewsItem } from './NewsItem'
-import Pagination from './Pagination'
-import { gql } from '@/graphql/client'
-import styles from './News.module.scss'
-import { GetNewsQuery } from '@/graphql/__generated__'
-import LoadingSpinner from '../LoadingSpinner/LoadingSpinner'
+import { NewsItem } from "./NewsItem"
+import Pagination from "./Pagination"
+import { gql } from "@/graphql/client"
+import styles from "./News.module.scss"
+import { GetNewsQuery } from "@/graphql/__generated__"
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 
 interface INewsProps {
   newsData: GetNewsQuery
@@ -15,7 +15,12 @@ interface INewsProps {
   addMarginBottom?: boolean
 }
 
-export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3, addMarginBottom = false }) => {
+export const News: React.FC<INewsProps> = ({
+  newsData,
+  showTitle,
+  pageSize = 3,
+  addMarginBottom = false,
+}) => {
   const firstRender = React.useRef(false)
 
   const [news, setNews] = React.useState([])
@@ -30,7 +35,7 @@ export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3, 
           const data = await gql.GetNews({ currentPage, pageSize })
           setNews(data.novinas.data)
         } catch (error) {
-          alert('Помилка при отриманні даних!')
+          alert("Помилка при отриманні даних!")
         } finally {
           setIsLoading(false)
         }
@@ -41,12 +46,26 @@ export const News: React.FC<INewsProps> = ({ newsData, showTitle, pageSize = 3, 
     }
   }, [currentPage])
 
+  if (!newsData.novinas) {
+    return
+  }
+
   return (
-    <div className={cn(styles['news'], { [styles['news--indent']]: addMarginBottom })}>
+    <div
+      className={cn(styles["news"], {
+        [styles["news--indent"]]: addMarginBottom,
+      })}
+    >
       {/* <div className={'container'}> */}
-      <div className={styles['news__inner']}>
-        {showTitle && <h2 className={cn(styles['news__title'], 'section-title')}>Новини</h2>}
-        <div className={cn(styles['news__items'], { [styles['news__items--loading']]: isLoading })}>
+      <div className={styles["news__inner"]}>
+        {showTitle && (
+          <h2 className={cn(styles["news__title"], "section-title")}>Новини</h2>
+        )}
+        <div
+          className={cn(styles["news__items"], {
+            [styles["news__items--loading"]]: isLoading,
+          })}
+        >
           {(news.length ? news : newsData?.novinas.data).map((news) => (
             <NewsItem
               key={news.id}

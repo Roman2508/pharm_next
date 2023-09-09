@@ -15,7 +15,7 @@
 /* page-conent */
 .page-conent {
   width: 100%;
-  font-family: 'GilroyRegular', sans-serif;
+  font-family: "GilroyRegular", sans-serif;
   border-collapse: collapse;
   font-size: 20px;
   margin-bottom: 20px;
@@ -33,7 +33,7 @@
 .page-conent h5 strong,
 .page-conent h6,
 .page-conent h6 strong {
-  font-family: 'GilroyBold', sans-serif !important;
+  font-family: "GilroyBold", sans-serif !important;
   color: var(--primary-color) !important;
   margin-bottom: 10px;
 }
@@ -129,7 +129,7 @@
 
 .cmk-teachers-title {
   font-size: 24px;
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -156,7 +156,7 @@
   height: 130px;
 }
 .teacher-name {
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   font-size: 24px;
 }
 .teacher-lessons {
@@ -196,7 +196,7 @@
 
 .section-name {
   font-size: 24px;
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -261,3 +261,21 @@
   margin-bottom: 20px;
 }
 /* // edication books */
+
+/* button-images */
+.button-images__wrapper {
+  display: flex;
+  flex-wrap: wrap;
+}
+.button-images__link {
+  max-width: calc(33.333333333% - 20px);
+  margin: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.button-images__img {
+  // max-width: 33.333333333%;
+  width: 100%;
+}
+/* // button-images */

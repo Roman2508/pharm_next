@@ -1,20 +1,27 @@
-import React from 'react'
-import cn from 'classnames'
+import React from "react"
+import cn from "classnames"
 
-import styles from './Partners.module.scss'
-import { GetPartnersQuery } from '@/graphql/__generated__'
-import PartnerItems from './PartnerItems'
+import styles from "./Partners.module.scss"
+import { GetPartnersQuery } from "@/graphql/__generated__"
+import PartnerItems from "./PartnerItems"
 
 interface IPartnersProps {
   partners: GetPartnersQuery
 }
 
 export const Partners: React.FC<IPartnersProps> = ({ partners }) => {
+  if (!partners || !partners.partners) {
+    return
+  }
+
   return (
-    <div className={styles['partners']}>
-      <h2 className={cn(styles['partners__title'], 'section-title')}>Наші партнери</h2>
-      <p className={styles['partners__descr']}>
-        Ми співпрацюємо з багатьма закладами освіти та роботодавцями. Завжди відкриті для нових пропозицій
+    <div className={styles["partners"]}>
+      <h2 className={cn(styles["partners__title"], "section-title")}>
+        Наші партнери
+      </h2>
+      <p className={styles["partners__descr"]}>
+        Ми співпрацюємо з багатьма закладами освіти та роботодавцями. Завжди
+        відкриті для нових пропозицій
       </p>
 
       <PartnerItems partners={partners} />
