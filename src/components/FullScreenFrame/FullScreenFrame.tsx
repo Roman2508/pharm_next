@@ -1,7 +1,7 @@
-import React from 'react'
-import cn from 'classnames'
+import React from "react"
+import cn from "classnames"
 
-import styles from './FullScreenFrame.module.scss'
+import styles from "./FullScreenFrame.module.scss"
 
 interface IFullScreenFrameProps {
   isOpenFullScreen: boolean
@@ -9,27 +9,40 @@ interface IFullScreenFrameProps {
   setOpenFullScreen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const FullScreenFrame: React.FC<React.PropsWithChildren<IFullScreenFrameProps>> = ({
-  children,
-  isOpenFullScreen,
-  setOpenFullScreen,
-}) => {
+const FullScreenFrame: React.FC<
+  React.PropsWithChildren<IFullScreenFrameProps>
+> = ({ children, isOpenFullScreen, setOpenFullScreen }) => {
+  const pauseVideo = () => {
+    var iframe = document.querySelector("iframe")
+    if (iframe) {
+      var iframeSrc = iframe.src
+      iframe.src = iframeSrc
+    }
+  }
+
+  const handleClose = () => {
+    pauseVideo()
+    setOpenFullScreen(false)
+  }
+
   return (
     <div
-      className={cn(styles['full-screen-frame'], { [styles['full-screen-frame__layout-close']]: !isOpenFullScreen })}
+      className={cn(styles["full-screen-frame"], {
+        [styles["full-screen-frame__layout-close"]]: !isOpenFullScreen,
+      })}
     >
-      <div className={styles['full-screen-frame__inner']}>
+      <div className={styles["full-screen-frame__inner"]}>
         <div
-          className={cn(styles['full-screen-frame__content'], {
-            [styles['full-screen-frame--open']]: isOpenFullScreen,
-            [styles['full-screen-frame--close']]: !isOpenFullScreen,
+          className={cn(styles["full-screen-frame__content"], {
+            [styles["full-screen-frame--open"]]: isOpenFullScreen,
+            [styles["full-screen-frame--close"]]: !isOpenFullScreen,
           })}
         >
           {children}
 
           <svg
-            className={styles['full-screen-frame__close-icon']}
-            onClick={() => setOpenFullScreen(false)}
+            className={styles["full-screen-frame__close-icon"]}
+            onClick={handleClose}
             width="30px"
             height="30px"
             viewBox="0 0 1024 1024"

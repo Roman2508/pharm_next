@@ -66,6 +66,11 @@ const PageContnet = ({
     })
   }
 
+  React.useEffect(() => {
+    setCurrentPage(1)
+  }, [cmkTeachers])
+  console.log(cmkTeachers)
+
   return (
     <div className={colSize}>
       {mainPhotoCol && (
@@ -128,7 +133,7 @@ const PageContnet = ({
             const teacherLink = `/structure/cmks/${cmkSlug}/${teacher.attributes.slug}`
 
             return (
-              <div className={styles["teacher-wrapper"]}>
+              <div className={styles["teacher-wrapper"]} key={teacher.id}>
                 <div className={styles["teacher-row"]}>
                   <Link className={styles["teacher-photo"]} href={teacherLink}>
                     <img
@@ -139,17 +144,17 @@ const PageContnet = ({
                     {nameArray.map((el) => {
                       if (!el.length) return
                       return (
-                        <>
+                        <React.Fragment key={el}>
                           {el}
                           <br />
-                        </>
+                        </React.Fragment>
                       )
                     })}
                   </Link>
                 </div>
                 <ul className={styles["teacher-lessons"]}>
                   {teacher.attributes.lessons.data.map((lesson) => (
-                    <li className={styles["teacher-lesson"]}>
+                    <li className={styles["teacher-lesson"]} key={lesson.id}>
                       «{lesson.attributes.name}»
                     </li>
                   ))}
@@ -168,6 +173,7 @@ const PageContnet = ({
                   [styles["active-page"]]: currentPage === index + 1,
                 })}
                 onClick={() => handleChangeTeachersRange(index + 1)}
+                key={index}
               >
                 {index + 1}
               </span>
@@ -445,6 +451,7 @@ const PageContnet = ({
               <div className={styles["page-cards-wrapper"]}>
                 {component.cards.map((card) => (
                   <PageCard
+                    key={card.id}
                     id={card.id}
                     slug={card.link}
                     photo={card.photo.data.attributes.url}
@@ -466,6 +473,7 @@ const PageContnet = ({
 
                   return (
                     <a
+                      key={el.id}
                       className={styles["partner-item"]}
                       title={el.attributes.name}
                       href={partnerLink}
@@ -573,7 +581,11 @@ const PageContnet = ({
           return (
             <div className={styles["button-images__wrapper"]}>
               {component.Components.map((el) => (
-                <a className={styles["button-images__link"]} href={el.link}>
+                <a
+                  className={styles["button-images__link"]}
+                  href={el.link}
+                  key={el.id}
+                >
                   <img
                     className={styles["button-images__img"]}
                     src={`${process.env.API_URL}${el.image.data.attributes.url}`}

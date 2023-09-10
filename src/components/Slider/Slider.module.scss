@@ -6,7 +6,7 @@
 
 .slider__wrapper::before,
 .slider__wrapper::after {
-  content: '';
+  content: "";
   position: absolute;
   top: -15%;
   height: 130%;
@@ -16,11 +16,19 @@
 
 .slider__wrapper::before {
   left: 0;
-  background: linear-gradient(90deg, rgb(255, 255, 255) 50px, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    90deg,
+    rgb(255, 255, 255) 50px,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 .slider__wrapper::after {
   right: 0;
-  background: linear-gradient(270deg, rgb(255, 255, 255) 50px, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    270deg,
+    rgb(255, 255, 255) 50px,
+    rgba(255, 255, 255, 0) 100%
+  );
 }
 
 /* active slide */
@@ -103,6 +111,10 @@
   .slider__wrapper .swiper-slide {
     min-height: 300px;
   }
+  .arrow--left,
+  .arrow--right {
+    top: 50%;
+  }
 }
 
 @media (max-width: 640px) {
@@ -127,7 +139,8 @@
     padding: 30px;
 
     svg path {
-      fill: var(--primary-color);
+      // fill: var(--primary-color);
+      stroke: var(--primary-color);
     }
   }
 

@@ -23,6 +23,11 @@
   align-items: center;
   justify-content: center;
 }
+
+.full-screen-frame__content iframe {
+  width: 60%;
+}
+
 .full-screen-frame__close-icon {
   position: absolute;
   top: 20px;
@@ -58,5 +63,33 @@
   to {
     opacity: 0;
     transform: scale(0.5);
+  }
+}
+
+@media (max-width: 1024px) {
+  .full-screen-frame__content iframe {
+    width: 80%;
+    height: 70%;
+  }
+}
+
+@media (max-width: 924px) {
+  .full-screen-frame__content iframe {
+    width: 80%;
+    height: 60%;
+  }
+}
+
+@media (max-width: 840px) {
+  .full-screen-frame__content iframe {
+    width: 85%;
+    height: 60%;
+  }
+}
+
+@media (max-width: 768px) {
+  .full-screen-frame__content iframe {
+    width: 100%;
+    height: 80%;
   }
 }

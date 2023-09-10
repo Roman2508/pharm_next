@@ -1,7 +1,18 @@
+.wrapper {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.wrapper * {
+  font-family: "GilroyRegular", sans-serif;
+}
+
 .section-name {
   font-size: 24px;
-  font-family: 'GilroyBold', sans-serif;
-  background-color: var(--gray-color);
+  font-family: "GilroyBold", sans-serif;
+  background-color: #f9f9f9;
   color: var(--primary-color);
   text-align: center;
   padding: 10px 20px;
@@ -13,19 +24,43 @@
 }
 
 .group-item {
+  position: relative;
   display: inline-block;
-  padding: 10px 20px;
   color: var(--primary-color);
-  // background-color: var(--gray-color);
-  // border: 3px solid var(--primary-color);
-  margin: 10px;
-  // width: 100px;
-  // text-align: center;
-  // font-family: GilroyBold, sans-serif;
+  background-color: var(--gray-color);
+  font-family: GilroyBold, sans-serif;
   transition: all 0.3s ease-in-out;
+  padding: 10px 20px;
+  margin: 10px;
 }
 .group-item:hover {
   text-decoration: underline;
-  // background-color: var(--primary-color);
-  // color: #fff;
+  &::after {
+    opacity: 1;
+  }
+}
+
+.group-item::after {
+  top: 0;
+  left: 0;
+  opacity: 0;
+  content: "";
+  position: absolute;
+  width: calc(100% - 6px);
+  height: calc(100% - 6px);
+  transition: all 0.3s ease-in-out;
+  border: 3px solid var(--primary-color);
+}
+
+.lg-title {
+  font-family: GilroyBold, sans-serif;
+  margin-bottom: 20px;
+  font-size: 40px;
+  color: #000;
+}
+.md-title {
+  font-family: GilroyBold, sans-serif;
+  margin-bottom: 20px;
+  font-size: 32px;
+  color: #000;
 }

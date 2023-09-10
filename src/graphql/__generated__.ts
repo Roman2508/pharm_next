@@ -3477,10 +3477,7 @@ export const GetAllVidilenyasDocument = gql`
     `;
 export const GetCycleCommissionDocument = gql`
     query GetCycleCommission($pageUrl: String) {
-  cycleCommissions(
-    filters: {page_url: {in: [$pageUrl]}}
-    pagination: {pageSize: 100}
-  ) {
+  cycleCommissions(filters: {page_url: {in: [$pageUrl]}}) {
     data {
       id
       attributes {
@@ -3562,7 +3559,7 @@ export const GetCycleCommissionDocument = gql`
           ...GetTwoColumnWithImageComponent
           ...GetBlocksPersonComponent
         }
-        workers {
+        workers(pagination: {pageSize: 100}) {
           data {
             attributes {
               name

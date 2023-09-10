@@ -1,7 +1,7 @@
-import React from 'react'
-import cn from 'classnames'
+import React from "react"
+import cn from "classnames"
 
-import styles from './Modal.module.scss'
+import styles from "./Modal.module.scss"
 
 interface IModalProps {
   isShow: boolean
@@ -9,19 +9,26 @@ interface IModalProps {
   modalBody?: string
   setIsShow: React.Dispatch<React.SetStateAction<boolean>>
   children?: JSX.Element | JSX.Element[] | string
+  classNames?: string
   ref: any
 }
 
 const Modal = React.forwardRef<React.FC, React.PropsWithChildren<IModalProps>>(
-  ({ children, isShow, setIsShow, modalTitle, modalBody }, ref) => {
-    const body = modalBody?.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+  (
+    { children, isShow, setIsShow, modalTitle, modalBody, classNames = "" },
+    ref
+  ) => {
+    const body = modalBody?.replaceAll(
+      "/uploads",
+      `${process.env.API_URL}/uploads`
+    )
 
     return (
       <>
         <div className={cn(styles.layout, { [styles.layoutClose]: !isShow })}>
           <div className={styles.modalWrapper}>
             <div
-              className={cn(styles.modal, styles.light, {
+              className={cn(styles.modal, classNames, styles.light, {
                 [styles.openModal]: isShow,
                 [styles.closeModal]: !isShow,
               })}
@@ -45,7 +52,10 @@ const Modal = React.forwardRef<React.FC, React.PropsWithChildren<IModalProps>>(
                 </svg>
               </div>
               {children}
-              <div className={styles['body']} dangerouslySetInnerHTML={{ __html: body || '' }} />
+              <div
+                className={styles["body"]}
+                dangerouslySetInnerHTML={{ __html: body || "" }}
+              />
             </div>
           </div>
         </div>

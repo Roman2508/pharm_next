@@ -38,6 +38,7 @@
 .active-tab {
   position: relative;
   color: var(--primary-color);
+  background-color: var(--gray-color);
 }
 .active-tab::before {
   content: "";

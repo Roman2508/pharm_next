@@ -18,10 +18,10 @@
 
 .contacts__wrapper::before {
   position: absolute;
-  content: '';
+  content: "";
   top: -59px;
   left: 0;
-  background-image: url('../../../public/assets/images/contacts/contacts-decor.png');
+  background-image: url("../../../public/assets/images/contacts/contacts-decor.png");
   background-repeat: no-repeat;
   width: 370px;
   height: 59px;
@@ -64,7 +64,7 @@
   font-family: GilroyRegular, sans-serif;
   font-size: 16px;
   color: #353f4f;
-  max-width: 200px;
+  max-width: 215px;
   margin: 15px 20px;
 }
 
@@ -98,7 +98,7 @@
 .contact__item-tel::after,
 .contact__item-email::after {
   transition: width 0.3s ease-in-out;
-  content: '';
+  content: "";
   position: absolute;
   width: 0;
   height: 2px;

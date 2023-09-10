@@ -1,6 +1,9 @@
 query GetAllTeachersFullInfo($cmkName: String = "") {
   workers(
-    filters: { category: { in: ["teacher"] }, cycle_commission: { name: { contains: $cmkName } } }
+    filters: {
+      category: { in: ["teacher"] }
+      cycle_commission: { name: { contains: $cmkName } }
+    }
     sort: "name:asc"
     pagination: { pageSize: 200 }
   ) {
