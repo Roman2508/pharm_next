@@ -1,0 +1,51 @@
+.wrapper {
+  display: flex;
+  justify-content: space-between;
+  margin: 40px 0;
+  width: 100%;
+}
+
+.col {
+  min-width: 50%;
+}
+
+.col + .col {
+  margin-left: 20px;
+}
+
+.section-name {
+  font-size: 24px;
+  font-family: 'GilroyBold', sans-serif;
+  background-color: var(--gray-color);
+  color: var(--primary-color);
+  text-align: center;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+.principal {
+  display: flex;
+}
+
+.img {
+  margin-right: 20px;
+
+  img {
+    max-width: 100px;
+    height: auto;
+    object-fit: cover;
+  }
+}
+
+.info {
+  p {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  h4 {
+    font-size: 28px;
+    font-family: GilroyBold, sans-serif;
+    margin-bottom: 20px;
+  }
+}
