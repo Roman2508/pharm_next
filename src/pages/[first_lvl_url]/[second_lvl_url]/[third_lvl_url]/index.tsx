@@ -64,7 +64,6 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreen
 
 // export const getStaticProps: GetStaticProps = async ({ params }) => {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  console.log(params)
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, cmkData: {} },

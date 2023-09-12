@@ -10,6 +10,12 @@
   color: #fff;
 }
 
+.table thead tr td {
+  background-color: var(--primary-color);
+  text-align: center;
+  color: #fff;
+}
+
 .table td,
 .table th {
   /* border: 1px solid #dddddd; */
@@ -26,6 +32,13 @@
   list-style: disc;
 }
 
-.table tr:nth-child(odd) {
-  background-color: var(--gray-color);
+.table a {
+  color: var(--primary-color);
+}
+.table a:hover {
+  text-decoration: underline;
+}
+
+.table tr:nth-child(even) {
+  // background-color: var(--gray-color);
 }

@@ -15,7 +15,7 @@
 /* page-conent */
 .page-conent {
   width: 100%;
-  font-family: "GilroyRegular", sans-serif;
+  font-family: 'GilroyRegular', sans-serif;
   border-collapse: collapse;
   font-size: 20px;
   margin-bottom: 20px;
@@ -33,7 +33,7 @@
 .page-conent h5 strong,
 .page-conent h6,
 .page-conent h6 strong {
-  font-family: "GilroyBold", sans-serif !important;
+  font-family: 'GilroyBold', sans-serif !important;
   color: var(--primary-color) !important;
   margin-bottom: 10px;
 }
@@ -129,7 +129,7 @@
 
 .cmk-teachers-title {
   font-size: 24px;
-  font-family: "GilroyBold", sans-serif;
+  font-family: 'GilroyBold', sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -156,7 +156,7 @@
   height: 130px;
 }
 .teacher-name {
-  font-family: "GilroyBold", sans-serif;
+  font-family: 'GilroyBold', sans-serif;
   font-size: 24px;
 }
 .teacher-lessons {
@@ -196,7 +196,7 @@
 
 .section-name {
   font-size: 24px;
-  font-family: "GilroyBold", sans-serif;
+  font-family: 'GilroyBold', sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -279,3 +279,66 @@
   width: 100%;
 }
 /* // button-images */
+
+@media (max-width: 1024px) {
+  .page-conent p:has(img) {
+    max-width: 70%;
+    margin: 0 auto 20px;
+  }
+
+  .page-cards-wrapper {
+    justify-content: center;
+  }
+
+  .teachers-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .teacher-wrapper {
+    width: 50%;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-conent p:has(img) {
+    max-width: 100%;
+  }
+
+  .teachers-list {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .teacher-wrapper {
+    width: 100%;
+  }
+
+  .books__wrapper {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 550px) {
+  .photo-item {
+    width: 100%;
+    max-width: 70% !important;
+
+    img {
+      width: 100%;
+      height: auto;
+      max-height: 350px;
+    }
+  }
+}
+
+@media (max-width: 425px) {
+  .photo-item {
+    max-width: 90% !important;
+  }
+}
+
+@media (max-width: 375px) {
+  .photo-item {
+    max-width: 100% !important;
+  }
+}

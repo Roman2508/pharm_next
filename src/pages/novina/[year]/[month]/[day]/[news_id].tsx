@@ -40,7 +40,10 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
 
   const { day, month, year } = convertMonthName(fullNews.attributes.date)
 
-  const newsBody = fullNews.attributes.body.replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+  const newsBody = fullNews.attributes.body
+    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
+    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
+    .replaceAll('</table>', `</table></div>`)
 
   return (
     <Layout headerData={headerData} mainScreenData={mainScreenData} title={fullNews.attributes.title}>

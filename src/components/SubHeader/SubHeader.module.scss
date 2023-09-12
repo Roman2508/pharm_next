@@ -70,8 +70,9 @@
   position: absolute;
   left: 0;
   height: 100%;
-  aspect-ratio: 16 / 9;
-  min-width: 100%;
+  // aspect-ratio: 16 / 9;
+  // min-width: 100%;
+  width: 100%;
   background: transparent url('../../../public/assets/images/header/header-video-poster.jpg') 50% 50% / cover no-repeat;
 }
 

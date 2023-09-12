@@ -372,33 +372,33 @@ body {
 
 .col-9-12 {
   flex: 0 0 75%;
-  max-width: calc(75% - 30px);
-  margin-right: 60px;
+  max-width: calc(75% - 25px);
+  margin-right: 50px;
 }
 .col-8-12 {
   flex: 0 0 66.666666666%;
-  max-width: calc(66.666666666% - 30px);
-  margin-right: 60px;
+  max-width: calc(66.666666666% - 25px);
+  margin-right: 50px;
 }
 .col-7-12 {
   flex: 0 0 58.3333333333%;
-  max-width: calc(58.3333333333% - 30px);
+  max-width: calc(58.3333333333% - 25px);
 }
 .col-4-12 {
   flex: 0 0 33.333333333%;
-  max-width: calc(33.333333333% - 30px);
+  max-width: calc(33.333333333% - 25px);
 }
 .col-3-12 {
   flex: 0 0 25%;
-  max-width: calc(25% - 30px);
+  max-width: calc(25% - 25px);
 }
 .col-2-12 {
   flex: 0 0 16.66666666%;
-  max-width: calc(16.66666666% - 30px);
+  max-width: calc(16.66666666% - 25px);
 }
 .col-1-12 {
   flex: 0 0 8.333333333%;
-  max-width: calc(8.333333333% - 30px);
+  max-width: calc(8.333333333% - 25px);
 }
 
 /* // layout */
@@ -478,6 +478,31 @@ body {
     margin-left: 10px;
     max-width: calc(25% - 10px);
   }
+
+  .col-9-12 {
+    flex: 0 0 73%;
+    max-width: calc(73% - 30px);
+    margin-right: 30px;
+  }
+  .col-3-12 {
+    flex: 0 0 27%;
+    max-width: 27%;
+  }
+
+  // .col-8-12 {
+  //   flex: 0 0 66.666666666%;
+  //   max-width: calc(66.666666666% - 30px);
+  //   margin-right: 30px;
+  // }
+  // .col-8-12 {
+  //   flex: 0 0 66.666666666%;
+  //   max-width: calc(66.666666666% - 30px);
+  //   margin-right: 30px;
+  // }
+  // .col-7-12 {
+  //   flex: 0 0 58.3333333333%;
+  //   max-width: calc(58.3333333333% - 30px);
+  // }
 }
 
 @media (max-width: 1150px) {
@@ -489,5 +514,62 @@ body {
     flex: 0 0 100%;
     margin-left: 0px;
     max-width: 100%;
+  }
+}
+
+@media (max-width: 1024px) {
+  .col-9-12,
+  .col-8-12,
+  .col-7-12 {
+    flex: 0 0 100%;
+    max-width: 100%;
+    margin-right: 0;
+  }
+  .col-4-12,
+  .col-3-12,
+  .col-2-12,
+  .col-1-12 {
+    margin-top: 40px;
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .cmk-main-photo {
+    margin-bottom: 20px;
+    img {
+      max-height: none;
+    }
+  }
+}
+
+@media (max-width: 840px) {
+  .section-title {
+    font-size: 34px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section-title {
+    font-size: 30px;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-title {
+    font-size: 28px;
+    padding: 0 30px;
+  }
+}
+
+@media (max-width: 425px) {
+  .section-title {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 375px) {
+  .section-title {
+    font-size: 22px;
+    padding: 0 20px;
   }
 }

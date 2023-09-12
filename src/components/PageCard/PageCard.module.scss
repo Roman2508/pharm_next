@@ -53,3 +53,35 @@
   font-size: 18px;
   color: #fff;
 }
+
+@media (max-width: 1024px) {
+  .item {
+    width: calc(33.33333333% - 30px);
+  }
+}
+
+@media (max-width: 840px) {
+  .item {
+    width: calc(50% - 20px);
+    margin: 10px;
+  }
+}
+
+@media (max-width: 550px) {
+  .item {
+    width: 80%;
+    margin: 0 auto 20px auto;
+  }
+}
+
+@media (max-width: 425px) {
+  .item {
+    width: 90%;
+  }
+}
+
+@media (max-width: 425px) {
+  .item {
+    width: 100%;
+  }
+}

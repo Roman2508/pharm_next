@@ -3,6 +3,7 @@ import { GetStaticProps } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from './GeneralInfo.module.scss'
+import tableStyles from '../../components/ui/Table/Table.module.scss'
 import { GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
 
 interface IGeneralInfoProps {
@@ -63,20 +64,185 @@ const GeneralInfo: React.FC<IGeneralInfoProps> = ({ headerData, mainScreenData }
             </div>
           </div>
 
-          <table>
-            <body>
+          <table className={tableStyles['table']}>
+            <thead>
               <tr>
-                <td>Field of Expertise</td>
-                <td>Program Subject Area</td>
-                <td>Education Program</td>
-                <td>Educational Background</td>
-                <td>Form of Study</td>
-                <td>Term of Study</td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Field of Expertise</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Program Subject Area </strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Education Program</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Educational Background</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Form of Study </strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Term of Study</strong>
+                  </p>
+                </td>
               </tr>
-              <tr></tr>
-              <tr></tr>
-              <tr></tr>
-            </body>
+            </thead>
+
+            <tbody>
+              <tr>
+                <td colSpan={1} rowSpan={7}>
+                  <p>
+                    <strong>22 Health</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={5}>
+                  <p>
+                    <strong>226 Pharmacy, Industrial Pharmacy</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={5}>
+                  <p>
+                    <strong>Pharmacy</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={2}>
+                  <p>
+                    <strong>
+                      <a href="https://drive.google.com/file/d/1npa0f3KYWGm-639hG4Gm-1vywLYDC6Bo/view">
+                        І (baccalaureate)
+                      </a>
+                    </strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Intramural</strong> (on the basis of complete general secondary education)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>3 years</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Extramural</strong> (on the basis of education qualificational level junior specialist)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>2 years</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td colSpan={1} rowSpan={3}>
+                  <p>
+                    <strong>
+                      <a href="https://drive.google.com/drive/folders/186VHbPxrtxX9XAQAyUTu9JhlVaob4ghj">
+                        junior specialist,
+                      </a>
+                    </strong>
+                  </p>
+                  <p>
+                    <strong>
+                      <a href="https://drive.google.com/drive/folders/186VHbPxrtxX9XAQAyUTu9JhlVaob4ghj">
+                        Junior Bachelor
+                      </a>
+                    </strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Intramural</strong> (on the basis of basic general secondary education)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>3 years</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Intramural</strong> (on the basis of complete secondary education)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>2 years</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Extramural</strong> (on the basis of complete secondary education)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>2,5 years</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td colSpan={1} rowSpan={2}>
+                  <p>
+                    <strong>224 Technologies of Medical Diagnostics and Treatment</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={2}>
+                  <p>
+                    <strong>Laboratory Diagnostics</strong>
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={2}>
+                  junior specialist
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Intramural</strong> (on the basis of basic general secondary education)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>3 years</strong>
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td colSpan={1} rowSpan={1}>
+                  <p>
+                    <strong>Intramural</strong> (on the basis of complete secondary education)
+                  </p>
+                </td>
+                <td colSpan={1} rowSpan={1}>
+                  <strong>2 years</strong>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
