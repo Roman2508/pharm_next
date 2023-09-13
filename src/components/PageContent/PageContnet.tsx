@@ -46,7 +46,6 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
   React.useEffect(() => {
     setCurrentPage(1)
   }, [cmkTeachers])
-  console.log(cmkTeachers)
 
   return (
     <div className={colSize}>

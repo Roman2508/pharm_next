@@ -11,7 +11,7 @@
 .card__item {
   position: relative;
   margin: 15px;
-  width: calc(25% - 40px);
+  width: calc(25% - 30px);
   overflow: hidden;
   cursor: pointer;
   padding-bottom: 30px;
@@ -49,4 +49,45 @@
   font-family: GilroyRegular, sans-serif;
   font-size: 18px;
   color: #fff;
+}
+
+@media (max-width: 1024px) {
+  .card__item {
+    width: calc(33.333333333% - 30px);
+  }
+}
+
+@media (max-width: 768px) {
+  .card__wrapper {
+    justify-content: center;
+  }
+
+  .card__item {
+    width: 45%;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  .card__item {
+    width: 60%;
+  }
+}
+
+@media (max-width: 540px) {
+  .card__item {
+    width: 75%;
+  }
+}
+
+@media (max-width: 425px) {
+  .card__item {
+    width: 90%;
+  }
+}
+
+@media (max-width: 375px) {
+  .card__item {
+    width: 100%;
+  }
 }

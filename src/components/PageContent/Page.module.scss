@@ -299,6 +299,48 @@
   }
 }
 
+@media (max-width: 840px) {
+  .page-conent h1 {
+    font-size: 36px;
+  }
+  .page-conent h2 {
+    font-size: 32px;
+  }
+  .page-conent h3 {
+    font-size: 30px;
+  }
+  .page-conent h4 {
+    font-size: 28px;
+  }
+  .page-conent h5 {
+    font-size: 24px;
+  }
+  .page-conent h6 {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-conent h1 {
+    font-size: 32px;
+  }
+  .page-conent h2 {
+    font-size: 30px;
+  }
+  .page-conent h3 {
+    font-size: 28px;
+  }
+  .page-conent h4 {
+    font-size: 24px;
+  }
+  .page-conent h5 {
+    font-size: 22px;
+  }
+  .page-conent h6 {
+    font-size: 20px;
+  }
+}
+
 @media (max-width: 640px) {
   .page-conent p:has(img) {
     max-width: 100%;
@@ -316,6 +358,25 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+
+  .page-conent h1 {
+    font-size: 30px;
+  }
+  .page-conent h2 {
+    font-size: 28px;
+  }
+  .page-conent h3 {
+    font-size: 24px;
+  }
+  .page-conent h4 {
+    font-size: 22px;
+  }
+  .page-conent h5 {
+    font-size: 20px;
+  }
+  .page-conent h6 {
+    font-size: 18px;
+  }
 }
 
 @media (max-width: 550px) {
@@ -331,14 +392,60 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 426px) {
   .photo-item {
     max-width: 90% !important;
+  }
+
+  .page-conent p,
+  .page-conent p *,
+  .page-conent ul li,
+  .page-conent ul li *,
+  .page-conent table * {
+    font-size: 18px !important;
+  }
+
+  .page-conent h1 {
+    font-size: 28px;
+  }
+  .page-conent h2 {
+    font-size: 26px;
+  }
+  .page-conent h3 {
+    font-size: 24px;
+  }
+  .page-conent h4 {
+    font-size: 22px;
+  }
+  .page-conent h5 {
+    font-size: 20px;
+  }
+  .page-conent h6 {
+    font-size: 18px;
   }
 }
 
 @media (max-width: 375px) {
   .photo-item {
     max-width: 100% !important;
+  }
+
+  .page-conent h1 {
+    font-size: 26px;
+  }
+  .page-conent h2 {
+    font-size: 24px;
+  }
+  .page-conent h3 {
+    font-size: 22px;
+  }
+  .page-conent h4 {
+    font-size: 20px;
+  }
+  .page-conent h5 {
+    font-size: 18px;
+  }
+  .page-conent h6 {
+    font-size: 16px;
   }
 }

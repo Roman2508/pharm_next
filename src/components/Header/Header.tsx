@@ -35,8 +35,6 @@ const Header: React.FC<IHeaderProps> = ({ headerData }) => {
     }
   })
 
-  console.log(isOpenMobileMenu)
-
   const onCloseMobileMenu = () => {
     setIsOpenMobileMenu(false)
     setOpenSubmenuName('')

@@ -37,11 +37,12 @@
   flex-wrap: wrap;
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1150px) {
   .administration__list {
     justify-content: center;
   }
 }
+
 /* // administration */
 
 /* contacts */
@@ -49,7 +50,13 @@
   display: flex;
   flex-wrap: wrap;
 }
-.form{
+@media (max-width: 1250px) {
+  .contacts__items {
+    justify-content: center;
+  }
+}
+
+.form {
   margin-top: 20px;
 }
 /* // contacts */
