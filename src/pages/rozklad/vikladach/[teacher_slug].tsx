@@ -1,21 +1,22 @@
 import React from 'react'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetServerSideProps } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Rozklad.module.scss'
-import { GetHeaderQuery, GetMainScreenQuery, WorkerEntity, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, WorkerEntity, gql } from '@/graphql/client'
 
 interface ITeacherSchedulePageProps {
+  SEO: GetSeoQuery
   teacherData: WorkerEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
 }
 
-const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({ headerData, mainScreenData, teacherData }) => {
+const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({ SEO, headerData, mainScreenData, teacherData }) => {
   const calendarUrl = `https://calendar.google.com/calendar/embed?showTitle=0&showTz=0&mode=AGENDA&height=600&wkst=2&hl=uk_UA&bgcolor=%23FFFFFF&src=${teacherData.attributes.calendar_id}&ctz=Europe%2FKiev`
 
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Викладач">
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Викладач">
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           {teacherData.attributes.name}
@@ -53,11 +54,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return returnData
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
         teacherData: teacherData.workers.data[0],
@@ -65,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { teacherData: {}, headerData: {}, mainScreenData: {} } }
+    return { props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {} } }
   }
 }
 

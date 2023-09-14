@@ -4,18 +4,26 @@ import { GetServerSideProps, GetStaticProps } from 'next'
 import { Layout } from '@/layouts/Layout'
 import { News } from '@/components/News/News'
 import NewsArchive from '@/components/News/NewsArchive'
-import { GetAllNewsDatesQuery, GetHeaderQuery, GetMainScreenQuery, GetNewsQuery, gql } from '@/graphql/client'
+import {
+  GetAllNewsDatesQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  GetNewsQuery,
+  GetSeoQuery,
+  gql,
+} from '@/graphql/client'
 
 interface INewsPageProps {
+  SEO: GetSeoQuery
   newsData: GetNewsQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   newsDates: GetAllNewsDatesQuery
 }
 
-const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsData, newsDates }) => {
+const NewsPage: React.FC<INewsPageProps> = ({ SEO, headerData, mainScreenData, newsData, newsDates }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Всі новини
@@ -45,6 +53,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return returnData
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const newsDates = await gql.GetAllNewsDates()
@@ -85,6 +94,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     return {
       props: {
+        SEO,
         newsData,
         newsDates,
         headerData,
@@ -93,7 +103,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { headerData: {} } }
+    return { props: { SEO: {}, headerData: {}, newsData: {}, newsDates: {}, mainScreenData: {} } }
   }
 }
 

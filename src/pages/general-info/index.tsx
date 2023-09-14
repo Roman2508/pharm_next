@@ -4,16 +4,17 @@ import { GetStaticProps } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from './GeneralInfo.module.scss'
 import tableStyles from '../../components/ui/Table/Table.module.scss'
-import { GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 
 interface IGeneralInfoProps {
+  SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
 }
 
-const GeneralInfo: React.FC<IGeneralInfoProps> = ({ headerData, mainScreenData }) => {
+const GeneralInfo: React.FC<IGeneralInfoProps> = ({ SEO, headerData, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Zhytomyr College of Pharmacy">
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Zhytomyr College of Pharmacy">
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Zhytomyr College of Pharmacy
@@ -252,11 +253,13 @@ const GeneralInfo: React.FC<IGeneralInfoProps> = ({ headerData, mainScreenData }
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
       },
@@ -264,7 +267,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'general info page error')
-    return { props: { headerData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {} } }
   }
 }
 

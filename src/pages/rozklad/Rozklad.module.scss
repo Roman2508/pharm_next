@@ -15,7 +15,7 @@
 
 .section-name {
   font-size: 24px;
-  font-family: "GilroyBold", sans-serif;
+  font-family: 'GilroyBold', sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -49,4 +49,10 @@
   text-decoration: underline;
   // background-color: var(--primary-color);
   // color: #fff;
+}
+
+@media (max-width: 640px) {
+  .schedule-box iframe {
+    width: 100%;
+  }
 }

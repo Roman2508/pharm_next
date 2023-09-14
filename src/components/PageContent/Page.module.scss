@@ -297,6 +297,10 @@
   .teacher-wrapper {
     width: 50%;
   }
+
+  .page-conent td img {
+    min-width: 60px;
+  }
 }
 
 @media (max-width: 840px) {
@@ -318,6 +322,10 @@
   .page-conent h6 {
     font-size: 20px;
   }
+
+  .partner-item img {
+    max-height: 60px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -338,6 +346,10 @@
   }
   .page-conent h6 {
     font-size: 20px;
+  }
+
+  .partner-item img {
+    max-height: 50px;
   }
 }
 
@@ -377,6 +389,21 @@
   .page-conent h6 {
     font-size: 18px;
   }
+
+  .partner-item img {
+    max-height: 40px;
+  }
+
+  .full-size__wrapper {
+    flex-direction: column;
+  }
+  .full-size__content {
+    margin-top: -20px;
+  }
+  .full-size__title {
+    font-size: 28px !important;
+    text-align: center;
+  }
 }
 
 @media (max-width: 550px) {
@@ -389,6 +416,17 @@
       height: auto;
       max-height: 350px;
     }
+  }
+
+  .partner-item img {
+    max-height: 35px;
+  }
+
+  .full-size__title {
+    font-size: 24px !important;
+  }
+  .full-size__text {
+    font-size: 18px;
   }
 }
 
@@ -422,6 +460,10 @@
   }
   .page-conent h6 {
     font-size: 18px;
+  }
+
+  .full-size__text {
+    font-size: 16px;
   }
 }
 

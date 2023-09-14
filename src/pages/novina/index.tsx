@@ -1,26 +1,29 @@
 import React from 'react'
+import { GetStaticProps } from 'next'
 
 import { Layout } from '@/layouts/Layout'
-import { GetStaticProps } from 'next'
-import { GetAllNewsDatesQuery, GetHeaderQuery, GetMainScreenQuery, GetNewsQuery, gql } from '@/graphql/client'
 import { News } from '@/components/News/News'
-import groupNewsByYearsAndMonths from '@/utils/groupNewsByYearsAndMonths'
-import { Accordion } from '@/components/ui/Accordion/Accordion'
-import Link from 'next/link'
 import NewsArchive from '@/components/News/NewsArchive'
+import {
+  GetAllNewsDatesQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  GetNewsQuery,
+  GetSeoQuery,
+  gql,
+} from '@/graphql/client'
 
 interface INewsPageProps {
+  SEO: GetSeoQuery
   newsData: GetNewsQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   newsDates: GetAllNewsDatesQuery
 }
 
-const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsData, newsDates }) => {
-  // const newsYears = groupNewsByYearsAndMonths(newsDates)
-
+const NewsPage: React.FC<INewsPageProps> = ({ SEO, headerData, mainScreenData, newsData, newsDates }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Всі новини
@@ -41,6 +44,7 @@ const NewsPage: React.FC<INewsPageProps> = ({ headerData, mainScreenData, newsDa
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const newsData = await gql.GetNews({ pageSize: 6 })
@@ -48,6 +52,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
+        SEO,
         newsData,
         newsDates,
         headerData,
@@ -57,7 +62,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { headerData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, newsData: {}, newsDates: {} } }
   }
 }
 

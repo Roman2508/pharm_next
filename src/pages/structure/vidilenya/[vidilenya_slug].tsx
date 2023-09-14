@@ -5,17 +5,23 @@ import { GetServerSideProps, NextPage } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
-import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
+import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 
 interface IVidilenyaPageProps {
+  SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   vidilenyaData: CycleCommissionEntity
 }
 
-const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({ headerData, vidilenyaData, mainScreenData }) => {
+const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({ SEO, headerData, vidilenyaData, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title={vidilenyaData.attributes.SEO.title}>
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      title={vidilenyaData.attributes.SEO.title}
+    >
       <h1 className={`${styles['main-title']} section-title`}>{vidilenyaData.attributes.name}</h1>
 
       {/* {vidilenyaData.attributes.main_photo.data && (
@@ -94,11 +100,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       }
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
         vidilenyaData: vidilenyaData.vidilenyas.data[0],
@@ -106,7 +114,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'vidilenya page error')
-    return { props: { headerData: {}, mainScreenData: {}, vidilenyaData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {} } }
   }
 }
 

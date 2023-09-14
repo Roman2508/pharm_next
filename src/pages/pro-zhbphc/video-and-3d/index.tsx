@@ -1,84 +1,68 @@
-import React from "react"
-import { GetStaticProps, NextPage } from "next"
+import React from 'react'
+import { GetStaticProps, NextPage } from 'next'
 
-import { gql } from "@/graphql/client"
-import { Layout } from "@/layouts/Layout"
-import styles from "./VideoAnd3d.module.scss"
-import { Videos } from "@/components/Videos/Videos"
+import { gql } from '@/graphql/client'
+import { Layout } from '@/layouts/Layout'
+import styles from './VideoAnd3d.module.scss'
+import { Videos } from '@/components/Videos/Videos'
 import {
   GetAllVideosQuery,
   GetHeaderQuery,
   GetMainScreenQuery,
   GetPanoramsQuery,
-} from "@/graphql/__generated__"
-import FullScreenFrame from "@/components/FullScreenFrame/FullScreenFrame"
-import Image from "next/image"
+  GetSeoQuery,
+} from '@/graphql/__generated__'
+import FullScreenFrame from '@/components/FullScreenFrame/FullScreenFrame'
+import Image from 'next/image'
 
 interface IMTBazaPageProps {
+  SEO: GetSeoQuery
   videos: GetAllVideosQuery
   headerData: GetHeaderQuery
   panoramas: GetPanoramsQuery
   mainScreenData: GetMainScreenQuery
 }
 
-const VideoAnd3d: NextPage<IMTBazaPageProps> = ({
-  headerData,
-  mainScreenData,
-  videos,
-  panoramas,
-}) => {
+const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ SEO, headerData, mainScreenData, videos, panoramas }) => {
   const [isOpenFullScreen, setOpenFullScreen] = React.useState(false)
-  const [frameUrl, setFrameUrl] = React.useState("")
+  const [frameUrl, setFrameUrl] = React.useState('')
 
   const handleOpenFullScreenFrame = (url: string) => {
     console.log(url)
     setFrameUrl(url)
     setOpenFullScreen(true)
   }
-  console.log(panoramas)
+
   return (
-    <Layout
-      headerData={headerData}
-      mainScreenData={mainScreenData}
-      title="Відео і 3D-панорами"
-    >
-      <FullScreenFrame
-        isOpenFullScreen={isOpenFullScreen}
-        setOpenFullScreen={setOpenFullScreen}
-      >
-        <iframe
-          frameBorder="0"
-          width="90%"
-          height="90%"
-          src={frameUrl}
-          allowFullScreen
-        />
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Відео і 3D-панорами">
+      <FullScreenFrame isOpenFullScreen={isOpenFullScreen} setOpenFullScreen={setOpenFullScreen}>
+        <iframe frameBorder="0" width="90%" height="90%" src={frameUrl} allowFullScreen />
       </FullScreenFrame>
 
-      <div className={styles["subdivisions"]}>
-        <h1 className="section-title" style={{ marginBottom: "50px" }}>
+      <div className={styles['subdivisions']}>
+        <h1 className="section-title" style={{ marginBottom: '50px' }}>
           Відео і 3D-панорами
         </h1>
 
         <div className="container">
-          <div className={styles["card__wrapper"]}>
+          <div className={styles['card__wrapper']}>
             {panoramas.panoramas.data.map((el) => (
               <div
-                className={styles["card__item"]}
+                className={styles['card__item']}
                 key={el.id}
                 onClick={() => handleOpenFullScreenFrame(el.attributes.link)}
               >
                 <div className="scale-photo-hover scale-icon">
                   <Image
-                    className={styles["photo-element"]}
+                    className={styles['photo-element']}
                     src={`${process.env.API_URL}${el.attributes.poster.data.attributes.url}`}
                     alt={el.attributes.poster.data.attributes.name}
                     width={el.attributes.poster.data.attributes.width}
                     height={el.attributes.poster.data.attributes.height}
                   />
                 </div>
-                <div className={styles["card__text-box"]}>
-                  <p className={styles["card__text"]}>{el.attributes.title}</p>
+                <div className={styles['card__text-box']}>
+                  <p className={styles['card__text']}>{el.attributes.title}</p>
                 </div>
               </div>
             ))}
@@ -93,6 +77,7 @@ const VideoAnd3d: NextPage<IMTBazaPageProps> = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const videos = await gql.GetAllVideos()
@@ -100,6 +85,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
+        SEO,
         videos,
         panoramas,
         headerData,
@@ -108,8 +94,8 @@ export const getStaticProps: GetStaticProps = async () => {
       revalidate: 10,
     }
   } catch (error) {
-    console.log(error, "about page error")
-    return { props: { headerData: {} } }
+    console.log(error, 'about page error')
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, videos: {}, panoramas: {} } }
   }
 }
 

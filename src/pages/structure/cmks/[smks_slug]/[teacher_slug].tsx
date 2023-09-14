@@ -1,55 +1,43 @@
-import React from "react"
-import Link from "next/link"
-import { GetServerSideProps } from "next"
-import cn from "classnames"
+import React from 'react'
+import Link from 'next/link'
+import { GetServerSideProps } from 'next'
+import cn from 'classnames'
 
-import {
-  GetHeaderQuery,
-  GetMainScreenQuery,
-  WorkerEntity,
-  gql,
-} from "@/graphql/client"
-import { Layout } from "@/layouts/Layout"
-import styles from "./Teacher.module.scss"
-import pageStyles from "../../../../components/PageContent/Page.module.scss"
-import { FancyboxGallery } from "@/components/FancyboxGallery"
-import Image from "next/image"
+import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, WorkerEntity, gql } from '@/graphql/client'
+import { Layout } from '@/layouts/Layout'
+import styles from './Teacher.module.scss'
+import pageStyles from '../../../../components/PageContent/Page.module.scss'
+import { FancyboxGallery } from '@/components/FancyboxGallery'
+import Image from 'next/image'
 
 interface ITeacherPageProps {
+  SEO: GetSeoQuery
   teacher: WorkerEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
 }
 
 const tabs = [
-  { id: 1, text: "Загальна інформація" },
-  { id: 2, text: "Додаткова інформація" },
-  { id: 3, text: "Друковані праці" },
+  { id: 1, text: 'Загальна інформація' },
+  { id: 2, text: 'Додаткова інформація' },
+  { id: 3, text: 'Друковані праці' },
 ]
 
-const TeacherPage: React.FC<ITeacherPageProps> = ({
-  teacher,
-  headerData,
-  mainScreenData,
-}) => {
+const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, mainScreenData }) => {
   const [activeTab, setActiveTab] = React.useState(1)
 
   return (
-    <Layout
-      headerData={headerData}
-      mainScreenData={mainScreenData}
-      title={teacher.attributes.name}
-    >
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={teacher.attributes.name}>
       <div className="container">
         <h1 className="section-title">{teacher.attributes.name}</h1>
 
         <div className={styles.wrapper}>
-          <div className={styles["tabs-wrapper"]}>
+          <div className={styles['tabs-wrapper']}>
             <div className={styles.tabs}>
               {tabs.map((el) => (
                 <div
                   className={cn(styles.tab, {
-                    [styles["active-tab"]]: activeTab === el.id,
+                    [styles['active-tab']]: activeTab === el.id,
                   })}
                   onClick={() => setActiveTab(el.id)}
                   key={el.id}
@@ -61,13 +49,13 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({
           </div>
 
           {activeTab === 1 && (
-            <div className={styles.content}>
+            <div className={`${styles.content} ${styles['general-information']}`}>
               <div className={styles.img}>
                 <FancyboxGallery>
                   <a
                     data-fancybox="gallery"
                     href={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
-                    style={{ maxWidth: "200px" }}
+                    style={{ maxWidth: '200px' }}
                   >
                     <Image
                       src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
@@ -82,9 +70,9 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({
                   alt={teacher.attributes.name}
                 /> */}
               </div>
-              <div className={pageStyles["page-conent"]}>
+              <div className={pageStyles['page-conent']}>
                 <Link
-                  className={styles["mb-10"]}
+                  className={styles['mb-10']}
                   href={`/structure/cmks/${teacher.attributes.cycle_commission.data.attributes.slug}`}
                 >
                   {teacher.attributes.cycle_commission.data.attributes.name}
@@ -92,49 +80,37 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({
 
                 {teacher.attributes.email && (
                   <>
-                    <span className={styles["mb-10"]}>
+                    <span className={styles['mb-10']}>
                       <b>Електронна пошта:</b>
                     </span>
-                    <Link
-                      className={styles["mb-10"]}
-                      href={`mailto:${teacher.attributes.email}`}
-                    >
+                    <Link className={styles['mb-10']} href={`mailto:${teacher.attributes.email}`}>
                       {teacher.attributes.email}
                     </Link>
                   </>
                 )}
 
-                <span className={styles["mb-10"]}>
+                <span className={styles['mb-10']}>
                   <b>Навчальні предмети, які викладає:</b>
                 </span>
 
-                <ul style={{ marginBottom: "10px" }}>
+                <ul className={styles['lessons']}>
                   {teacher.attributes.lessons.data.map((lesson) => (
                     <li key={lesson.id}>«{lesson.attributes.name}»</li>
                   ))}
                 </ul>
 
-                <span className={styles["mb-10"]}>
-                  <b>
-                    Посада, науковий ступінь, вчене звання, кваліфікаційна
-                    категорія:
-                  </b>
+                <span className={styles['mb-10']}>
+                  <b>Посада, науковий ступінь, вчене звання, кваліфікаційна категорія:</b>
                 </span>
-                <p>
-                  {teacher.attributes.status
-                    ? teacher.attributes.status
-                    : teacher.attributes.position}
-                </p>
+                <p>{teacher.attributes.status ? teacher.attributes.status : teacher.attributes.position}</p>
 
-                <Link href={`/rozklad/vikladach/${teacher.attributes.slug}`}>
-                  Переглянути розклад викладача
-                </Link>
+                <Link href={`/rozklad/vikladach/${teacher.attributes.slug}`}>Переглянути розклад викладача</Link>
               </div>
             </div>
           )}
 
           {activeTab === 2 && (
-            <div className={cn(styles.content, pageStyles["page-conent"])}>
+            <div className={cn(styles.content, pageStyles['page-conent'])}>
               <div
                 dangerouslySetInnerHTML={{
                   __html: teacher.attributes.additional_information,
@@ -144,7 +120,7 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({
           )}
 
           {activeTab === 3 && (
-            <div className={cn(styles.content, pageStyles["page-conent"])}>
+            <div className={cn(styles.content, pageStyles['page-conent'])}>
               <div
                 dangerouslySetInnerHTML={{
                   __html: teacher.attributes.printed_works,
@@ -162,7 +138,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, teacher: {} },
-      redirect: { destination: "/404", permanent: false },
+      redirect: { destination: '/404', permanent: false },
     }
 
     if (!params || !params.teacher_slug) {
@@ -177,19 +153,21 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return returnData
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
         teacher: teacher.workers.data[0],
       },
     }
   } catch (error) {
-    console.log(error, "cmks page error")
-    return { props: { headerData: {}, mainScreenData: {}, cmkData: {} } }
+    console.log(error, 'cmks page error')
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
   }
 }
 

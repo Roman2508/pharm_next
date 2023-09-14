@@ -1,33 +1,29 @@
 import React from 'react'
-import Link from 'next/link'
 import { GetStaticProps } from 'next'
 
 import { Layout } from '@/layouts/Layout'
-import styles from './Rozklad.module.scss'
-import pageStyles from '../../components/PageContent/Page.module.scss'
 import {
   GetAllCycleCommissionsTeachersQuery,
   GetAllGroupsQuery,
-  GetAllTeachersQuery,
   GetHeaderQuery,
   GetMainScreenQuery,
-  GetNewsQuery,
+  GetSeoQuery,
   gql,
 } from '@/graphql/client'
-import { sortGroupsByDepartments } from '@/utils/sortGroupsByDepartments'
 import GroupSchedule from '@/components/GroupSchedule/GroupSchedule'
 import TeachersSchedule from '@/components/TeachersSchedule/TeachersSchedule'
 
 interface ISchedulePageProps {
+  SEO: GetSeoQuery
   groups: GetAllGroupsQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   cycleCommissions: GetAllCycleCommissionsTeachersQuery
 }
 
-const SchedulePage: React.FC<ISchedulePageProps> = ({ headerData, mainScreenData, cycleCommissions, groups }) => {
+const SchedulePage: React.FC<ISchedulePageProps> = ({ SEO, headerData, mainScreenData, cycleCommissions, groups }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Розклад">
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Розклад">
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Групи
@@ -51,9 +47,11 @@ export const getStaticProps: GetStaticProps = async () => {
     const mainScreenData = await gql.GetMainScreen()
     const cycleCommissions = await gql.GetAllCycleCommissionsTeachers()
     const groups = await gql.GetAllGroups()
+    const SEO = await gql.GetSEO()
 
     return {
       props: {
+        SEO,
         groups,
         headerData,
         mainScreenData,
@@ -63,7 +61,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { headerData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cycleCommission: {}, groups: {} } }
   }
 }
 

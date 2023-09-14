@@ -1,0 +1,13 @@
+query GetSEO {
+  seo {
+    data {
+      attributes {
+        SEO {
+          id
+          name
+          content
+        }
+      }
+    }
+  }
+}

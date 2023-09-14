@@ -17,11 +17,15 @@ interface Group {
 
 export const sortGroupsByDepartments = (groups: readonly any[]) => {
   const farmLab: Group[] = groups.filter(
-    (el) => el.attributes.vidilenya.data.attributes.name === 'Фармацевтично-лабораторне відділення'
+    (el) =>
+      el.attributes.vidilenya.data &&
+      el.attributes.vidilenya.data.attributes.name === 'Фармацевтично-лабораторне відділення'
   )
 
   const zaochnaForma: Group[] = groups.filter(
-    (el) => el.attributes.vidilenya.data.attributes.name === 'Відділення заочної форми навчання'
+    (el) =>
+      el.attributes.vidilenya.data &&
+      el.attributes.vidilenya.data.attributes.name === 'Відділення заочної форми навчання'
   )
 
   return {

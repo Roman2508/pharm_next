@@ -5,17 +5,18 @@ import { GetServerSideProps, NextPage } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from '../../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
-import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, gql } from '@/graphql/client'
+import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 
 interface ISmksPageProps {
+  SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   cmkData: CycleCommissionEntity
 }
 
-const SmksPage: NextPage<ISmksPageProps> = ({ headerData, cmkData, mainScreenData }) => {
+const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkData, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title={cmkData.attributes.SEO.title}>
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={cmkData.attributes.SEO.title}>
       <h1 className={`${styles['main-title']} section-title`}>{cmkData.attributes.name}</h1>
 
       {/* {cmkData.attributes.main_photo.data && (
@@ -115,11 +116,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       }
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
         cmkData: cmkData.cycleCommissions.data[0],
@@ -127,7 +130,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'cmks page error')
-    return { props: { headerData: {}, mainScreenData: {}, cmkData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
   }
 }
 

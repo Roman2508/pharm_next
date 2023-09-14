@@ -4,19 +4,20 @@ import { GetServerSideProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
-import { GetHeaderQuery, GetMainScreenQuery, SubdivisionEntity, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, SubdivisionEntity, gql } from '@/graphql/client'
 import Link from 'next/link'
 import PageCard from '@/components/PageCard/PageCard'
 
 interface SubdivPageProps {
+  SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   subdivList: SubdivisionEntity[]
 }
 
-const SubdivPage: NextPage<SubdivPageProps> = ({ headerData, subdivList, mainScreenData }) => {
+const SubdivPage: NextPage<SubdivPageProps> = ({ SEO, headerData, subdivList, mainScreenData }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title={'Підрозділи'}>
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={'Підрозділи'}>
       <h1 className={`${styles['main-title']} section-title`}>Підрозділи</h1>
 
       <div className="container">
@@ -41,9 +42,11 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const subdivList = await gql.GetAllSubdivision()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const SEO = await gql.GetSEO()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
         subdivList: subdivList.subdivisions.data,
@@ -51,7 +54,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'cmks page error')
-    return { props: { headerData: {}, mainScreenData: {}, cmkData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
   }
 }
 

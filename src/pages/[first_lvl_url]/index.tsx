@@ -4,18 +4,19 @@ import { GetServerSideProps, GetStaticProps } from 'next'
 
 import styles from './Page.module.scss'
 import { Layout } from '@/layouts/Layout'
-import { GetHeaderQuery, GetMainScreenQuery, PageEntity, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, PageEntity, gql } from '@/graphql/client'
 import PageContnet from '@/components/PageContent/PageContnet'
 
 interface IAdministrationProps {
+  SEO: GetSeoQuery
   pageData: PageEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreenData, pageData }) => {
+const Administration: React.FC<IAdministrationProps> = ({ SEO, headerData, mainScreenData, pageData }) => {
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title={pageData.attributes.SEO.title}>
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={pageData.attributes.SEO.title}>
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 
@@ -37,11 +38,17 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreen
               <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
               <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
             </div>
-          ) : String(pageData.attributes.layout) === 'col_2_7_4' ? (
+          ) : String(pageData.attributes.layout) === 'col_2_7_3' ? (
             <div className={cn('page-row', 'container')}>
               <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.left_sidebar} />
               <PageContnet colSize="col-7-12" pageComponents={pageData.attributes.page_components} />
               <PageContnet colSize="col-4-12" pageComponents={pageData.attributes.right_sidebar} />
+            </div>
+          ) : String(pageData.attributes.layout) === 'col_2_8_2' ? (
+            <div className={cn('page-row', 'container')}>
+              <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.left_sidebar} />
+              <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
+              <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.right_sidebar} />
             </div>
           ) : String(pageData.attributes.layout) === 'col_8_4' ? (
             <div className={cn('page-row', 'container')}>
@@ -66,7 +73,7 @@ const Administration: React.FC<IAdministrationProps> = ({ headerData, mainScreen
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const returnData = {
-      props: { headerData: {}, mainScreenData: {}, cmkData: {} },
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} },
       redirect: { destination: '/404', permanent: false },
     }
 
@@ -80,11 +87,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return returnData
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
 
     return {
       props: {
+        SEO,
         headerData,
         mainScreenData,
         pageData: pageData.pages.data[0],
@@ -92,52 +101,8 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'ERROR!')
-    return { props: { headerData: {}, mainScreenData: {}, pageData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, pageData: {} } }
   }
 }
 
 export default Administration
-// const headerData = await gql.GetHeader()
-// const mainScreenData = await gql.GetMainScreen()
-
-/* 
-    if (params && params.first_lvl_url) {
-      const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}` })
-
-      if (pageData.pages.data[0]) {
-        return {
-          props: {
-            headerData,
-            mainScreenData,
-            pageData: pageData.pages.data[0],
-          },
-        }
-      } else {
-        return {
-          props: {
-            pageData: {},
-            mainScreenData: {},
-            headerData: {},
-          },
-          redirect: {
-            // redirect to notFonundPage
-            destination: '/',
-            permanent: false,
-          },
-        }
-      }
-    } else {
-      return {
-        props: {
-          headerData: {},
-          mainScreenData: {},
-          pageData: {},
-        },
-        redirect: {
-          destination: '/',
-          permanent: false,
-        },
-      }
-    }
-   */
-//

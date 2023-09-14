@@ -1,6 +1,5 @@
 import React from 'react'
 import cn from 'classnames'
-import Link from 'next/link'
 import Image from 'next/image'
 import { GetServerSideProps, NextPage } from 'next'
 
@@ -8,6 +7,7 @@ import {
   GetAllNewsDatesQuery,
   GetHeaderQuery,
   GetMainScreenQuery,
+  GetSeoQuery,
   GetSomeLastNewsQuery,
   NovinaEntity,
   gql,
@@ -22,6 +22,7 @@ import { FancyboxGallery } from '@/components/FancyboxGallery'
 import { getVideoUrl } from '@/utils/getVideoUrl'
 
 interface IFullNewsPageProps {
+  SEO: GetSeoQuery
   fullNews: NovinaEntity
   headerData: GetHeaderQuery
   newsDates: GetAllNewsDatesQuery
@@ -30,11 +31,12 @@ interface IFullNewsPageProps {
 }
 
 const FullNewsPage: NextPage<IFullNewsPageProps> = ({
-  headerData,
-  mainScreenData,
+  SEO,
   fullNews,
   newsDates,
   resentNews,
+  headerData,
+  mainScreenData,
 }) => {
   const videoUrl = getVideoUrl(fullNews.attributes.video_url)
 
@@ -46,7 +48,7 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
     .replaceAll('</table>', `</table></div>`)
 
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title={fullNews.attributes.title}>
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={fullNews.attributes.title}>
       <div className="container">
         <div className="page-row">
           <div className={styles['col-2-12']}>
@@ -211,6 +213,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       return returnData
     }
 
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const newsDates = await gql.GetAllNewsDates()
     const mainScreenData = await gql.GetMainScreen()
@@ -218,6 +221,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     return {
       props: {
+        SEO,
         newsDates,
         headerData,
         resentNews,
@@ -227,7 +231,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { headerData: {}, mainScreenData: {}, fullNews: {}, newsDates: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, fullNews: {}, newsDates: {} } }
   }
 }
 

@@ -660,6 +660,7 @@ export enum Enum_Group_Specialty {
 export enum Enum_Page_Layout {
   Col_1_8_3 = 'col_1_8_3',
   Col_2_7_3 = 'col_2_7_3',
+  Col_2_8_2 = 'col_2_8_2',
   Col_8_4 = 'col_8_4',
   Col_9_3 = 'col_9_3',
   Col_12 = 'col_12'
@@ -789,7 +790,7 @@ export type FloatFilterInput = {
   readonly startsWith: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImage | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksFullSizePerson | ComponentPageBlocksPageCard | ComponentPageBlocksPageCards | ComponentPageBlocksPanorams | ComponentPageBlocksPartner | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | CycleCommission | Event | Group | Header | I18NLocale | Lesson | NewsTag | Novina | Page | Panorama | Partner | Subdivision | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Video | Vidilenya | Worker;
+export type GenericMorph = Advertisement | ComponentHeaderHeader | ComponentHeaderSubmenu1 | ComponentHeaderSubmenu2 | ComponentHeaderSubmenu3 | ComponentPageBlocksAccordion | ComponentPageBlocksBody | ComponentPageBlocksButtonImage | ComponentPageBlocksButtonImages | ComponentPageBlocksButtonLink | ComponentPageBlocksEducationBooks | ComponentPageBlocksFullSizePerson | ComponentPageBlocksPageCard | ComponentPageBlocksPageCards | ComponentPageBlocksPanorams | ComponentPageBlocksPartner | ComponentPageBlocksPartnersBlock | ComponentPageBlocksPerson | ComponentPageBlocksPhotosGallery | ComponentPageBlocksTwoColumnWithImage | ComponentPagesMeta | ComponentPagesSeo | ComponentUiIconButton | ComponentUiSocial | CycleCommission | Event | Group | Header | I18NLocale | Lesson | NewsTag | Novina | Page | Panorama | Partner | Seo | Subdivision | UploadFile | UploadFolder | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Video | Vidilenya | Worker;
 
 export type Group = {
   readonly __typename?: 'Group';
@@ -1061,6 +1062,7 @@ export type Mutation = {
   readonly deletePage: Maybe<PageEntityResponse>;
   readonly deletePanorama: Maybe<PanoramaEntityResponse>;
   readonly deletePartner: Maybe<PartnerEntityResponse>;
+  readonly deleteSeo: Maybe<SeoEntityResponse>;
   readonly deleteSubdivision: Maybe<SubdivisionEntityResponse>;
   readonly deleteUploadFile: Maybe<UploadFileEntityResponse>;
   readonly deleteUploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -1094,6 +1096,7 @@ export type Mutation = {
   readonly updatePage: Maybe<PageEntityResponse>;
   readonly updatePanorama: Maybe<PanoramaEntityResponse>;
   readonly updatePartner: Maybe<PartnerEntityResponse>;
+  readonly updateSeo: Maybe<SeoEntityResponse>;
   readonly updateSubdivision: Maybe<SubdivisionEntityResponse>;
   readonly updateUploadFile: Maybe<UploadFileEntityResponse>;
   readonly updateUploadFolder: Maybe<UploadFolderEntityResponse>;
@@ -1403,6 +1406,11 @@ export type MutationUpdatePanoramaArgs = {
 export type MutationUpdatePartnerArgs = {
   data: PartnerInput;
   id: Scalars['ID']['input'];
+};
+
+
+export type MutationUpdateSeoArgs = {
+  data: SeoInput;
 };
 
 
@@ -1800,6 +1808,7 @@ export type Query = {
   readonly panoramas: Maybe<PanoramaEntityResponseCollection>;
   readonly partner: Maybe<PartnerEntityResponse>;
   readonly partners: Maybe<PartnerEntityResponseCollection>;
+  readonly seo: Maybe<SeoEntityResponse>;
   readonly subdivision: Maybe<SubdivisionEntityResponse>;
   readonly subdivisions: Maybe<SubdivisionEntityResponseCollection>;
   readonly uploadFile: Maybe<UploadFileEntityResponse>;
@@ -2061,6 +2070,35 @@ export type QueryWorkersArgs = {
 export type ResponseCollectionMeta = {
   readonly __typename?: 'ResponseCollectionMeta';
   readonly pagination: Pagination;
+};
+
+export type Seo = {
+  readonly __typename?: 'Seo';
+  readonly SEO: Maybe<ReadonlyArray<Maybe<ComponentPagesMeta>>>;
+  readonly createdAt: Maybe<Scalars['DateTime']['output']>;
+  readonly updatedAt: Maybe<Scalars['DateTime']['output']>;
+};
+
+
+export type SeoSeoArgs = {
+  filters: InputMaybe<ComponentPagesMetaFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+export type SeoEntity = {
+  readonly __typename?: 'SeoEntity';
+  readonly attributes: Maybe<Seo>;
+  readonly id: Maybe<Scalars['ID']['output']>;
+};
+
+export type SeoEntityResponse = {
+  readonly __typename?: 'SeoEntityResponse';
+  readonly data: Maybe<SeoEntity>;
+};
+
+export type SeoInput = {
+  readonly SEO: InputMaybe<ReadonlyArray<InputMaybe<ComponentPagesMetaInput>>>;
 };
 
 export type StringFilterInput = {
@@ -2897,6 +2935,11 @@ export type GetPartnersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetPartnersQuery = { readonly __typename?: 'Query', readonly partners: { readonly __typename?: 'PartnerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'PartnerEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Partner', readonly name: string, readonly link: string, readonly presentation_link: string, readonly type: Enum_Partner_Type, readonly weight: number, readonly logo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly name: string, readonly width: number, readonly height: number } } } } }> } };
+
+export type GetSeoQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetSeoQuery = { readonly __typename?: 'Query', readonly seo: { readonly __typename?: 'SeoEntityResponse', readonly data: { readonly __typename?: 'SeoEntity', readonly attributes: { readonly __typename?: 'Seo', readonly SEO: ReadonlyArray<{ readonly __typename?: 'ComponentPagesMeta', readonly id: string, readonly name: string, readonly content: string }> } } } };
 
 export type GetSomeLastNewsQueryVariables = Exact<{
   newsCount?: InputMaybe<Scalars['Int']['input']>;
@@ -3995,6 +4038,21 @@ export const GetPartnersDocument = gql`
   }
 }
     `;
+export const GetSeoDocument = gql`
+    query GetSEO {
+  seo {
+    data {
+      attributes {
+        SEO {
+          id
+          name
+          content
+        }
+      }
+    }
+  }
+}
+    `;
 export const GetSomeLastNewsDocument = gql`
     query GetSomeLastNews($newsCount: Int = 5) {
   novinas(sort: "date:desc", pagination: {limit: $newsCount}) {
@@ -4271,6 +4329,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetPartners(variables?: GetPartnersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetPartnersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetPartnersQuery>(GetPartnersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetPartners', 'query');
+    },
+    GetSEO(variables?: GetSeoQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSeoQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetSeoQuery>(GetSeoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSEO', 'query');
     },
     GetSomeLastNews(variables?: GetSomeLastNewsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetSomeLastNewsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetSomeLastNewsQuery>(GetSomeLastNewsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetSomeLastNews', 'query');

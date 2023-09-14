@@ -10,6 +10,7 @@ import {
   GetAllTeachersFullInfoQuery,
   GetHeaderQuery,
   GetMainScreenQuery,
+  GetSeoQuery,
   WorkerEntity,
   gql,
 } from '@/graphql/client'
@@ -19,6 +20,7 @@ import SelectItem from '@/components/ui/Select/SelectItem'
 import Link from 'next/link'
 
 interface ITeachingStaffPageProps {
+  SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   teachers: GetAllTeachersFullInfoQuery
@@ -26,6 +28,7 @@ interface ITeachingStaffPageProps {
 }
 
 const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
+  SEO,
   headerData,
   mainScreenData,
   teachers,
@@ -57,7 +60,7 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
   }, [selectedCmk])
 
   return (
-    <Layout headerData={headerData} mainScreenData={mainScreenData} title="Викладацький склад">
+    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Викладацький склад">
       <div className="container">
         <div className={cn(styles['teachers__title'], 'section-title')}>Викладацький склад</div>
 
@@ -117,6 +120,7 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
 
 export const getStaticProps: GetStaticProps = async () => {
   try {
+    const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const teachers = await gql.GetAllTeachersFullInfo()
@@ -124,6 +128,7 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       props: {
+        SEO,
         teachers,
         headerData,
         mainScreenData,
@@ -135,6 +140,7 @@ export const getStaticProps: GetStaticProps = async () => {
     console.log(error, 'teachers page error')
     return {
       props: {
+        SEO: {},
         headerData: {},
         mainScreenData: {},
         teachers: {},
