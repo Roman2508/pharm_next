@@ -6,8 +6,10 @@ const nextConfig = {
     // formats: ['image/jpg', 'image/jpeg', 'image/png', 'image/svg'],
   },
   env: {
-    API_URL: "http://localhost:1337",
-    GRAPHQL_API_URL: "http://localhost:1337/graphql",
+    // API_URL: "http://localhost:1337",
+    // GRAPHQL_API_URL: "http://localhost:1337/graphql",
+    API_URL: "https://pharm-strapi.onrender.com",
+    GRAPHQL_API_URL: "https://pharm-strapi.onrender.com/graphql",
     SENDGRID_API_KEY:
       "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",
   },
