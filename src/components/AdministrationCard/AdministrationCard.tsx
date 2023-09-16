@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react"
 
-import styles from './AdministrationCard.module.scss'
-import Link from 'next/link'
-import Image from 'next/image'
-import { FancyboxGallery } from '../FancyboxGallery'
+import styles from "./AdministrationCard.module.scss"
+import Link from "next/link"
+import Image from "next/image"
+import { FancyboxGallery } from "../FancyboxGallery"
 
 interface IAdministrationCardProps {
   photo: string
@@ -19,27 +19,39 @@ interface IAdministrationCardProps {
 //   </a>
 // </FancyboxGallery>
 
-const AdministrationCard: React.FC<IAdministrationCardProps> = ({ photo, position, name, phone, mail }) => {
+const AdministrationCard: React.FC<IAdministrationCardProps> = ({
+  photo,
+  position,
+  name,
+  phone,
+  mail,
+}) => {
   return (
-    <div className={styles['administration__item']}>
-      <FancyboxGallery className={'page-gallery'}>
+    <div className={styles["administration__item"]}>
+      <FancyboxGallery className={"page-gallery"}>
         <a
-          className={styles['administration__item-top']}
+          className={styles["administration__item-top"]}
           data-fancybox="gallery"
           href={`${process.env.API_URL}${photo}`}
         >
-          <Image src={`${process.env.API_URL}${photo}`} width={300} height={400} alt="administration" />
-          <p className={styles['administration__item-position']}>{position}</p>
+          <Image
+            src={`${process.env.API_URL}${photo}`}
+            width={300}
+            height={400}
+            alt="administration"
+          />
+          <p className={styles["administration__item-position"]}>{position}</p>
         </a>
       </FancyboxGallery>
 
-      <div className={styles['administration__item-name']} href="#">
-        {name}
-      </div>
-      <a className={styles['administration__item-tel']} href="tel:0412242545">
+      <div className={styles["administration__item-name"]}>{name}</div>
+      <a className={styles["administration__item-tel"]} href="tel:0412242545">
         {phone}
       </a>
-      <a className={styles['administration__item-mail']} href="mailto:boychuck.iryna@pharm.zt.ua">
+      <a
+        className={styles["administration__item-mail"]}
+        href="mailto:boychuck.iryna@pharm.zt.ua"
+      >
         {mail}
       </a>
     </div>
