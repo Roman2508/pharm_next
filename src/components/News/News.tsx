@@ -5,7 +5,7 @@ import { NewsItem } from "./NewsItem"
 import Pagination from "./Pagination"
 import { gql } from "@/graphql/client"
 import styles from "./News.module.scss"
-import { GetNewsQuery } from "@/graphql/__generated__"
+import { GetNewsQuery, NovinaEntity } from "@/graphql/__generated__"
 import LoadingSpinner from "../LoadingSpinner/LoadingSpinner"
 
 interface INewsProps {
@@ -23,7 +23,7 @@ export const News: React.FC<INewsProps> = ({
 }) => {
   const firstRender = React.useRef(false)
 
-  const [news, setNews] = React.useState([])
+  const [news, setNews] = React.useState<NovinaEntity[]>([])
   const [currentPage, setCurrentPage] = React.useState(1)
   const [isLoading, setIsLoading] = React.useState(false)
 
@@ -33,6 +33,7 @@ export const News: React.FC<INewsProps> = ({
         try {
           setIsLoading(true)
           const data = await gql.GetNews({ currentPage, pageSize })
+          // @ts-ignore
           setNews(data.novinas.data)
         } catch (error) {
           alert("Помилка при отриманні даних!")
@@ -56,7 +57,6 @@ export const News: React.FC<INewsProps> = ({
         [styles["news--indent"]]: addMarginBottom,
       })}
     >
-      {/* <div className={'container'}> */}
       <div className={styles["news__inner"]}>
         {showTitle && (
           <h2 className={cn(styles["news__title"], "section-title")}>Новини</h2>
@@ -88,7 +88,6 @@ export const News: React.FC<INewsProps> = ({
           setCurrentPage={setCurrentPage}
         />
       </div>
-      {/* </div> */}
     </div>
   )
 }
