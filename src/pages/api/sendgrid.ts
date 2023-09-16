@@ -1,11 +1,13 @@
-import sendgrid from '@sendgrid/mail'
+import { NextApiRequest, NextApiResponse } from "next"
 
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY || '')
+import sendgrid from "@sendgrid/mail"
 
-async function sendEmail(req, res) {
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY || "")
+
+async function sendEmail(req: NextApiRequest, res: NextApiResponse) {
   try {
     await sendgrid.send({
-      to: 'noreply@pharm.zt.ua', // Your email where you'll receive emails
+      to: "noreply@pharm.zt.ua", // Your email where you'll receive emails
       from: req.body.email, // your website email address here
       subject: `[Повідомлення з сайту ЖБФФК] : ${req.body.subject}`,
       html: `
@@ -31,14 +33,14 @@ async function sendEmail(req, res) {
       </html>`,
     })
 
-    return res.status(200).json({ message: 'Повідомлення надіслано!' })
+    return res.status(200).json({ message: "Повідомлення надіслано!" })
   } catch (error) {
     console.log(error)
     // @ts-ignore
     return res.status(error.statusCode || 500).json({ error: error.message })
   }
 
-  return res.status(200).json({ error: '' })
+  return res.status(200).json({ error: "" })
 }
 
 export default sendEmail
