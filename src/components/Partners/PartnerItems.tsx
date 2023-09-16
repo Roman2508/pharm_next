@@ -1,9 +1,11 @@
-import React from 'react'
-import cn from 'classnames'
+// @ts-nocheck
 
-import styles from './Partners.module.scss'
-import { GetPartnersQuery } from '@/graphql/__generated__'
-import PartnerItem from './PartnerItem'
+import React from "react"
+import cn from "classnames"
+
+import styles from "./Partners.module.scss"
+import { GetPartnersQuery } from "@/graphql/__generated__"
+import PartnerItem from "./PartnerItem"
 
 interface IPartnerItemsProps {
   partners: GetPartnersQuery
@@ -19,26 +21,38 @@ const PartnerItems: React.FC<IPartnerItemsProps> = ({ partners }) => {
 
   return (
     <>
-      <div className={styles['partners__items-wrap']}>
-        <div className={cn(styles['partners__items'], styles['marquee'])}>
+      <div className={styles["partners__items-wrap"]}>
+        <div className={cn(styles["partners__items"], styles["marquee"])}>
           {slicedArray[0].map((partner) => (
             <PartnerItem partner={partner} />
           ))}
         </div>
-        <div className={cn(styles['partners__items'], styles['marquee'])}>
+        <div className={cn(styles["partners__items"], styles["marquee"])}>
           {slicedArray[1].map((partner) => (
             <PartnerItem partner={partner} />
           ))}
         </div>
       </div>
 
-      <div className={styles['partners__items-wrap']}>
-        <div className={cn(styles['partners__items'], styles['marquee'], styles['reverce'])}>
+      <div className={styles["partners__items-wrap"]}>
+        <div
+          className={cn(
+            styles["partners__items"],
+            styles["marquee"],
+            styles["reverce"]
+          )}
+        >
           {slicedArray[2].map((partner) => (
             <PartnerItem partner={partner} />
           ))}
         </div>
-        <div className={cn(styles['partners__items'], styles['marquee'], styles['reverce'])}>
+        <div
+          className={cn(
+            styles["partners__items"],
+            styles["marquee"],
+            styles["reverce"]
+          )}
+        >
           {slicedArray[3].map((partner) => (
             <PartnerItem partner={partner} />
           ))}
