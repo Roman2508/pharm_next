@@ -59,7 +59,7 @@ const Home: NextPage<IHomeProps> = ({
   )
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
