@@ -3,6 +3,7 @@ import React from 'react'
 import styles from './News.module.scss'
 import convertMonthName from '@/utils/convertMonthName'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface INewsItemProps {
   id: string
@@ -30,7 +31,13 @@ export const NewsItem: React.FC<INewsItemProps> = ({ id, title, mainPhoto, date,
           <span>{year}</span>
         </p>
         <Link href={newsUrl}>
-          <img className={styles['news__item-img']} src={`${process.env.API_URL}${mainPhoto}`} alt="news" />
+          <Image
+            className={styles['news__item-img']}
+            src={`${process.env.API_URL}${mainPhoto}`}
+            width={300}
+            height={200}
+            alt="news"
+          />
         </Link>
       </div>
       <div className={styles['news__item-col']}>

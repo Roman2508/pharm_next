@@ -5,6 +5,7 @@ import { Layout } from '@/layouts/Layout'
 import styles from './GeneralInfo.module.scss'
 import tableStyles from '../../components/ui/Table/Table.module.scss'
 import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
+import Image from 'next/image'
 
 interface IGeneralInfoProps {
   SEO: GetSeoQuery
@@ -50,7 +51,12 @@ const GeneralInfo: React.FC<IGeneralInfoProps> = ({ SEO, headerData, mainScreenD
               <div className={styles['section-name']}>Principal:</div>
               <div className={styles.principal}>
                 <div className={styles.img}>
-                  <img src="./assets/images/general-info/boychuk-irina-dmitrivna.jpg" alt="principal photo" />
+                  <Image
+                    src="/assets/images/general-info/boychuk-irina-dmitrivna.jpg"
+                    alt="principal photo"
+                    width={200}
+                    height={200}
+                  />
                 </div>
                 <div className={styles.info}>
                   <h4>Boichuk Iryna</h4>

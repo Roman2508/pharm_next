@@ -1,8 +1,9 @@
-"use client"
+'use client'
 
-import React from "react"
-import styles from "./MainScreen.module.scss"
-import { GetMainScreenQuery } from "@/graphql/__generated__"
+import React from 'react'
+import styles from './MainScreen.module.scss'
+import { GetMainScreenQuery } from '@/graphql/__generated__'
+import Image from 'next/image'
 
 interface IMainScreenProps {
   mainScreenData: GetMainScreenQuery
@@ -22,8 +23,8 @@ const MainScreen: React.FC<IMainScreenProps> = ({ mainScreenData }) => {
   }
 
   return (
-    <div className={styles["main-screen"]}>
-      <div className={styles["main-screen__video"]}>
+    <div className={styles['main-screen']}>
+      <div className={styles['main-screen__video']}>
         <video ref={videoRef} preload="none" autoPlay muted loop playsInline>
           <source
             src={`${process.env.API_URL}${mainScreenData?.header.data.attributes.Header.background.data.attributes.url}`}
@@ -32,13 +33,13 @@ const MainScreen: React.FC<IMainScreenProps> = ({ mainScreenData }) => {
         </video>
       </div>
 
-      <div className={styles["main-screen__content"]}>
-        <h1 className={styles["main-screen__title"]}>
-          {mainScreenData?.header.data.attributes.Header.title}
-        </h1>
-        <img
-          className={styles["main-screen__logo"]}
+      <div className={styles['main-screen__content']}>
+        <h1 className={styles['main-screen__title']}>{mainScreenData?.header.data.attributes.Header.title}</h1>
+        <Image
+          className={styles['main-screen__logo']}
           src={`${process.env.API_URL}${mainScreenData?.header.data.attributes.Header.logo.data.attributes.url}`}
+          width={160 || mainScreenData?.header.data.attributes.Header.logo.data.attributes.width}
+          height={160 || mainScreenData?.header.data.attributes.Header.logo.data.attributes.height}
           alt="logo"
         />
       </div>

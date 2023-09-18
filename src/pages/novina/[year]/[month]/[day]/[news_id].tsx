@@ -127,7 +127,12 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
 
             <div className={styles['full-news']}>
               <div className={styles['main-img']}>
-                <img src={`${process.env.API_URL}${fullNews.attributes.main_photo.data.attributes.url}`} alt="news" />
+                <Image
+                  src={`${process.env.API_URL}${fullNews.attributes.main_photo.data.attributes.url}`}
+                  width={fullNews.attributes.main_photo.data.attributes.width}
+                  height={fullNews.attributes.main_photo.data.attributes.height}
+                  alt="news"
+                />
               </div>
 
               <div className={pageStyles['page-conent']}>

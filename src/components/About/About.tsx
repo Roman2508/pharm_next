@@ -3,6 +3,7 @@ import cn from 'classnames'
 
 import styles from './About.module.scss'
 import Link from 'next/link'
+import Image from 'next/image'
 
 interface IAboutProps {
   titleVisible?: boolean
@@ -39,7 +40,13 @@ const About: React.FC<IAboutProps> = ({ titleVisible = true, buttonVisible = tru
           </div>
 
           <div className={styles['about__image']}>
-            <img src="./assets/images/about/about-bg.png" alt="college photo" />
+            <Image
+              src="/assets/images/about/about-bg.png"
+              width={400}
+              height={400}
+              layout="responsive"
+              alt="college photo"
+            />
           </div>
         </div>
       </div>

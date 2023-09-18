@@ -216,6 +216,8 @@
 
 .partner-item img {
   max-height: 80px;
+  max-width: 250px;
+  object-fit: contain;
   transition: transform 0.3s ease-in;
 }
 
@@ -266,6 +268,7 @@
 .button-images__wrapper {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 .button-images__link {
   max-width: calc(33.333333333% - 20px);
@@ -275,8 +278,8 @@
   align-items: center;
 }
 .button-images__img {
-  // max-width: 33.333333333%;
   width: 100%;
+  height: auto;
 }
 /* // button-images */
 

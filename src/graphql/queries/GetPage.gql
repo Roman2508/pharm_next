@@ -18,6 +18,8 @@ query GetPage($pageUrl: String) {
           data {
             attributes {
               url
+              width
+              height
             }
           }
         }

@@ -6,6 +6,7 @@ import styles from '../Page.module.scss'
 import { Layout } from '@/layouts/Layout'
 import PageContnet from '@/components/PageContent/PageContnet'
 import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, PageEntity, gql } from '@/graphql/client'
+import Image from 'next/image'
 
 interface IPageProps {
   SEO: GetSeoQuery
@@ -23,8 +24,10 @@ const Page: React.FC<IPageProps> = ({ SEO, headerData, mainScreenData, pageData 
         {pageData.attributes.main_photo.data && (
           <div className="container">
             <div className={'main-photo-page'}>
-              <img
+              <Image
                 src={`${process.env.API_URL}${pageData.attributes.main_photo.data.attributes.url}`}
+                width={pageData.attributes.main_photo.data.attributes.width || 800}
+                height={pageData.attributes.main_photo.data.attributes.height || 400}
                 alt="main page photo"
               />
             </div>
