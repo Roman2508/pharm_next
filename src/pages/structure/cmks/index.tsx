@@ -1,12 +1,10 @@
 import React from 'react'
-import cn from 'classnames'
 import { GetServerSideProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
-import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
-import Link from 'next/link'
 import PageCard from '@/components/PageCard/PageCard'
+import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 
 interface ISmksPageProps {
   SEO: GetSeoQuery
@@ -37,18 +35,7 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkList, mainScre
   )
 }
 
-/* 
-            <Link key={el.id} className={styles['item']} href={`cmks/${el.attributes.slug}`}>
-              <div className={cn(styles['photo'], 'scale-photo-hover', 'hand-pointer')}>
-                <img src={`${process.env.API_URL}${el.attributes.main_photo.data.attributes.url}`} alt="subdivisions" />
-              </div>
-              <div className={styles['text-box']}>
-                <p className={styles['text']}>{el.attributes.name}</p>
-              </div>
-            </Link>
-*/
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
     const cmkList = await gql.GetAllCycleCommissions()
     const headerData = await gql.GetHeader()

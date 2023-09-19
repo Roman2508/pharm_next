@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../../Structure.module.scss'
@@ -98,7 +98,24 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkData, mainScre
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const cmks = await gql.GetAllCycleCommissionsSlug()
+
+  if (!cmks.cycleCommissions.data.length) {
+    return {
+      paths: [],
+      fallback: false,
+    }
+  }
+
+  const paths = cmks.cycleCommissions.data.map((el) => ({ params: { smks_slug: el.attributes.slug } }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     if (!params || !params.smks_slug) {
       return {
@@ -133,5 +150,41 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   try {
+//     if (!params || !params.smks_slug) {
+//       return {
+//         props: { headerData: {}, mainScreenData: {}, cmkData: {} },
+//         redirect: { destination: '/404', permanent: false },
+//       }
+//     }
+
+//     const cmkData = await gql.GetCycleCommission({ pageUrl: `/${params.smks_slug}` })
+
+//     if (!cmkData.cycleCommissions.data[0]) {
+//       return {
+//         props: { headerData: {}, mainScreenData: {}, cmkData: {} },
+//         redirect: { destination: '/404', permanent: false },
+//       }
+//     }
+
+//     const SEO = await gql.GetSEO()
+//     const headerData = await gql.GetHeader()
+//     const mainScreenData = await gql.GetMainScreen()
+
+//     return {
+//       props: {
+//         SEO,
+//         headerData,
+//         mainScreenData,
+//         cmkData: cmkData.cycleCommissions.data[0],
+//       },
+//     }
+//   } catch (error) {
+//     console.log(error, 'cmks page error')
+//     return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
+//   }
+// }
 
 export default SmksPage

@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import { GetServerSideProps, NextPage } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
@@ -77,7 +77,25 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainS
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const cmks = await gql.GetAllSubdivisionSlug()
+
+  if (!cmks.subdivisions.data.length) {
+    return {
+      paths: [],
+      fallback: false,
+    }
+  }
+
+  const paths = cmks.subdivisions.data.map((el) => ({ params: { subdiv_slug: el.attributes.slug } }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     if (!params || !params.subdiv_slug) {
       return {
@@ -85,20 +103,16 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         redirect: { destination: '/404', permanent: false },
       }
     }
-
     const subdivData = await gql.GetSubdiv({ subdivSlug: `${params.subdiv_slug}` })
-
     if (!subdivData.subdivisions.data[0]) {
       return {
         props: { headerData: {}, mainScreenData: {}, subdivData: {} },
         redirect: { destination: '/404', permanent: false },
       }
     }
-
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
-
     return {
       props: {
         SEO,
@@ -112,5 +126,41 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {} } }
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   try {
+//     if (!params || !params.subdiv_slug) {
+//       return {
+//         props: { headerData: {}, mainScreenData: {}, subdivData: {} },
+//         redirect: { destination: '/404', permanent: false },
+//       }
+//     }
+
+//     const subdivData = await gql.GetSubdiv({ subdivSlug: `${params.subdiv_slug}` })
+
+//     if (!subdivData.subdivisions.data[0]) {
+//       return {
+//         props: { headerData: {}, mainScreenData: {}, subdivData: {} },
+//         redirect: { destination: '/404', permanent: false },
+//       }
+//     }
+
+//     const SEO = await gql.GetSEO()
+//     const headerData = await gql.GetHeader()
+//     const mainScreenData = await gql.GetMainScreen()
+
+//     return {
+//       props: {
+//         SEO,
+//         headerData,
+//         mainScreenData,
+//         subdivData: subdivData.subdivisions.data[0],
+//       },
+//     }
+//   } catch (error) {
+//     console.log(error, 'subdiv page error')
+//     return { props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {} } }
+//   }
+// }
 
 export default SmksPage

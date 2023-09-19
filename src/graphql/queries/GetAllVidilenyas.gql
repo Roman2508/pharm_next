@@ -18,3 +18,13 @@ query GetAllVidilenyas {
     }
   }
 }
+
+query GetAllVidilenyaSlug {
+  vidilenyas(pagination: { pageSize: 100 }) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}

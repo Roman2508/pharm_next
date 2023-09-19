@@ -1,5 +1,5 @@
 import React from 'react'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Rozklad.module.scss'
@@ -37,7 +37,25 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({ SEO, headerData,
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const cmks = await gql.GetGroupSchedule()
+
+  if (!cmks.groups.data.length) {
+    return {
+      paths: [],
+      fallback: false,
+    }
+  }
+
+  const paths = cmks.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, groupData: {} },
@@ -71,5 +89,40 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {} } }
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   try {
+//     const returnData = {
+//       props: { headerData: {}, mainScreenData: {}, groupData: {} },
+//       redirect: { destination: '/404', permanent: false },
+//     }
+
+//     if (!params || !params.group_name || typeof params.group_name !== 'string') {
+//       return returnData
+//     }
+
+//     const teacherData = await gql.GetGroupSchedule({ groupName: params.group_name })
+
+//     if (!teacherData.groups.data[0]) {
+//       return returnData
+//     }
+
+//     const SEO = await gql.GetSEO()
+//     const headerData = await gql.GetHeader()
+//     const mainScreenData = await gql.GetMainScreen()
+
+//     return {
+//       props: {
+//         SEO,
+//         headerData,
+//         mainScreenData,
+//         groupData: teacherData.groups.data[0],
+//       },
+//     }
+//   } catch (error) {
+//     console.log(error, 'news page error')
+//     return { props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {} } }
+//   }
+// }
 
 export default GroupSchedulePage

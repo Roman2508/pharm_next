@@ -1,6 +1,6 @@
 import React from 'react'
 import cn from 'classnames'
-import { GetServerSideProps, GetStaticProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 
 import styles from '../../Page.module.scss'
 import { Layout } from '@/layouts/Layout'
@@ -72,8 +72,37 @@ const Administration: React.FC<IAdministrationProps> = ({ SEO, headerData, mainS
   )
 }
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const pagesUrl = await gql.GetAllPagesUrl()
+
+  if (!pagesUrl.pages.data.length) {
+    return {
+      paths: [],
+      fallback: 'blocking',
+    }
+  }
+
+  const paths = pagesUrl.pages.data.map((el) => {
+    const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
+
+    // if(arr.length === 1) {} else if(arr.length === 1) {}else if(arr.length === 1) {}
+
+    return {
+      params: {
+        first_lvl_url: arr[0] || '',
+        second_lvl_url: arr[1] || '',
+        third_lvl_url: arr[2] || '',
+      },
+    }
+  })
+
+  return {
+    paths,
+    fallback: true,
+  }
+}
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
       props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} },
@@ -103,11 +132,49 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         mainScreenData,
         pageData: pageData.pages.data[0],
       },
+      revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'default page error')
     return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {} } }
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   try {
+//     const returnData = {
+//       props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} },
+//       redirect: { destination: '/404', permanent: false },
+//     }
+
+//     if (!params || !params.first_lvl_url || !params.second_lvl_url || !params.third_lvl_url) {
+//       return returnData
+//     }
+
+//     const pageData = await gql.GetPage({
+//       pageUrl: `/${params.first_lvl_url}/${params.second_lvl_url}/${params.third_lvl_url}`,
+//     })
+
+//     if (!pageData.pages.data[0]) {
+//       return returnData
+//     }
+
+//     const SEO = await gql.GetSEO()
+//     const headerData = await gql.GetHeader()
+//     const mainScreenData = await gql.GetMainScreen()
+
+//     return {
+//       props: {
+//         SEO,
+//         headerData,
+//         mainScreenData,
+//         pageData: pageData.pages.data[0],
+//       },
+//     }
+//   } catch (error) {
+//     console.log(error, 'default page error')
+//     return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {} } }
+//   }
+// }
 
 export default Administration

@@ -81,7 +81,6 @@ export const getServerSideProps: GetStaticProps = async () => {
         advertisments,
         mainScreenData,
       },
-      revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'home page error')

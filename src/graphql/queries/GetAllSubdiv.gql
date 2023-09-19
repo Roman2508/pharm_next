@@ -19,3 +19,13 @@ query GetAllSubdivision {
     }
   }
 }
+
+query GetAllSubdivisionSlug {
+  subdivisions(pagination: { pageSize: 100 }) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}

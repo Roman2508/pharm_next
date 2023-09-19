@@ -2821,6 +2821,11 @@ export type GetAllCycleCommissionsQueryVariables = Exact<{ [key: string]: never;
 
 export type GetAllCycleCommissionsQuery = { readonly __typename?: 'Query', readonly cycleCommissions: { readonly __typename?: 'CycleCommissionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'CycleCommissionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'CycleCommission', readonly name: string, readonly slug: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } }> } };
 
+export type GetAllCycleCommissionsSlugQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllCycleCommissionsSlugQuery = { readonly __typename?: 'Query', readonly cycleCommissions: { readonly __typename?: 'CycleCommissionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'CycleCommissionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } }> } };
+
 export type GetAllEventsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -2836,15 +2841,30 @@ export type GetAllNewsDatesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetAllNewsDatesQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly date: any } }> } };
 
+export type GetAllPagesUrlQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllPagesUrlQuery = { readonly __typename?: 'Query', readonly pages: { readonly __typename?: 'PageEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'PageEntity', readonly attributes: { readonly __typename?: 'Page', readonly page_url: string } }> } };
+
 export type GetAllSubdivisionQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllSubdivisionQuery = { readonly __typename?: 'Query', readonly subdivisions: { readonly __typename?: 'SubdivisionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'SubdivisionEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Subdivision', readonly name: string, readonly slug: string, readonly page_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } }> } };
 
+export type GetAllSubdivisionSlugQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllSubdivisionSlugQuery = { readonly __typename?: 'Query', readonly subdivisions: { readonly __typename?: 'SubdivisionEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'SubdivisionEntity', readonly attributes: { readonly __typename?: 'Subdivision', readonly slug: string } }> } };
+
 export type GetAllTeachersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllTeachersQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string } }> } };
+
+export type GetAllTeachersWithCycleCommissionQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllTeachersWithCycleCommissionQuery = { readonly __typename?: 'Query', readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string, readonly cycle_commission: { readonly __typename?: 'CycleCommissionEntityResponse', readonly data: { readonly __typename?: 'CycleCommissionEntity', readonly attributes: { readonly __typename?: 'CycleCommission', readonly slug: string } } } } }> } };
 
 export type GetAllTeachersFullInfoQueryVariables = Exact<{
   cmkName?: InputMaybe<Scalars['String']['input']>;
@@ -2862,6 +2882,11 @@ export type GetAllVidilenyasQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetAllVidilenyasQuery = { readonly __typename?: 'Query', readonly vidilenyas: { readonly __typename?: 'VidilenyaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'VidilenyaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Vidilenya', readonly name: string, readonly slug: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } } } }> } };
+
+export type GetAllVidilenyaSlugQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllVidilenyaSlugQuery = { readonly __typename?: 'Query', readonly vidilenyas: { readonly __typename?: 'VidilenyaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'VidilenyaEntity', readonly attributes: { readonly __typename?: 'Vidilenya', readonly slug: string } }> } };
 
 export type GetCycleCommissionQueryVariables = Exact<{
   pageUrl: InputMaybe<Scalars['String']['input']>;
@@ -3336,6 +3361,18 @@ export const GetAllCycleCommissionsDocument = gql`
   }
 }
     `;
+export const GetAllCycleCommissionsSlugDocument = gql`
+    query GetAllCycleCommissionsSlug {
+  cycleCommissions(pagination: {pageSize: 100}) {
+    data {
+      id
+      attributes {
+        slug
+      }
+    }
+  }
+}
+    `;
 export const GetAllEventsDocument = gql`
     query GetAllEvents {
   events(pagination: {pageSize: 100}) {
@@ -3393,6 +3430,17 @@ export const GetAllNewsDatesDocument = gql`
   }
 }
     `;
+export const GetAllPagesUrlDocument = gql`
+    query GetAllPagesUrl {
+  pages(pagination: {pageSize: 500}) {
+    data {
+      attributes {
+        page_url
+      }
+    }
+  }
+}
+    `;
 export const GetAllSubdivisionDocument = gql`
     query GetAllSubdivision {
   subdivisions(pagination: {pageSize: 100}) {
@@ -3416,6 +3464,17 @@ export const GetAllSubdivisionDocument = gql`
   }
 }
     `;
+export const GetAllSubdivisionSlugDocument = gql`
+    query GetAllSubdivisionSlug {
+  subdivisions(pagination: {pageSize: 100}) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}
+    `;
 export const GetAllTeachersDocument = gql`
     query GetAllTeachers {
   workers(
@@ -3427,6 +3486,29 @@ export const GetAllTeachersDocument = gql`
       attributes {
         name
         slug
+      }
+    }
+  }
+}
+    `;
+export const GetAllTeachersWithCycleCommissionDocument = gql`
+    query GetAllTeachersWithCycleCommission {
+  workers(
+    filters: {category: {in: ["teacher"]}}
+    sort: "name:asc"
+    pagination: {pageSize: 500}
+  ) {
+    data {
+      attributes {
+        name
+        slug
+        cycle_commission {
+          data {
+            attributes {
+              slug
+            }
+          }
+        }
       }
     }
   }
@@ -3513,6 +3595,17 @@ export const GetAllVidilenyasDocument = gql`
             }
           }
         }
+      }
+    }
+  }
+}
+    `;
+export const GetAllVidilenyaSlugDocument = gql`
+    query GetAllVidilenyaSlug {
+  vidilenyas(pagination: {pageSize: 100}) {
+    data {
+      attributes {
+        slug
       }
     }
   }
@@ -4275,6 +4368,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     GetAllCycleCommissions(variables?: GetAllCycleCommissionsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllCycleCommissionsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllCycleCommissionsQuery>(GetAllCycleCommissionsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllCycleCommissions', 'query');
     },
+    GetAllCycleCommissionsSlug(variables?: GetAllCycleCommissionsSlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllCycleCommissionsSlugQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllCycleCommissionsSlugQuery>(GetAllCycleCommissionsSlugDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllCycleCommissionsSlug', 'query');
+    },
     GetAllEvents(variables?: GetAllEventsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllEventsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllEventsQuery>(GetAllEventsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllEvents', 'query');
     },
@@ -4284,11 +4380,20 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     GetAllNewsDates(variables?: GetAllNewsDatesQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllNewsDatesQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllNewsDatesQuery>(GetAllNewsDatesDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllNewsDates', 'query');
     },
+    GetAllPagesUrl(variables?: GetAllPagesUrlQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllPagesUrlQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllPagesUrlQuery>(GetAllPagesUrlDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllPagesUrl', 'query');
+    },
     GetAllSubdivision(variables?: GetAllSubdivisionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllSubdivisionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllSubdivisionQuery>(GetAllSubdivisionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllSubdivision', 'query');
     },
+    GetAllSubdivisionSlug(variables?: GetAllSubdivisionSlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllSubdivisionSlugQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllSubdivisionSlugQuery>(GetAllSubdivisionSlugDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllSubdivisionSlug', 'query');
+    },
     GetAllTeachers(variables?: GetAllTeachersQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllTeachersQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllTeachersQuery>(GetAllTeachersDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllTeachers', 'query');
+    },
+    GetAllTeachersWithCycleCommission(variables?: GetAllTeachersWithCycleCommissionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllTeachersWithCycleCommissionQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllTeachersWithCycleCommissionQuery>(GetAllTeachersWithCycleCommissionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllTeachersWithCycleCommission', 'query');
     },
     GetAllTeachersFullInfo(variables?: GetAllTeachersFullInfoQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllTeachersFullInfoQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllTeachersFullInfoQuery>(GetAllTeachersFullInfoDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllTeachersFullInfo', 'query');
@@ -4298,6 +4403,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetAllVidilenyas(variables?: GetAllVidilenyasQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllVidilenyasQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetAllVidilenyasQuery>(GetAllVidilenyasDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllVidilenyas', 'query');
+    },
+    GetAllVidilenyaSlug(variables?: GetAllVidilenyaSlugQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllVidilenyaSlugQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllVidilenyaSlugQuery>(GetAllVidilenyaSlugDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllVidilenyaSlug', 'query');
     },
     GetCycleCommission(variables?: GetCycleCommissionQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetCycleCommissionQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetCycleCommissionQuery>(GetCycleCommissionDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetCycleCommission', 'query');

@@ -18,3 +18,14 @@ query GetAllCycleCommissions {
     }
   }
 }
+
+query GetAllCycleCommissionsSlug {
+  cycleCommissions(pagination: { pageSize: 100 }) {
+    data {
+      id
+      attributes {
+        slug
+      }
+    }
+  }
+}

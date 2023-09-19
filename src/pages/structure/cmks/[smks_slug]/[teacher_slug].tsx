@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { GetServerSideProps } from 'next'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import cn from 'classnames'
 
 import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, WorkerEntity, gql } from '@/graphql/client'
@@ -134,29 +134,46 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, ma
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const teachers = await gql.GetAllTeachersWithCycleCommission()
+
+  if (!teachers.workers.data.length) {
+    return {
+      paths: [],
+      fallback: false,
+    }
+  }
+
+  const paths = teachers.workers.data.map((el) => ({
+    params: {
+      teacher_slug: el.attributes.slug || '',
+      smks_slug: el.attributes.cycle_commission.data.attributes.slug || '',
+    },
+  }))
+
+  return {
+    paths,
+    fallback: false,
+  }
+}
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, teacher: {} },
       redirect: { destination: '/404', permanent: false },
     }
-
     if (!params || !params.teacher_slug) {
       return returnData
     }
-
     const teacher = await gql.GetOneTeacher({
       teacherSlug: `${params.teacher_slug}`,
     })
-
     if (!teacher.workers.data.length) {
       return returnData
     }
-
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
-
     return {
       props: {
         SEO,
@@ -170,5 +187,42 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
   }
 }
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
+//   try {
+//     const returnData = {
+//       props: { headerData: {}, mainScreenData: {}, teacher: {} },
+//       redirect: { destination: '/404', permanent: false },
+//     }
+
+//     if (!params || !params.teacher_slug) {
+//       return returnData
+//     }
+
+//     const teacher = await gql.GetOneTeacher({
+//       teacherSlug: `${params.teacher_slug}`,
+//     })
+
+//     if (!teacher.workers.data.length) {
+//       return returnData
+//     }
+
+//     const SEO = await gql.GetSEO()
+//     const headerData = await gql.GetHeader()
+//     const mainScreenData = await gql.GetMainScreen()
+
+//     return {
+//       props: {
+//         SEO,
+//         headerData,
+//         mainScreenData,
+//         teacher: teacher.workers.data[0],
+//       },
+//     }
+//   } catch (error) {
+//     console.log(error, 'cmks page error')
+//     return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
+//   }
+// }
 
 export default TeacherPage
