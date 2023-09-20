@@ -3,7 +3,14 @@ import Link from 'next/link'
 import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import cn from 'classnames'
 
-import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, WorkerEntity, gql } from '@/graphql/client'
+import {
+  GetHeaderQuery,
+  GetHeaderScheduleQuery,
+  GetMainScreenQuery,
+  GetSeoQuery,
+  WorkerEntity,
+  gql,
+} from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from './Teacher.module.scss'
 import pageStyles from '../../../../components/PageContent/Page.module.scss'
@@ -15,6 +22,7 @@ interface ITeacherPageProps {
   teacher: WorkerEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
 const tabs = [
@@ -23,11 +31,17 @@ const tabs = [
   { id: 3, text: 'Друковані праці' },
 ]
 
-const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, mainScreenData }) => {
+const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, mainScreenData, headerSchedule }) => {
   const [activeTab, setActiveTab] = React.useState(1)
 
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={teacher.attributes.name}>
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      title={teacher.attributes.name}
+      headerSchedule={headerSchedule}
+    >
       <div className="container">
         <h1 className="section-title">{teacher.attributes.name}</h1>
 
@@ -159,32 +173,39 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
-      props: { headerData: {}, mainScreenData: {}, teacher: {} },
+      props: { headerData: {}, mainScreenData: {}, teacher: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: false },
     }
+
     if (!params || !params.teacher_slug) {
       return returnData
     }
+
     const teacher = await gql.GetOneTeacher({
       teacherSlug: `${params.teacher_slug}`,
     })
+
     if (!teacher.workers.data.length) {
       return returnData
     }
+
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
+
     return {
       props: {
         SEO,
         headerData,
         mainScreenData,
+        headerSchedule,
         teacher: teacher.workers.data[0],
       },
     }
   } catch (error) {
     console.log(error, 'cmks page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} } }
   }
 }
 

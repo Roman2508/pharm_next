@@ -2903,7 +2903,7 @@ export type GetFullNewsQueryVariables = Exact<{
 export type GetFullNewsQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly name: string, readonly width: number, readonly height: number } } }, readonly collage_photos: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly name: string, readonly width: number, readonly height: number } }> }, readonly news_tags: { readonly __typename?: 'NewsTagRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NewsTagEntity', readonly attributes: { readonly __typename?: 'NewsTag', readonly title: string } }> } } }> } };
 
 export type GetGroupScheduleQueryVariables = Exact<{
-  groupName?: InputMaybe<Scalars['String']['input']>;
+  groupName: InputMaybe<Scalars['String']['input']>;
 }>;
 
 
@@ -2913,6 +2913,11 @@ export type GetHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
 export type GetHeaderQuery = { readonly __typename?: 'Query', readonly header: { readonly __typename?: 'HeaderEntityResponse', readonly data: { readonly __typename?: 'HeaderEntity', readonly attributes: { readonly __typename?: 'Header', readonly Header: { readonly __typename?: 'ComponentHeaderHeader', readonly navigation: ReadonlyArray<{ readonly __typename?: 'ComponentHeaderSubmenu1', readonly id: string, readonly text: string, readonly link: string, readonly submenu: ReadonlyArray<{ readonly __typename?: 'ComponentHeaderSubmenu2', readonly id: string, readonly text: string, readonly link: string, readonly submenu: ReadonlyArray<{ readonly __typename?: 'ComponentHeaderSubmenu3', readonly id: string, readonly text: string, readonly link: string }> }> }>, readonly headerIcons: ReadonlyArray<{ readonly __typename?: 'ComponentUiIconButton', readonly id: string, readonly text: string, readonly link: string, readonly icon: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly formats: any } } } }>, readonly social: { readonly __typename?: 'ComponentUiSocial', readonly text: string, readonly icons: ReadonlyArray<{ readonly __typename?: 'ComponentUiIconButton', readonly id: string, readonly text: string, readonly link: string, readonly icon: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly formats: any } } } }> } } } } } };
+
+export type GetHeaderScheduleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetHeaderScheduleQuery = { readonly __typename?: 'Query', readonly groups: { readonly __typename?: 'GroupEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'GroupEntity', readonly attributes: { readonly __typename?: 'Group', readonly name: string } }> }, readonly workers: { readonly __typename?: 'WorkerEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'WorkerEntity', readonly attributes: { readonly __typename?: 'Worker', readonly name: string, readonly slug: string } }> } };
 
 export type GetMainScreenQueryVariables = Exact<{ [key: string]: never; }>;
 
@@ -3776,7 +3781,7 @@ export const GetFullNewsDocument = gql`
 }
     `;
 export const GetGroupScheduleDocument = gql`
-    query GetGroupSchedule($groupName: String = "101") {
+    query GetGroupSchedule($groupName: String) {
   groups(filters: {name: {in: [$groupName]}}) {
     data {
       attributes {
@@ -3804,6 +3809,29 @@ export const GetHeaderDocument = gql`
     ${GetNavigationFragmentDoc}
 ${GetHeaderIconsFragmentDoc}
 ${GetHeaderSocialFragmentDoc}`;
+export const GetHeaderScheduleDocument = gql`
+    query GetHeaderSchedule {
+  groups(sort: "name:asc", pagination: {pageSize: 500}) {
+    data {
+      attributes {
+        name
+      }
+    }
+  }
+  workers(
+    filters: {category: {in: ["teacher"]}}
+    sort: "name:asc"
+    pagination: {pageSize: 500}
+  ) {
+    data {
+      attributes {
+        name
+        slug
+      }
+    }
+  }
+}
+    `;
 export const GetMainScreenDocument = gql`
     query GetMainScreen {
   header {
@@ -4418,6 +4446,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetHeader(variables?: GetHeaderQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHeaderQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHeaderQuery>(GetHeaderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHeader', 'query');
+    },
+    GetHeaderSchedule(variables?: GetHeaderScheduleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHeaderScheduleQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetHeaderScheduleQuery>(GetHeaderScheduleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHeaderSchedule', 'query');
     },
     GetMainScreen(variables?: GetMainScreenQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetMainScreenQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetMainScreenQuery>(GetMainScreenDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetMainScreen', 'query');

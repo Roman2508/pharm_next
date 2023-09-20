@@ -1,19 +1,20 @@
 import React from 'react'
+import Image from 'next/image'
 import { GetStaticProps, NextPage } from 'next'
 
-import { gql } from '@/graphql/client'
-import { Layout } from '@/layouts/Layout'
-import styles from './VideoAnd3d.module.scss'
-import { Videos } from '@/components/Videos/Videos'
 import {
   GetAllVideosQuery,
   GetHeaderQuery,
+  GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetPanoramsQuery,
   GetSeoQuery,
 } from '@/graphql/__generated__'
+import { gql } from '@/graphql/client'
+import { Layout } from '@/layouts/Layout'
+import styles from './VideoAnd3d.module.scss'
+import { Videos } from '@/components/Videos/Videos'
 import FullScreenFrame from '@/components/FullScreenFrame/FullScreenFrame'
-import Image from 'next/image'
 
 interface IMTBazaPageProps {
   SEO: GetSeoQuery
@@ -21,9 +22,17 @@ interface IMTBazaPageProps {
   headerData: GetHeaderQuery
   panoramas: GetPanoramsQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ SEO, headerData, mainScreenData, videos, panoramas }) => {
+const VideoAnd3d: NextPage<IMTBazaPageProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  videos,
+  panoramas,
+  headerSchedule,
+}) => {
   const [isOpenFullScreen, setOpenFullScreen] = React.useState(false)
   const [frameUrl, setFrameUrl] = React.useState('')
 
@@ -34,7 +43,13 @@ const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ SEO, headerData, mainScreenDat
   }
 
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Відео і 3D-панорами">
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      title="Відео і 3D-панорами"
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+    >
       <FullScreenFrame isOpenFullScreen={isOpenFullScreen} setOpenFullScreen={setOpenFullScreen}>
         <iframe frameBorder="0" width="90%" height="90%" src={frameUrl} allowFullScreen />
       </FullScreenFrame>
@@ -78,10 +93,11 @@ const VideoAnd3d: NextPage<IMTBazaPageProps> = ({ SEO, headerData, mainScreenDat
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
-    const headerData = await gql.GetHeader()
-    const mainScreenData = await gql.GetMainScreen()
     const videos = await gql.GetAllVideos()
+    const headerData = await gql.GetHeader()
     const panoramas = await gql.GetPanorams()
+    const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
@@ -89,13 +105,14 @@ export const getStaticProps: GetStaticProps = async () => {
         videos,
         panoramas,
         headerData,
+        headerSchedule,
         mainScreenData,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'about page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, videos: {}, panoramas: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, videos: {}, panoramas: {}, headerSchedule: {} } }
   }
 }
 

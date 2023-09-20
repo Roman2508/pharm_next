@@ -6,6 +6,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import {
   GetAllNewsDatesQuery,
   GetHeaderQuery,
+  GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetSeoQuery,
   GetSomeLastNewsQuery,
@@ -14,12 +15,12 @@ import {
 } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from '../../../Novina.module.scss'
-import pageStyles from '../../../../../components/PageContent/Page.module.scss'
+import { getVideoUrl } from '@/utils/getVideoUrl'
 import NewsArchive from '@/components/News/NewsArchive'
 import convertMonthName from '@/utils/convertMonthName'
 import { ResentNews } from '@/components/News/ResentNews'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
-import { getVideoUrl } from '@/utils/getVideoUrl'
+import pageStyles from '../../../../../components/PageContent/Page.module.scss'
 
 interface IFullNewsPageProps {
   SEO: GetSeoQuery
@@ -28,6 +29,7 @@ interface IFullNewsPageProps {
   newsDates: GetAllNewsDatesQuery
   resentNews: GetSomeLastNewsQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
 const FullNewsPage: NextPage<IFullNewsPageProps> = ({
@@ -37,6 +39,7 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
   resentNews,
   headerData,
   mainScreenData,
+  headerSchedule,
 }) => {
   const videoUrl = getVideoUrl(fullNews.attributes.video_url)
 
@@ -48,7 +51,13 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
     .replaceAll('</table>', `</table></div>`)
 
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={fullNews.attributes.title}>
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      title={fullNews.attributes.title}
+      headerSchedule={headerSchedule}
+    >
       <div className="container">
         <div className="page-row">
           <div className={styles['col-2-12']}>
@@ -222,6 +231,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     const headerData = await gql.GetHeader()
     const newsDates = await gql.GetAllNewsDates()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
     const resentNews = await gql.GetSomeLastNews({ newsCount: 5 })
 
     return {
@@ -230,13 +240,14 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         newsDates,
         headerData,
         resentNews,
+        headerSchedule,
         mainScreenData,
         fullNews: fullNews.novinas.data[0],
       },
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, fullNews: {}, newsDates: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, fullNews: {}, newsDates: {}, headerSchedule: {} } }
   }
 }
 

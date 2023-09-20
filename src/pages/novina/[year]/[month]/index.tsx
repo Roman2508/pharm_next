@@ -7,6 +7,7 @@ import NewsArchive from '@/components/News/NewsArchive'
 import {
   GetAllNewsDatesQuery,
   GetHeaderQuery,
+  GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetNewsQuery,
   GetSeoQuery,
@@ -17,13 +18,27 @@ interface INewsPageProps {
   SEO: GetSeoQuery
   newsData: GetNewsQuery
   headerData: GetHeaderQuery
-  mainScreenData: GetMainScreenQuery
   newsDates: GetAllNewsDatesQuery
+  mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const NewsPage: React.FC<INewsPageProps> = ({ SEO, headerData, mainScreenData, newsData, newsDates }) => {
+const NewsPage: React.FC<INewsPageProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  newsData,
+  newsDates,
+  headerSchedule,
+}) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
+    <Layout
+      SEO={SEO}
+      title="Всі новини"
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+    >
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Всі новини
@@ -55,8 +70,9 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
-    const mainScreenData = await gql.GetMainScreen()
     const newsDates = await gql.GetAllNewsDates()
+    const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     let maxDayInMonth = ''
 
@@ -98,12 +114,13 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
         newsData,
         newsDates,
         headerData,
+        headerSchedule,
         mainScreenData,
       },
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, headerData: {}, newsData: {}, newsDates: {}, mainScreenData: {} } }
+    return { props: { SEO: {}, headerData: {}, newsData: {}, newsDates: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 

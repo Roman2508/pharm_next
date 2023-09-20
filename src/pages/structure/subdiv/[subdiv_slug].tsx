@@ -1,22 +1,36 @@
 import React from 'react'
 import cn from 'classnames'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
-import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
+import {
+  CycleCommissionEntity,
+  GetHeaderQuery,
+  GetHeaderScheduleQuery,
+  GetMainScreenQuery,
+  GetSeoQuery,
+  gql,
+} from '@/graphql/client'
 
 interface ISmksPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
-  mainScreenData: GetMainScreenQuery
   subdivData: CycleCommissionEntity
+  mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainScreenData }) => {
+const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainScreenData, headerSchedule }) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={subdivData.attributes.SEO.title}>
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+      title={subdivData.attributes.SEO.title}
+    >
       <h1 className={`${styles['main-title']} section-title`}>{subdivData.attributes.name}</h1>
 
       {/* {subdivData.attributes.main_photo.data && (
@@ -99,31 +113,37 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     if (!params || !params.subdiv_slug) {
       return {
-        props: { headerData: {}, mainScreenData: {}, subdivData: {} },
+        props: { headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
         redirect: { destination: '/404', permanent: false },
       }
     }
+
     const subdivData = await gql.GetSubdiv({ subdivSlug: `${params.subdiv_slug}` })
+
     if (!subdivData.subdivisions.data[0]) {
       return {
         props: { headerData: {}, mainScreenData: {}, subdivData: {} },
         redirect: { destination: '/404', permanent: false },
       }
     }
+
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
+
     return {
       props: {
         SEO,
         headerData,
+        headerSchedule,
         mainScreenData,
         subdivData: subdivData.subdivisions.data[0],
       },
     }
   } catch (error) {
     console.log(error, 'subdiv page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} } }
   }
 }
 

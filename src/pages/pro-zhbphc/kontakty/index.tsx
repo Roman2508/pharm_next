@@ -2,6 +2,13 @@ import React from 'react'
 import { GetStaticProps, NextPage } from 'next'
 import { SubmitHandler, Controller, useForm } from 'react-hook-form'
 
+import {
+  GetAdministrationQuery,
+  GetHeaderQuery,
+  GetHeaderScheduleQuery,
+  GetMainScreenQuery,
+  GetSeoQuery,
+} from '@/graphql/__generated__'
 import { gql } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from '../ProZhbphc.module.scss'
@@ -12,13 +19,13 @@ import Select from '@/components/ui/Select/Select'
 import SelectItem from '@/components/ui/Select/SelectItem'
 import { Textarea } from '@/components/ui/Textarea/Textarea'
 import ContactsItem from '@/components/Contacts/ContactsItem'
-import { GetAdministrationQuery, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery } from '@/graphql/__generated__'
 
 interface IContactsPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   administration: GetAdministrationQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
 export interface IFormFields {
@@ -35,7 +42,13 @@ const topicList = [
   { id: 4, text: 'Питання про вступ' },
 ]
 
-const Contacts: NextPage<IContactsPageProps> = ({ SEO, headerData, mainScreenData, administration }) => {
+const Contacts: NextPage<IContactsPageProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  administration,
+  headerSchedule,
+}) => {
   const {
     control,
     register,
@@ -68,7 +81,13 @@ const Contacts: NextPage<IContactsPageProps> = ({ SEO, headerData, mainScreenDat
   }
 
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Контакти">
+    <Layout
+      SEO={SEO}
+      title="Контакти"
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+    >
       <div className="contacts">
         <div className="container">
           <h1 className="section-title">Контакти</h1>
@@ -177,6 +196,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const administration = await gql.GetAdministration()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
@@ -184,12 +204,13 @@ export const getStaticProps: GetStaticProps = async () => {
         headerData,
         mainScreenData,
         administration,
+        headerSchedule,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'about page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, administration: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, administration: {}, headerSchedule: {} } }
   }
 }
 

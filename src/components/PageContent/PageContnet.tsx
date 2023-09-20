@@ -7,14 +7,14 @@ import Image from 'next/image'
 
 import styles from './Page.module.scss'
 import personStyles from './PersonComponent.module.scss'
-import panoramsStyles from './PanoramsComponent.module.scss'
-import twoColImageStyles from './TwoColumnWithImage.module.scss'
-import linkStyles from './ButtonLinkComponent.module.scss'
+// import panoramsStyles from './PanoramsComponent.module.scss'
+// import twoColImageStyles from './TwoColumnWithImage.module.scss'
+// import linkStyles from './ButtonLinkComponent.module.scss'
 
-import { FancyboxGallery } from '../FancyboxGallery'
-import { Accordion } from '../ui/Accordion/Accordion'
+// import { FancyboxGallery } from '../FancyboxGallery'
+// import { Accordion } from '../ui/Accordion/Accordion'
 import { PagePageComponentsDynamicZone, UploadFileEntity, Worker, WorkerEntity } from '@/graphql/__generated__'
-import FullScreenFrame from '../FullScreenFrame/FullScreenFrame'
+// import FullScreenFrame from '../FullScreenFrame/FullScreenFrame'
 import ButtonImages from '../PageComponents/ButtonImages'
 import EducationBooks from '../PageComponents/EducationBooks'
 import FullSizePerson from '../PageComponents/FullSizePerson'
@@ -189,7 +189,7 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
         } else if (component.component_type === 'two_col_with_image') {
           return <TwoColWithImage component={component} key={component.id} colSize={colSize} />
         } else if (component.component_type === 'panoramas') {
-          return <PanoramsComponent component={component} key={component.id} />
+          return <PanoramsComponent component={component} key={component.id} colSize={colSize} />
         } else if (component.component_type === 'accordion') {
           return <AccordionComponent component={component} key={component.id} colSize={colSize} />
         } else if (component.component_type === 'photos_gallery') {

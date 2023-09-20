@@ -1,4 +1,4 @@
-query GetGroupSchedule($groupName: String = "101") {
+query GetGroupSchedule($groupName: String) {
   groups(filters: { name: { in: [$groupName] } }) {
     data {
       attributes {

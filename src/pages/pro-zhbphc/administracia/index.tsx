@@ -5,18 +5,38 @@ import styles from '../ProZhbphc.module.scss'
 import { Layout } from '@/layouts/Layout'
 import AdministrationCard from '@/components/AdministrationCard/AdministrationCard'
 import { GetStaticProps } from 'next'
-import { GetAdministrationQuery, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
+import {
+  GetAdministrationQuery,
+  GetHeaderQuery,
+  GetHeaderScheduleQuery,
+  GetMainScreenQuery,
+  GetSeoQuery,
+  gql,
+} from '@/graphql/client'
 
 interface IAdministrationProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   administration: GetAdministrationQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ SEO, headerData, mainScreenData, administration }) => {
+const Administration: React.FC<IAdministrationProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  administration,
+  headerSchedule,
+}) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Адміністрація">
+    <Layout
+      SEO={SEO}
+      title="Адміністрація"
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+    >
       <div className={styles['administration']}>
         <div className="container">
           <div className={`${styles['administration__title']} section-title`}>Адміністрація</div>
@@ -44,6 +64,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const administration = await gql.GetAdministration()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
@@ -51,12 +72,13 @@ export const getStaticProps: GetStaticProps = async () => {
         headerData,
         mainScreenData,
         administration,
+        headerSchedule,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'about page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, administration: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, administration: {}, headerSchedule: {} } }
   }
 }
 

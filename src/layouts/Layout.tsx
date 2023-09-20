@@ -4,7 +4,7 @@ import Header from '@/components/Header/Header'
 import SubHeader from '@/components/SubHeader/SubHeader'
 import Breadcrumbs from '@/components/Breadcrumbs/Breadcrumbs'
 import { Footer } from '@/components/Footer/Footer'
-import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery } from '@/graphql/__generated__'
+import { GetHeaderQuery, GetHeaderScheduleQuery, GetMainScreenQuery, GetSeoQuery } from '@/graphql/__generated__'
 
 interface ILayoutProps {
   title?: string
@@ -12,6 +12,7 @@ interface ILayoutProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
 export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
@@ -20,6 +21,7 @@ export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
   SEO,
   headerData,
   mainScreenData,
+  headerSchedule,
 }) => {
   return (
     <>
@@ -39,7 +41,7 @@ export const Layout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         />
       </Head>
       <main>
-        <Header headerData={headerData} />
+        <Header headerData={headerData} headerSchedule={headerSchedule} />
         <SubHeader mainScreenData={mainScreenData} />
         <Breadcrumbs />
         {children}

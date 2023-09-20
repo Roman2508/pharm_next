@@ -1,24 +1,39 @@
 import React from 'react'
 import cn from 'classnames'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
+import { GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
+import {
+  gql,
+  GetSeoQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  CycleCommissionEntity,
+  GetHeaderScheduleQuery,
+} from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
-import { CycleCommissionEntity, GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 
 interface IVidilenyaPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   vidilenyaData: CycleCommissionEntity
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({ SEO, headerData, vidilenyaData, mainScreenData }) => {
+const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({
+  SEO,
+  headerData,
+  vidilenyaData,
+  mainScreenData,
+  headerSchedule,
+}) => {
   return (
     <Layout
       SEO={SEO}
       headerData={headerData}
+      headerSchedule={headerSchedule}
       mainScreenData={mainScreenData}
       title={vidilenyaData.attributes.SEO.title}
     >
@@ -108,27 +123,33 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         redirect: { destination: '/404', permanent: false },
       }
     }
+
     const vidilenyaData = await gql.GetVidilenya({ vidilenyaSlug: `${params.vidilenya_slug}` })
+
     if (!vidilenyaData.vidilenyas.data[0]) {
       return {
         props: { headerData: {}, mainScreenData: {}, vidilenyaData: {} },
         redirect: { destination: '/404', permanent: false },
       }
     }
+
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
+
     return {
       props: {
         SEO,
         headerData,
         mainScreenData,
+        headerSchedule,
         vidilenyaData: vidilenyaData.vidilenyas.data[0],
       },
     }
   } catch (error) {
     console.log(error, 'vidilenya page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {}, headerSchedule: {} } }
   }
 }
 

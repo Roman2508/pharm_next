@@ -7,6 +7,7 @@ import NewsArchive from '@/components/News/NewsArchive'
 import {
   GetAllNewsDatesQuery,
   GetHeaderQuery,
+  GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetNewsQuery,
   GetSeoQuery,
@@ -19,11 +20,25 @@ interface INewsPageProps {
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   newsDates: GetAllNewsDatesQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const NewsPage: React.FC<INewsPageProps> = ({ SEO, headerData, mainScreenData, newsData, newsDates }) => {
+const NewsPage: React.FC<INewsPageProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  newsData,
+  newsDates,
+  headerSchedule,
+}) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Всі новини">
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      title="Всі новини"
+      headerSchedule={headerSchedule}
+    >
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Всі новини
@@ -49,6 +64,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const mainScreenData = await gql.GetMainScreen()
     const newsData = await gql.GetNews({ pageSize: 6 })
     const newsDates = await gql.GetAllNewsDates()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
@@ -57,12 +73,13 @@ export const getStaticProps: GetStaticProps = async () => {
         newsDates,
         headerData,
         mainScreenData,
+        headerSchedule,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, newsData: {}, newsDates: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, newsData: {}, newsDates: {}, headerSchedule: {} } }
   }
 }
 

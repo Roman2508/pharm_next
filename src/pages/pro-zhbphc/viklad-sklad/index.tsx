@@ -9,6 +9,7 @@ import {
   GetAllCycleCommissionsQuery,
   GetAllTeachersFullInfoQuery,
   GetHeaderQuery,
+  GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetSeoQuery,
   WorkerEntity,
@@ -24,14 +25,16 @@ interface ITeachingStaffPageProps {
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   teachers: GetAllTeachersFullInfoQuery
+  headerSchedule: GetHeaderScheduleQuery
   cycleCommissions: GetAllCycleCommissionsQuery
 }
 
 const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
   SEO,
-  headerData,
-  mainScreenData,
   teachers,
+  headerData,
+  headerSchedule,
+  mainScreenData,
   cycleCommissions,
 }) => {
   const [selectedCmk, setSelectedCmk] = React.useState('')
@@ -60,7 +63,13 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
   }, [selectedCmk])
 
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Викладацький склад">
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      title="Викладацький склад"
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+    >
       <div className="container">
         <div className={cn(styles['teachers__title'], 'section-title')}>Викладацький склад</div>
 
@@ -124,6 +133,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const teachers = await gql.GetAllTeachersFullInfo()
+    const headerSchedule = await gql.GetHeaderSchedule()
     const cycleCommissions = await gql.GetAllCycleCommissions()
 
     return {
@@ -131,6 +141,7 @@ export const getStaticProps: GetStaticProps = async () => {
         SEO,
         teachers,
         headerData,
+        headerSchedule,
         mainScreenData,
         cycleCommissions,
       },
@@ -141,9 +152,10 @@ export const getStaticProps: GetStaticProps = async () => {
     return {
       props: {
         SEO: {},
+        teachers: {},
         headerData: {},
         mainScreenData: {},
-        teachers: {},
+        headerSchedule: {},
         cycleCommissions: {},
       },
     }

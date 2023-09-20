@@ -1,20 +1,22 @@
 import React from 'react'
 import { GetStaticProps } from 'next'
 
-import { Layout } from '@/layouts/Layout'
 import {
-  GetAllCycleCommissionsTeachersQuery,
+  gql,
+  GetSeoQuery,
   GetHeaderQuery,
   GetMainScreenQuery,
-  GetSeoQuery,
-  gql,
+  GetHeaderScheduleQuery,
+  GetAllCycleCommissionsTeachersQuery,
 } from '@/graphql/client'
+import { Layout } from '@/layouts/Layout'
 import TeachersSchedule from '@/components/TeachersSchedule/TeachersSchedule'
 
 interface ITeachersSchedulePageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
   cycleCommissions: GetAllCycleCommissionsTeachersQuery
 }
 
@@ -22,10 +24,17 @@ const TeachersSchedulePage: React.FC<ITeachersSchedulePageProps> = ({
   SEO,
   headerData,
   mainScreenData,
+  headerSchedule,
   cycleCommissions,
 }) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Викладачі">
+    <Layout
+      SEO={SEO}
+      title="Викладачі"
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+    >
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Викладачі
@@ -42,6 +51,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
     const cycleCommissions = await gql.GetAllCycleCommissionsTeachers()
 
     return {
@@ -49,13 +59,14 @@ export const getStaticProps: GetStaticProps = async () => {
         SEO,
         headerData,
         mainScreenData,
+        headerSchedule,
         cycleCommissions,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cycleCommission: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cycleCommission: {}, headerSchedule: {} } }
   }
 }
 

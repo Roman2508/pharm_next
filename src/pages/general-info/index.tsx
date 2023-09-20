@@ -4,18 +4,25 @@ import { GetStaticProps } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from './GeneralInfo.module.scss'
 import tableStyles from '../../components/ui/Table/Table.module.scss'
-import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
+import { GetHeaderQuery, GetHeaderScheduleQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 import Image from 'next/image'
 
 interface IGeneralInfoProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const GeneralInfo: React.FC<IGeneralInfoProps> = ({ SEO, headerData, mainScreenData }) => {
+const GeneralInfo: React.FC<IGeneralInfoProps> = ({ SEO, headerData, mainScreenData, headerSchedule }) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title="Zhytomyr College of Pharmacy">
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+      title="Zhytomyr College of Pharmacy"
+    >
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
           Zhytomyr College of Pharmacy
@@ -262,18 +269,20 @@ export const getStaticProps: GetStaticProps = async () => {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
         SEO,
         headerData,
         mainScreenData,
+        headerSchedule,
       },
       revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'general info page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {} } }
+    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 

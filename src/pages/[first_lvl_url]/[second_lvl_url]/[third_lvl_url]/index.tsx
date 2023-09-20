@@ -1,11 +1,18 @@
 import React from 'react'
 import cn from 'classnames'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps } from 'next'
 
 import styles from '../../Page.module.scss'
 import { Layout } from '@/layouts/Layout'
 import PageContnet from '@/components/PageContent/PageContnet'
-import { GetHeaderQuery, GetMainScreenQuery, GetSeoQuery, PageEntity, gql } from '@/graphql/client'
+import {
+  GetHeaderQuery,
+  GetHeaderScheduleQuery,
+  GetMainScreenQuery,
+  GetSeoQuery,
+  PageEntity,
+  gql,
+} from '@/graphql/client'
 import Image from 'next/image'
 
 interface IAdministrationProps {
@@ -13,11 +20,24 @@ interface IAdministrationProps {
   pageData: PageEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
-const Administration: React.FC<IAdministrationProps> = ({ SEO, headerData, mainScreenData, pageData }) => {
+const Administration: React.FC<IAdministrationProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  pageData,
+  headerSchedule,
+}) => {
   return (
-    <Layout SEO={SEO} headerData={headerData} mainScreenData={mainScreenData} title={pageData.attributes.SEO.title}>
+    <Layout
+      SEO={SEO}
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      title={pageData.attributes.SEO.title}
+      headerSchedule={headerSchedule}
+    >
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 
@@ -105,7 +125,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
-      props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} },
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: false },
     }
 
@@ -124,11 +144,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
         SEO,
         headerData,
+        headerSchedule,
         mainScreenData,
         pageData: pageData.pages.data[0],
       },
@@ -136,7 +158,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'default page error')
-    return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {} } }
+    return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 

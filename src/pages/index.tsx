@@ -14,6 +14,7 @@ import {
   GetAllEventsQuery,
   GetAllVideosQuery,
   GetHeaderQuery,
+  GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetNewsQuery,
   GetPartnersQuery,
@@ -30,20 +31,28 @@ interface IHomeProps {
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   advertisments: GetAdvertisementsQuery
+  headerSchedule: GetHeaderScheduleQuery
 }
 
 const Home: NextPage<IHomeProps> = ({
   SEO,
-  headerData,
-  mainScreenData,
-  newsData,
-  advertisments,
   events,
   videos,
+  newsData,
   partners,
+  headerData,
+  advertisments,
+  mainScreenData,
+  headerSchedule,
 }) => {
   return (
-    <HomePageLayout title="Головна сторінка | ЖБФК" headerData={headerData} mainScreenData={mainScreenData} SEO={SEO}>
+    <HomePageLayout
+      title="Головна сторінка | ЖБФК"
+      headerData={headerData}
+      mainScreenData={mainScreenData}
+      headerSchedule={headerSchedule}
+      SEO={SEO}
+    >
       <Announcement advertisments={advertisments} />
       <About />
       <Stats />
@@ -62,6 +71,8 @@ const Home: NextPage<IHomeProps> = ({
 export const getServerSideProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
+    const headerSchedule = await gql.GetHeaderSchedule()
+
     const mainScreenData = await gql.GetMainScreen()
     const SEO = await gql.GetSEO()
     const newsData = await gql.GetNews()
@@ -80,6 +91,7 @@ export const getServerSideProps: GetStaticProps = async () => {
         headerData,
         advertisments,
         mainScreenData,
+        headerSchedule,
       },
     }
   } catch (error) {
@@ -87,12 +99,13 @@ export const getServerSideProps: GetStaticProps = async () => {
     return {
       props: {
         SEO: {},
+        events: {},
+        videos: {},
         newsData: {},
         headerData: {},
         advertisments: {},
         mainScreenData: {},
-        events: {},
-        videos: {},
+        headerSchedule: {},
       },
     }
   }
