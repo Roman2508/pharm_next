@@ -103,15 +103,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }
 
-    const paths = pagesUrl.pages.data.map((el) => {
+    const allPaths = pagesUrl.pages.data.map((el) => {
       const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
-
-      return {
-        params: {
-          first_lvl_url: arr[0] || '',
-        },
+      // const paths = arr.filter()
+      if (arr.length === 1) {
+        return {
+          params: {
+            first_lvl_url: arr[0],
+          },
+        }
+      } else {
+        return {
+          params: {
+            first_lvl_url: '',
+          },
+        }
       }
     })
+
+    const paths = allPaths.filter((f) => f.params.first_lvl_url !== '')
 
     return {
       paths,

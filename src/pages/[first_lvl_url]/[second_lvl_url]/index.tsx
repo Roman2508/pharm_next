@@ -97,16 +97,27 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }
 
-    const paths = pagesUrl.pages.data.map((el) => {
+    const allPaths = pagesUrl.pages.data.map((el) => {
       const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
 
-      return {
-        params: {
-          first_lvl_url: arr[0] || '',
-          second_lvl_url: arr[1] || '',
-        },
+      if (arr.length === 2) {
+        return {
+          params: {
+            first_lvl_url: arr[0],
+            second_lvl_url: arr[1],
+          },
+        }
+      } else {
+        return {
+          params: {
+            first_lvl_url: '',
+            second_lvl_url: '',
+          },
+        }
       }
     })
+
+    const paths = allPaths.filter((f) => f.params.first_lvl_url !== '' && f.params.second_lvl_url !== '')
 
     return {
       paths,
