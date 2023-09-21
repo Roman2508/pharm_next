@@ -29,9 +29,8 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         <meta property="title" content={`${title} | ЖБФК`} />
         <meta property="og:title" content={`${title} | ЖБФК`} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        {SEO.seo?.data?.attributes.SEO.map((el) => (
-          <meta key={el.id} property={el.name} content={el.content} />
-        ))}
+        {SEO.seo.data.attributes.SEO.length > 0 &&
+          SEO.seo.data.attributes.SEO.map((el) => <meta key={el.id} property={el.name} content={el.content} />)}
         <link
           rel="icon"
           type="image/png"

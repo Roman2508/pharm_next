@@ -236,7 +236,7 @@
   color: #000;
   display: flex;
   align-items: center;
-  justify-content: start;
+  justify-content: flex-start;
   font-weight: 500;
   height: 48px;
   line-height: 20px;
@@ -348,7 +348,7 @@
     height: 100vh;
     z-index: 9999;
     flex-direction: column;
-    justify-content: start;
+    justify-content: flex-start;
     font-size: 20px;
     overflow-y: auto;
     transition: all 0.4s ease;

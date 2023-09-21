@@ -99,16 +99,16 @@ const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const cmks = await gql.GetAllVidilenyaSlug()
+    const data = await gql.GetAllVidilenyaSlug()
 
-    if (!cmks.vidilenyas.data.length) {
+    if (!data.vidilenyas.data.length) {
       return {
         paths: [],
         fallback: false,
       }
     }
 
-    const paths = cmks.vidilenyas.data.map((el) => ({ params: { vidilenya_slug: el.attributes.slug } }))
+    const paths = data.vidilenyas.data.map((el) => ({ params: { vidilenya_slug: el.attributes.slug } }))
 
     return {
       paths,

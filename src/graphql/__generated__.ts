@@ -4166,7 +4166,7 @@ export const GetSeoDocument = gql`
   seo {
     data {
       attributes {
-        SEO {
+        SEO(pagination: {pageSize: 100}) {
           id
           name
           content
