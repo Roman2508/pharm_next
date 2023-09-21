@@ -4,48 +4,34 @@ import cn from 'classnames'
 
 import styles from '../PageContent/Page.module.scss'
 import { FancyboxGallery } from '../FancyboxGallery'
-import { Accordion } from '../ui/Accordion/Accordion'
 
 interface IPhotosGalleryProps {
   component: any
+  colSize: string
 }
 
-const PhotosGallery: React.FC<IPhotosGalleryProps> = ({ component }) => {
-  const componentBody = component.description
-    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-    .replaceAll('</table>', `</table></div>`)
-
-  const accordionBody = component.authors.body
-    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-    .replaceAll('</table>', `</table></div>`)
-
+const PhotosGallery: React.FC<IPhotosGalleryProps> = ({ component, colSize }) => {
   return (
-    <div className="container">
-      <div className={styles['books__wrapper']}>
+    <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
+      <div>
+        {component.title && (
+          <h3 style={{ textAlign: 'center' }} dangerouslySetInnerHTML={{ __html: component.title }} />
+        )}
+      </div>
+      <div style={{ marginBottom: '40px' }}>
         <FancyboxGallery className={'page-gallery'}>
-          <a
-            data-fancybox="gallery"
-            href={`${process.env.API_URL}${component.main_photo.data.attributes.url}`}
-            className={cn(styles['books__img'], 'gallery-item', 'hand-pointer', 'scale-icon')}
-            style={{ maxWidth: '200px' }}
-          >
-            <Image
-              src={`${process.env.API_URL}${component.main_photo.data.attributes.url}`}
-              alt="gallery photo"
-              width={200}
-              height={250}
-            />
-          </a>
+          {component.images.data.map((el: any) => (
+            <a
+              key={el.id}
+              data-fancybox="gallery"
+              href={`${process.env.API_URL}${el.attributes.url}`}
+              className={cn(styles['photo-item'], 'gallery-item', 'hand-pointer', 'scale-icon')}
+              style={{ maxWidth: '200px' }}
+            >
+              <Image src={`${process.env.API_URL}${el.attributes.url}`} alt="gallery photo" width={150} height={200} />
+            </a>
+          ))}
         </FancyboxGallery>
-
-        <div>
-          <div className={styles['books__desc']} dangerouslySetInnerHTML={{ __html: componentBody }} />
-          <Accordion title={component.authors.title}>
-            <div dangerouslySetInnerHTML={{ __html: accordionBody }} />
-          </Accordion>
-        </div>
       </div>
     </div>
   )

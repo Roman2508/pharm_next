@@ -118,21 +118,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const returnData = {
+    props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
+    redirect: { destination: '/404', permanent: false },
+  }
+
   try {
     if (!params || !params.subdiv_slug) {
-      return {
-        props: { headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
-        redirect: { destination: '/404', permanent: false },
-      }
+      return returnData
     }
 
     const subdivData = await gql.GetSubdiv({ subdivSlug: `${params.subdiv_slug}` })
 
     if (!subdivData.subdivisions.data[0]) {
-      return {
-        props: { headerData: {}, mainScreenData: {}, subdivData: {} },
-        redirect: { destination: '/404', permanent: false },
-      }
+      return returnData
     }
 
     const SEO = await gql.GetSEO()

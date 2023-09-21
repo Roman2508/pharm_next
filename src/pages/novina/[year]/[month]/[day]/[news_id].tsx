@@ -21,6 +21,7 @@ import convertMonthName from '@/utils/convertMonthName'
 import { ResentNews } from '@/components/News/ResentNews'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
 import pageStyles from '../../../../../components/PageContent/Page.module.scss'
+import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
 
 interface IFullNewsPageProps {
   SEO: GetSeoQuery
@@ -43,12 +44,9 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
 }) => {
   const videoUrl = getVideoUrl(fullNews.attributes.video_url)
 
-  const { day, month, year } = convertMonthName(fullNews.attributes.date)
+  const { day, month, year } = convertMonthName(fullNews?.attributes?.date)
 
-  const newsBody = fullNews.attributes.body
-    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-    .replaceAll('</table>', `</table></div>`)
+  const newsBody = replaceDataInBodyComponent(fullNews?.attributes?.body)
 
   return (
     <Layout

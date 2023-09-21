@@ -137,12 +137,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  try {
-    const returnData = {
-      props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
-      redirect: { destination: '/404', permanent: false },
-    }
+  const returnData = {
+    props: { SEO: {}, headerData: {}, mainScreenData: {}, pageData: {}, headerSchedule: {} },
+    redirect: { destination: '/404', permanent: false },
+  }
 
+  try {
     if (!params || !params.first_lvl_url) {
       return returnData
     }

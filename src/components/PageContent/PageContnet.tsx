@@ -26,6 +26,7 @@ import PhotosGallery from '../PageComponents/PhotosGallery'
 import AccordionComponent from '../PageComponents/AccordionComponent'
 import PanoramsComponent from '../PageComponents/PanoramasComponent/PanoramsComponent'
 import TwoColWithImage from '../PageComponents/TwoColWithImage/TwoColWithImage'
+import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
 
 interface IPageContnetProps {
   colSize: string
@@ -174,10 +175,7 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
       {/* {pageComponents.map((component: PagePageComponentsDynamicZone) => { */}
       {pageComponents.map((component: any) => {
         if (component.component_type === 'body') {
-          const componentBody = component.body
-            .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-            .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-            .replaceAll('</table>', `</table></div>`)
+          const componentBody = replaceDataInBodyComponent(component?.body)
 
           /* body */
           return (
@@ -193,7 +191,7 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
         } else if (component.component_type === 'accordion') {
           return <AccordionComponent component={component} key={component.id} colSize={colSize} />
         } else if (component.component_type === 'photos_gallery') {
-          return <PhotosGallery component={component} key={component.id} />
+          return <PhotosGallery component={component} colSize={colSize} key={component.id} />
         } else if (component.component_type === 'person') {
           return <PersonComponent component={component} key={component.id} />
         } else if (component.component_type === 'button_link') {

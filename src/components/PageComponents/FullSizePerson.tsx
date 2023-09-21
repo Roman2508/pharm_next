@@ -4,16 +4,14 @@ import cn from 'classnames'
 
 import styles from '../PageContent/Page.module.scss'
 import { FancyboxGallery } from '../FancyboxGallery'
+import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
 
 interface IFullSizePersonProps {
   component: any
 }
 
 const FullSizePerson: React.FC<IFullSizePersonProps> = ({ component }) => {
-  const componentBody = component.body
-    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-    .replaceAll('</table>', `</table></div>`)
+  const componentBody = replaceDataInBodyComponent(component?.body)
 
   return (
     <div className="container">

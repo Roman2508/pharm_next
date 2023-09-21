@@ -124,21 +124,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const returnData = {
+    props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {}, headerSchedule: {} },
+    redirect: { destination: '/404', permanent: false },
+  }
+
   try {
     if (!params || !params.vidilenya_slug) {
-      return {
-        props: { headerData: {}, mainScreenData: {}, vidilenyaData: {} },
-        redirect: { destination: '/404', permanent: false },
-      }
+      return returnData
     }
 
     const vidilenyaData = await gql.GetVidilenya({ vidilenyaSlug: `${params.vidilenya_slug}` })
 
     if (!vidilenyaData.vidilenyas.data[0]) {
-      return {
-        props: { headerData: {}, mainScreenData: {}, vidilenyaData: {} },
-        redirect: { destination: '/404', permanent: false },
-      }
+      return returnData
     }
 
     const SEO = await gql.GetSEO()

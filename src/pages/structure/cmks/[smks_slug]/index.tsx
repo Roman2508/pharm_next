@@ -139,21 +139,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+  const returnData = {
+    props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
+    redirect: { destination: '/404', permanent: false },
+  }
+
   try {
     if (!params || !params.smks_slug) {
-      return {
-        props: { headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
-        redirect: { destination: '/404', permanent: false },
-      }
+      return returnData
     }
 
     const cmkData = await gql.GetCycleCommission({ pageUrl: `/${params.smks_slug}` })
 
     if (!cmkData.cycleCommissions.data[0]) {
-      return {
-        props: { headerData: {}, mainScreenData: {}, cmkData: {} },
-        redirect: { destination: '/404', permanent: false },
-      }
+      return returnData
     }
 
     const SEO = await gql.GetSEO()

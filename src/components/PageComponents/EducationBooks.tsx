@@ -5,21 +5,15 @@ import cn from 'classnames'
 import styles from '../PageContent/Page.module.scss'
 import { FancyboxGallery } from '../FancyboxGallery'
 import { Accordion } from '../ui/Accordion/Accordion'
+import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
 
 interface IEducationBooksProps {
   component: any
 }
 
 const EducationBooks: React.FC<IEducationBooksProps> = ({ component }) => {
-  const componentBody = component.description
-    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-    .replaceAll('</table>', `</table></div>`)
-
-  const accordionBody = component.authors.body
-    .replaceAll('/uploads', `${process.env.API_URL}/uploads`)
-    .replaceAll('<table>', `<div style="overflow-x: auto;"><table>`)
-    .replaceAll('</table>', `</table></div>`)
+  const componentBody = replaceDataInBodyComponent(component?.description)
+  const accordionBody = replaceDataInBodyComponent(component?.authors?.body)
 
   return (
     <div className="container">
