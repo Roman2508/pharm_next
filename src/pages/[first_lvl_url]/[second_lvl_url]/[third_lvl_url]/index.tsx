@@ -176,6 +176,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
       revalidate: 10,
     }
+    //
   } catch (error) {
     console.log(error, 'default page error')
     return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {}, headerSchedule: {} } }
