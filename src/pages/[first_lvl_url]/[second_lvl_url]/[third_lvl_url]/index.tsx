@@ -93,32 +93,38 @@ const Administration: React.FC<IAdministrationProps> = ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pagesUrl = await gql.GetAllPagesUrl()
+  try {
+    const pagesUrl = await gql.GetAllPagesUrl()
 
-  if (!pagesUrl.pages.data.length) {
+    if (!pagesUrl.pages.data.length) {
+      return {
+        paths: [],
+        fallback: 'blocking',
+      }
+    }
+
+    const paths = pagesUrl.pages.data.map((el) => {
+      const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
+
+      return {
+        params: {
+          first_lvl_url: arr[0] || '',
+          second_lvl_url: arr[1] || '',
+          third_lvl_url: arr[2] || '',
+        },
+      }
+    })
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
-      fallback: 'blocking',
+      fallback: false,
     }
-  }
-
-  const paths = pagesUrl.pages.data.map((el) => {
-    const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
-
-    // if(arr.length === 1) {} else if(arr.length === 1) {}else if(arr.length === 1) {}
-
-    return {
-      params: {
-        first_lvl_url: arr[0] || '',
-        second_lvl_url: arr[1] || '',
-        third_lvl_url: arr[2] || '',
-      },
-    }
-  })
-
-  return {
-    paths,
-    fallback: true,
   }
 }
 

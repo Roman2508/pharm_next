@@ -58,22 +58,31 @@ const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const cmks = await gql.GetAllTeachers()
+  try {
+    const cmks = await gql.GetAllTeachers()
 
-  if (!cmks.workers.data.length) {
+    if (!cmks.workers.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
+
+    const paths = cmks.workers.data.map((el) => ({ params: { teacher_slug: el.attributes.slug } }))
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
       fallback: false,
     }
   }
-
-  const paths = cmks.workers.data.map((el) => ({ params: { teacher_slug: el.attributes.slug } }))
-
-  return {
-    paths,
-    fallback: false,
-  }
 }
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {

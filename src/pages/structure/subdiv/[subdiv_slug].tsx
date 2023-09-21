@@ -92,20 +92,28 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainS
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const cmks = await gql.GetAllSubdivisionSlug()
+  try {
+    const cmks = await gql.GetAllSubdivisionSlug()
 
-  if (!cmks.subdivisions.data.length) {
+    if (!cmks.subdivisions.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
+
+    const paths = cmks.subdivisions.data.map((el) => ({ params: { subdiv_slug: el.attributes.slug } }))
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
       fallback: false,
     }
-  }
-
-  const paths = cmks.subdivisions.data.map((el) => ({ params: { subdiv_slug: el.attributes.slug } }))
-
-  return {
-    paths,
-    fallback: false,
   }
 }
 

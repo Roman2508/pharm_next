@@ -113,22 +113,31 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkData, mainScre
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const cmks = await gql.GetAllCycleCommissionsSlug()
+  try {
+    const cmks = await gql.GetAllCycleCommissionsSlug()
 
-  if (!cmks.cycleCommissions.data.length) {
+    if (!cmks.cycleCommissions.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
+
+    const paths = cmks.cycleCommissions.data.map((el) => ({ params: { smks_slug: el.attributes.slug } }))
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
       fallback: false,
     }
   }
-
-  const paths = cmks.cycleCommissions.data.map((el) => ({ params: { smks_slug: el.attributes.slug } }))
-
-  return {
-    paths,
-    fallback: false,
-  }
 }
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     if (!params || !params.smks_slug) {

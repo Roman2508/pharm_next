@@ -62,20 +62,28 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const cmks = await gql.GetGroupSchedule()
+  try {
+    const cmks = await gql.GetGroupSchedule()
 
-  if (!cmks.groups.data.length) {
+    if (!cmks.groups.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
+
+    const paths = cmks.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
       fallback: false,
     }
-  }
-
-  const paths = cmks.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
-
-  return {
-    paths,
-    fallback: false,
   }
 }
 

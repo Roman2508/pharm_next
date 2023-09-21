@@ -93,28 +93,36 @@ const Administration: React.FC<IAdministrationProps> = ({
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const pagesUrl = await gql.GetAllPagesUrl()
+  try {
+    const pagesUrl = await gql.GetAllPagesUrl()
 
-  if (!pagesUrl.pages.data.length) {
+    if (!pagesUrl.pages.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
+
+    const paths = pagesUrl.pages.data.map((el) => {
+      const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
+
+      return {
+        params: {
+          first_lvl_url: arr[0] || '',
+        },
+      }
+    })
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
       fallback: false,
     }
-  }
-
-  const paths = pagesUrl.pages.data.map((el) => {
-    const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
-
-    return {
-      params: {
-        first_lvl_url: arr[0] || '',
-      },
-    }
-  })
-
-  return {
-    paths,
-    fallback: false,
   }
 }
 

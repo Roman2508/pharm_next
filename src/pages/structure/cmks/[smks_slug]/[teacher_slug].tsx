@@ -149,27 +149,36 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, ma
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const teachers = await gql.GetAllTeachersWithCycleCommission()
+  try {
+    const teachers = await gql.GetAllTeachersWithCycleCommission()
 
-  if (!teachers.workers.data.length) {
+    if (!teachers.workers.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
+
+    const paths = teachers.workers.data.map((el) => ({
+      params: {
+        teacher_slug: el.attributes.slug || '',
+        smks_slug: el.attributes.cycle_commission.data.attributes.slug || '',
+      },
+    }))
+
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
     return {
       paths: [],
       fallback: false,
     }
   }
-
-  const paths = teachers.workers.data.map((el) => ({
-    params: {
-      teacher_slug: el.attributes.slug || '',
-      smks_slug: el.attributes.cycle_commission.data.attributes.slug || '',
-    },
-  }))
-
-  return {
-    paths,
-    fallback: false,
-  }
 }
+
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
