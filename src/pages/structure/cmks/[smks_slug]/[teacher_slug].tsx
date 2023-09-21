@@ -1,21 +1,21 @@
 import React from 'react'
-import Link from 'next/link'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import cn from 'classnames'
+import Link from 'next/link'
+import Image from 'next/image'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 
 import {
-  GetHeaderQuery,
-  GetHeaderScheduleQuery,
-  GetMainScreenQuery,
+  gql,
   GetSeoQuery,
   WorkerEntity,
-  gql,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  GetHeaderScheduleQuery,
 } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from './Teacher.module.scss'
-import pageStyles from '../../../../components/PageContent/Page.module.scss'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
-import Image from 'next/image'
+import pageStyles from '../../../../components/PageContent/Page.module.scss'
 
 interface ITeacherPageProps {
   SEO: GetSeoQuery
@@ -162,7 +162,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const paths = teachers.workers.data.map((el) => ({
       params: {
         teacher_slug: el.attributes.slug || '',
-        smks_slug: el.attributes.cycle_commission.data.attributes.slug || '',
+        smks_slug: el.attributes.cycle_commission.data?.attributes.slug || '',
       },
     }))
 
