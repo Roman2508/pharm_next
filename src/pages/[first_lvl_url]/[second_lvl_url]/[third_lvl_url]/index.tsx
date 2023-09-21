@@ -106,7 +106,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     const allPaths = pagesUrl.pages.data.map((el) => {
       const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
 
-      if (arr.length === 2) {
+      if (arr.length === 3) {
         return {
           params: {
             first_lvl_url: arr[0],
