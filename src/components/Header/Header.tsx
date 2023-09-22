@@ -56,18 +56,12 @@ const Header: React.FC<IHeaderProps> = ({ headerData, headerSchedule }) => {
             {headerData.header?.data?.attributes?.Header?.headerIcons.slice(0, 2).map((icon) => {
               return (
                 <Link className={styles['header__top-link']} href={icon.link} key={icon.id} target="_blank">
-                  <img
+                  <Image
                     src={`${process.env.API_URL}${icon.icon.data.attributes.url}`}
                     alt="icon"
                     width={40}
                     height={40}
                   />
-                  {/* <Image
-                    src={`${process.env.API_URL}${icon.icon.data.attributes.url}`}
-                    alt="icon"
-                    width={40}
-                    height={40}
-                  /> */}
                   <span className={styles['header__top-link-title']}>{icon.text}</span>
                 </Link>
               )

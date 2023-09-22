@@ -5,6 +5,14 @@ const nextConfig = {
     domains: ['localhost', 'pharm.zt.ua', 'pharm.vercel.app', 'pharm-strapi.onrender.com'],
     minimumCacheTTL: 1200,
     // formats: ['image/jpg', 'image/jpeg', 'image/png', 'image/svg'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'pharm.up.railway.app',
+        port: '',
+        pathname: '/uploads/**',
+      },
+    ],
   },
   env: {
     // API_URL: 'http://localhost:1337',
