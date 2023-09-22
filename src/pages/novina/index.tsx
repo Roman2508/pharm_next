@@ -66,6 +66,28 @@ export const getStaticProps: GetStaticProps = async () => {
     const newsDates = await gql.GetAllNewsDates()
     const headerSchedule = await gql.GetHeaderSchedule()
 
+    if (
+      !headerData.header.data ||
+      !mainScreenData.header.data ||
+      !SEO.seo.data.attributes.SEO.length ||
+      !headerSchedule.groups.data.length ||
+      !headerSchedule.workers.data.length ||
+      !newsData.novinas.data.length ||
+      !newsDates.novinas.data.length
+    ) {
+      return {
+        props: {
+          SEO: {},
+          headerData: {},
+          mainScreenData: {},
+          newsData: {},
+          newsDates: {},
+          headerSchedule: {},
+        },
+        redirect: { destination: '/404', permanent: true },
+      }
+    }
+
     return {
       props: {
         SEO,
@@ -79,7 +101,10 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, newsData: {}, newsDates: {}, headerSchedule: {} } }
+    return {
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, newsData: {}, newsDates: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
   }
 }
 

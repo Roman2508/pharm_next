@@ -145,7 +145,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const returnData = {
     props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {}, headerSchedule: {} },
-    redirect: { destination: '/404', permanent: false },
+    redirect: { destination: '/404', permanent: true },
   }
 
   try {
@@ -165,6 +165,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
+
+    if (
+      !headerData ||
+      !mainScreenData ||
+      !SEO.seo.data.attributes.SEO.length ||
+      !headerSchedule.groups.data.length ||
+      !headerSchedule.workers.data.length
+    ) {
+      return returnData
+    }
 
     return {
       props: {
@@ -187,7 +197,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //   try {
 //     const returnData = {
 //       props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} },
-//       redirect: { destination: '/404', permanent: false },
+//       redirect: { destination: '/404', permanent: true },
 //     }
 
 //     if (!params || !params.first_lvl_url || !params.second_lvl_url || !params.third_lvl_url) {

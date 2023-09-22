@@ -141,7 +141,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const returnData = {
     props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
-    redirect: { destination: '/404', permanent: false },
+    redirect: { destination: '/404', permanent: true },
   }
 
   try {
@@ -180,7 +180,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     if (!params || !params.smks_slug) {
 //       return {
 //         props: { headerData: {}, mainScreenData: {}, cmkData: {} },
-//         redirect: { destination: '/404', permanent: false },
+//         redirect: { destination: '/404', permanent: true },
 //       }
 //     }
 
@@ -189,7 +189,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     if (!cmkData.cycleCommissions.data[0]) {
 //       return {
 //         props: { headerData: {}, mainScreenData: {}, cmkData: {} },
-//         redirect: { destination: '/404', permanent: false },
+//         redirect: { destination: '/404', permanent: true },
 //       }
 //     }
 

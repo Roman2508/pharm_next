@@ -212,7 +212,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, fullNews: {}, newsDates: {} },
-      redirect: { destination: '/404', permanent: false },
+      redirect: { destination: '/404', permanent: true },
     }
 
     if (!params || !params.news_id || typeof params.news_id !== 'string') {

@@ -91,7 +91,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, groupData: {}, headerSchedule: {} },
-      redirect: { destination: '/404', permanent: false },
+      redirect: { destination: '/404', permanent: true },
     }
 
     if (!params || !params.group_name || typeof params.group_name !== 'string') {

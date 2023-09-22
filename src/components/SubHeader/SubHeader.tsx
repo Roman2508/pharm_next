@@ -11,12 +11,16 @@ interface ISubHeaderProps {
 }
 
 const SubHeader: React.FC<ISubHeaderProps> = ({ mainScreenData }) => {
+  const logo = mainScreenData.header?.data?.attributes?.Header?.logo?.data?.attributes?.url
+    ? `${process.env.API_URL}${mainScreenData.header?.data?.attributes?.Header?.logo?.data?.attributes?.url}`
+    : ''
+
   return (
     <div className={styles['sub-header']}>
       <div className={styles['sub-header__video']}>
         <video autoPlay muted loop playsInline>
           <source
-            src={`${process.env.API_URL}${mainScreenData.header.data.attributes.Header.background.data.attributes.url}`}
+            src={`${process.env.API_URL}${mainScreenData.header?.data?.attributes?.Header?.background?.data?.attributes?.url}`}
             type="video/mp4"
           />
         </video>
@@ -25,9 +29,11 @@ const SubHeader: React.FC<ISubHeaderProps> = ({ mainScreenData }) => {
       <div className="container">
         <div className={styles['sub-header__inner']}>
           <Link className={styles['sub-header__logo-box']} href="/">
-            <Image className={styles['sub-header__logo']} src={logoIcon} alt="cloud icon" width={140} />
+            {logo && (
+              <Image className={styles['sub-header__logo']} src={logo} alt="cloud icon" width={140} height={140} />
+            )}
           </Link>
-          <h1 className={styles['sub-header__title']}>{mainScreenData.header.data.attributes.Header.title}</h1>
+          <h1 className={styles['sub-header__title']}>{mainScreenData?.header?.data?.attributes?.Header?.title}</h1>
         </div>
       </div>
     </div>

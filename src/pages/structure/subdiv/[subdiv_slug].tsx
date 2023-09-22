@@ -29,7 +29,7 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainS
       headerData={headerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
-      title={subdivData.attributes.SEO.title}
+      title={subdivData?.attributes?.SEO?.title}
     >
       <h1 className={`${styles['main-title']} section-title`}>{subdivData.attributes.name}</h1>
 
@@ -118,19 +118,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const returnData = {
-    props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
-    redirect: { destination: '/404', permanent: false },
-  }
-
   try {
+    const returnData = {
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
+
     if (!params || !params.subdiv_slug) {
       return returnData
     }
 
     const subdivData = await gql.GetSubdiv({ subdivSlug: `${params.subdiv_slug}` })
 
-    if (!subdivData.subdivisions.data[0]) {
+    if (!subdivData || !subdivData.subdivisions.data[0]) {
       return returnData
     }
 
@@ -138,6 +138,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
+
+    if (
+      !headerData ||
+      !mainScreenData ||
+      !SEO.seo.data.attributes.SEO.length ||
+      !headerSchedule.groups.data.length ||
+      !headerSchedule.workers.data.length
+    ) {
+      return returnData
+    }
 
     return {
       props: {
@@ -150,7 +160,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'subdiv page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} } }
+    return {
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
   }
 }
 
@@ -159,7 +172,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     if (!params || !params.subdiv_slug) {
 //       return {
 //         props: { headerData: {}, mainScreenData: {}, subdivData: {} },
-//         redirect: { destination: '/404', permanent: false },
+//         redirect: { destination: '/404', permanent: true },
 //       }
 //     }
 
@@ -168,7 +181,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     if (!subdivData.subdivisions.data[0]) {
 //       return {
 //         props: { headerData: {}, mainScreenData: {}, subdivData: {} },
-//         redirect: { destination: '/404', permanent: false },
+//         redirect: { destination: '/404', permanent: true },
 //       }
 //     }
 

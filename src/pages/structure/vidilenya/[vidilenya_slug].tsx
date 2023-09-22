@@ -29,15 +29,20 @@ const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
+  //
+  if (!SEO || !vidilenyaData) {
+    return null
+  }
+
   return (
     <Layout
       SEO={SEO}
       headerData={headerData}
       headerSchedule={headerSchedule}
       mainScreenData={mainScreenData}
-      title={vidilenyaData.attributes.SEO.title}
+      title={vidilenyaData?.attributes?.SEO.title}
     >
-      <h1 className={`${styles['main-title']} section-title`}>{vidilenyaData.attributes.name}</h1>
+      <h1 className={`${styles['main-title']} section-title`}>{vidilenyaData?.attributes?.name}</h1>
 
       {/* {vidilenyaData.attributes.main_photo.data && (
         <div className="container">
@@ -124,19 +129,19 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const returnData = {
-    props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {}, headerSchedule: {} },
-    redirect: { destination: '/404', permanent: false },
-  }
-
   try {
+    const returnData = {
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
+
     if (!params || !params.vidilenya_slug) {
       return returnData
     }
 
     const vidilenyaData = await gql.GetVidilenya({ vidilenyaSlug: `${params.vidilenya_slug}` })
 
-    if (!vidilenyaData.vidilenyas.data[0]) {
+    if (!vidilenyaData || !vidilenyaData.vidilenyas.data[0]) {
       return returnData
     }
 
@@ -144,6 +149,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
+
+    if (
+      !headerData ||
+      !mainScreenData ||
+      !SEO.seo.data.attributes.SEO.length ||
+      !headerSchedule.groups.data.length ||
+      !headerSchedule.workers.data.length
+    ) {
+      return returnData
+    }
 
     return {
       props: {
@@ -153,10 +168,20 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         headerSchedule,
         vidilenyaData: vidilenyaData.vidilenyas.data[0],
       },
+      revalidate: 10,
     }
   } catch (error) {
     console.log(error, 'vidilenya page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, vidilenyaData: {}, headerSchedule: {} } }
+    return {
+      props: {
+        SEO: {},
+        headerData: {},
+        mainScreenData: {},
+        vidilenyaData: {},
+        headerSchedule: {},
+      },
+      redirect: { destination: '/404', permanent: true },
+    }
   }
 }
 
@@ -165,7 +190,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     if (!params || !params.vidilenya_slug) {
 //       return {
 //         props: { headerData: {}, mainScreenData: {}, vidilenyaData: {} },
-//         redirect: { destination: '/404', permanent: false },
+//         redirect: { destination: '/404', permanent: true },
 //       }
 //     }
 
@@ -174,7 +199,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //     if (!vidilenyaData.vidilenyas.data[0]) {
 //       return {
 //         props: { headerData: {}, mainScreenData: {}, vidilenyaData: {} },
-//         redirect: { destination: '/404', permanent: false },
+//         redirect: { destination: '/404', permanent: true },
 //       }
 //     }
 

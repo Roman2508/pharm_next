@@ -187,7 +187,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, teacher: {}, headerSchedule: {} },
-      redirect: { destination: '/404', permanent: false },
+      redirect: { destination: '/404', permanent: true },
     }
 
     if (!params || !params.teacher_slug) {
@@ -217,8 +217,11 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       },
     }
   } catch (error) {
-    console.log(error, 'cmks page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} } }
+    console.log(error, 'teacher page error')
+    return {
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
   }
 }
 
@@ -226,7 +229,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //   try {
 //     const returnData = {
 //       props: { headerData: {}, mainScreenData: {}, teacher: {} },
-//       redirect: { destination: '/404', permanent: false },
+//       redirect: { destination: '/404', permanent: true },
 //     }
 
 //     if (!params || !params.teacher_slug) {

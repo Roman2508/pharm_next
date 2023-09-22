@@ -87,7 +87,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
       props: { headerData: {}, mainScreenData: {}, teacherData: {}, headerSchedule: {} },
-      redirect: { destination: '/404', permanent: false },
+      redirect: { destination: '/404', permanent: true },
     }
 
     if (!params || !params.teacher_slug || typeof params.teacher_slug !== 'string') {
@@ -124,7 +124,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 //   try {
 //     const returnData = {
 //       props: { headerData: {}, mainScreenData: {}, teacherData: {} },
-//       redirect: { destination: '/404', permanent: false },
+//       redirect: { destination: '/404', permanent: true },
 //     }
 
 //     if (!params || !params.teacher_slug || typeof params.teacher_slug !== 'string') {

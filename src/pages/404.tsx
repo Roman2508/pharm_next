@@ -21,7 +21,7 @@ const NotFonundPage: React.FC<INotFonundPageProps> = ({ SEO, headerData, headerS
       mainScreenData={mainScreenData}
     >
       <div className="container">
-        <div className={`section-title`}>Сторінку не знайдено</div>
+        <div className={`section-title`}>Помилка при завантаженні сторінки</div>
       </div>
     </Layout>
   )
