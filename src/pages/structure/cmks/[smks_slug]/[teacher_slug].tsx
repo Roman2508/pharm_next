@@ -50,11 +50,11 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, ma
             <div className={styles.tabs}>
               {tabs.map((el) => (
                 <div
+                  key={el.id}
                   className={cn(styles.tab, {
                     [styles['active-tab']]: activeTab === el.id,
                   })}
                   onClick={() => setActiveTab(el.id)}
-                  key={el.id}
                 >
                   {el.text}
                 </div>
@@ -73,7 +73,7 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, ma
                   >
                     <Image
                       src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
-                      alt={teacher.attributes.name}
+                      alt={'teacher photo'}
                       width={150}
                       height={200}
                     />
@@ -159,12 +159,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }
 
-    const paths = teachers.workers.data.map((el) => ({
-      params: {
-        teacher_slug: el.attributes.slug || '',
-        smks_slug: el.attributes.cycle_commission.data?.attributes.slug || '',
-      },
-    }))
+    const paths = teachers.workers.data.map((el) => {
+      const smks_slug = el.attributes.cycle_commission.data?.attributes.slug || ''
+
+      return {
+        params: {
+          smks_slug,
+          teacher_slug: el.attributes.slug || '',
+        },
+      }
+    })
 
     return {
       paths,
