@@ -21,6 +21,7 @@ const useSlider = () => {
       defaultAnimation: {
         duration: 1200,
       },
+      // @ts-ignore
       breakpoints: {
         '(max-width: 1100px)': {
           slides: { perView: 2, spacing: 50, origin: 'center' },

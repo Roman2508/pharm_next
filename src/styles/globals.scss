@@ -128,17 +128,49 @@ body {
   height: auto;
 }
 
+/* cmk photo || cmk slider */
 .cmk-main-photo {
   width: 100%;
   margin-bottom: 10px;
 }
 .cmk-main-photo img {
-  object-position: 0px top;
+  // object-position: 0px top;
   object-fit: cover;
   width: 100%;
-  height: auto;
-  max-height: 400px;
+  // height: auto;
+  height: 520px;
 }
+
+.main-photo-slider {
+  position: relative;
+
+  & .dots {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 10%;
+  }
+
+  & .dot {
+    border: 0;
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    background-color: #fff;
+    border-radius: 50%;
+    transition: all 0.1s ease-in-out;
+  }
+
+  & .dot + .dot {
+    margin-left: 13px;
+  }
+
+  & .dot.active {
+    transform: scale(1.4);
+    background-color: var(--primary-color);
+  }
+}
+/* // cmk photo || cmk slider */
 
 .page-content {
   margin-bottom: 40px;
@@ -451,6 +483,7 @@ body {
     transform: scale(1);
   }
 }
+
 .full-screen-frame--close {
   animation-name: close-modal;
   animation-duration: 0.3s;
@@ -522,7 +555,8 @@ body {
   .cmk-main-photo {
     margin-bottom: 20px;
     img {
-      max-height: none;
+      // max-height: none;
+      height: 400px;
     }
   }
 }
@@ -531,11 +565,22 @@ body {
   .section-title {
     font-size: 34px;
   }
+  .cmk-main-photo img {
+    height: 350px;
+  }
+  .main-photo-slider {
+    & .dots {
+      bottom: 15%;
+    }
+  }
 }
 
 @media (max-width: 768px) {
   .section-title {
     font-size: 30px;
+  }
+  .cmk-main-photo img {
+    height: 300px;
   }
 }
 
@@ -544,11 +589,41 @@ body {
     font-size: 28px;
     padding: 0 30px;
   }
+  .cmk-main-photo img {
+    height: 250px;
+  }
+}
+
+@media (max-width: 540px) {
+  .cmk-main-photo img {
+    height: 200px;
+  }
+  .main-photo-slider {
+    & .dots {
+      bottom: 17%;
+    }
+    & .dot {
+      width: 10px;
+      height: 10px;
+    }
+  }
 }
 
 @media (max-width: 425px) {
   .section-title {
     font-size: 24px;
+  }
+  .cmk-main-photo img {
+    height: 160px;
+  }
+  .main-photo-slider {
+    & .dots {
+      bottom: 20%;
+    }
+    & .dot {
+      width: 8px;
+      height: 8px;
+    }
   }
 }
 
@@ -556,6 +631,9 @@ body {
   .section-title {
     font-size: 22px;
     padding: 0 20px;
+  }
+  .cmk-main-photo img {
+    height: 140px;
   }
 }
 

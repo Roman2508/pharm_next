@@ -4,12 +4,15 @@ import React from 'react'
 import cn from 'classnames'
 import Link from 'next/link'
 import Image from 'next/image'
+import 'keen-slider/keen-slider.min.css'
 
 import styles from './Page.module.scss'
 import personStyles from './PersonComponent.module.scss'
 // import panoramsStyles from './PanoramsComponent.module.scss'
 // import twoColImageStyles from './TwoColumnWithImage.module.scss'
 // import linkStyles from './ButtonLinkComponent.module.scss'
+
+import { useKeenSlider } from 'keen-slider/react'
 
 // import { FancyboxGallery } from '../FancyboxGallery'
 // import { Accordion } from '../ui/Accordion/Accordion'
@@ -27,12 +30,14 @@ import AccordionComponent from '../PageComponents/AccordionComponent'
 import PanoramsComponent from '../PageComponents/PanoramasComponent/PanoramsComponent'
 import TwoColWithImage from '../PageComponents/TwoColWithImage/TwoColWithImage'
 import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
+import useSlider from '@/hooks/useSlider'
+import { SliderArrow } from '../Slider/SliderArrows'
 
 interface IPageContnetProps {
   colSize: string
   cmkHead?: Worker
   cmkSlug?: string
-  mainPhotoCol?: UploadFileEntity
+  mainPhotoCol?: readonly UploadFileEntity[]
   cmkTeachers?: readonly WorkerEntity[]
   pageComponents: readonly PagePageComponentsDynamicZone[]
 }
@@ -49,28 +54,122 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
   const [teachersRange, setTeachersRange] = React.useState([0, teachersOnPage])
   const [currentPage, setCurrentPage] = React.useState(1)
 
+  const [currentSlide, setCurrentSlide] = React.useState(0)
+  const [loaded, setLoaded] = React.useState(false)
+  const [sliderRef, instanceRef] = useKeenSlider<HTMLDivElement>(
+    {
+      // loop: true,
+      initial: 0,
+      slideChanged(slider) {
+        setCurrentSlide(slider.track.details.rel)
+      },
+      created() {
+        setLoaded(true)
+      },
+    }
+    // [
+    //   (slider) => {
+    //     let timeout: ReturnType<typeof setTimeout>
+    //     let mouseOver = false
+    //     function clearNextTimeout() {
+    //       clearTimeout(timeout)
+    //     }
+    //     function nextTimeout() {
+    //       clearTimeout(timeout)
+    //       if (mouseOver) return
+    //       timeout = setTimeout(() => {
+    //         slider.next()
+    //       }, 5000)
+    //     }
+    //     slider.on('created', () => {
+    //       slider.container.addEventListener('mouseover', () => {
+    //         mouseOver = true
+    //         clearNextTimeout()
+    //       })
+    //       slider.container.addEventListener('mouseout', () => {
+    //         mouseOver = false
+    //         nextTimeout()
+    //       })
+    //       nextTimeout()
+    //     })
+    //     slider.on('dragStarted', clearNextTimeout)
+    //     slider.on('animationEnded', nextTimeout)
+    //     slider.on('updated', nextTimeout)
+    //   },
+    // ]
+  )
+
   const handleChangeTeachersRange = (currentPage: number) => {
     setCurrentPage(currentPage)
     setTeachersRange((prev) => {
       return [currentPage * teachersOnPage - teachersOnPage, currentPage * teachersOnPage]
     })
   }
-
+  console.log(loaded, instanceRef.current)
   React.useEffect(() => {
     setCurrentPage(1)
   }, [cmkTeachers])
 
   return (
     <div className={colSize}>
-      {mainPhotoCol && (
+      {mainPhotoCol && mainPhotoCol.length === 1 && (
         <div className={'cmk-main-photo'}>
           <Image
-            src={`${process.env.API_URL}${mainPhotoCol.attributes.url}`}
-            width={mainPhotoCol.attributes.width}
-            height={mainPhotoCol.attributes.height}
+            src={`${process.env.API_URL}${mainPhotoCol[0].attributes.url}`}
+            width={mainPhotoCol[0].attributes.width}
+            height={mainPhotoCol[0].attributes.height}
             alt="main page photo"
           />
         </div>
+      )}
+
+      {mainPhotoCol && mainPhotoCol.length > 1 && (
+        <>
+          <div ref={sliderRef} className={cn('keen-slider', 'main-photo-slider')}>
+            {mainPhotoCol.map((el) => (
+              <div className={cn('cmk-main-photo', 'keen-slider__slide')}>
+                <Image
+                  src={`${process.env.API_URL}${el.attributes.url}`}
+                  width={el.attributes.width}
+                  height={el.attributes.height}
+                  alt="main page photo"
+                  priority
+                />
+              </div>
+            ))}
+
+            {loaded && instanceRef.current && (
+              <div className="dots">
+                {[...Array(instanceRef?.current?.track?.details?.slides?.length).keys()].map((idx) => {
+                  return (
+                    <button
+                      key={idx}
+                      onClick={() => {
+                        instanceRef.current?.moveToIdx(idx)
+                      }}
+                      className={'dot' + (currentSlide === idx ? ' active' : '')}
+                    ></button>
+                  )
+                })}
+              </div>
+            )}
+
+            {/* {instanceRef.current && (
+              <>
+                <SliderArrow
+                  left
+                  onClick={(e: any) => e.stopPropagation() || instanceRef.current?.prev()}
+                  disabled={currentSlide === 0}
+                />
+
+                <SliderArrow
+                  onClick={(e: any) => e.stopPropagation() || instanceRef.current?.next()}
+                  disabled={currentSlide === instanceRef.current.track.details.slides.length - 1}
+                />
+              </>
+            )} */}
+          </div>
+        </>
       )}
 
       {cmkHead && (
@@ -106,9 +205,7 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
           </div>
         </div>
       )}
-
       {cmkTeachers && <div className={styles['cmk-teachers-title']}>Склад комісії</div>}
-
       {cmkTeachers && (
         <div className={styles['teachers-list']}>
           {cmkTeachers
@@ -153,7 +250,6 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
             })}
         </div>
       )}
-
       {cmkTeachers && (
         <div className={styles['cmk-teacher-pagination']}>
           {Array(pagesCount)
@@ -171,7 +267,6 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
             ))}
         </div>
       )}
-
       {/* {pageComponents.map((component: PagePageComponentsDynamicZone) => { */}
       {pageComponents.map((component: any) => {
         if (component.component_type === 'body') {

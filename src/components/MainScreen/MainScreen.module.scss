@@ -57,14 +57,14 @@
 
 .main-screen__logo {
   width: 180px;
-  -webkit-filter: drop-shadow(0 0px 1px #000000);
-  filter: drop-shadow(0 0px 1px #000000);
+  -webkit-filter: drop-shadow(0 0px 10px #303030);
+  filter: drop-shadow(0 0px 10px #303030);
 }
 
 .main-screen__title {
   /* -webkit-text-stroke: 1px #175793; */
   /* text-stroke: 1px #175793; */
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.9);
+  text-shadow: 1px 1px 1px rgba(0, 0, 10, 0.95);
   max-width: 860px;
   max-width: 70%;
   text-align: center;

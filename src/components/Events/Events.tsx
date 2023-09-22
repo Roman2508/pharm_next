@@ -50,7 +50,7 @@ export const Events: React.FC<IEventsProps> = ({ events }) => {
                         width={el.attributes.image.data.attributes.width}
                         height={el.attributes.image.data.attributes.height}
                         alt={el.attributes.image.data.attributes.name}
-                        // priority
+                        priority
                       />
                     </div>
                     <div className={styles['events__content']}>

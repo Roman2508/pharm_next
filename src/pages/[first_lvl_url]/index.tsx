@@ -41,13 +41,13 @@ const Administration: React.FC<IAdministrationProps> = ({
       <div className={styles['---']}>
         <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
 
-        {pageData.attributes.main_photo.data && (
+        {!!pageData.attributes.main_photo.data.length && (
           <div className="container">
             <div className={'main-photo-page'}>
               <Image
-                src={`${process.env.API_URL}${pageData.attributes.main_photo.data.attributes.url}`}
-                width={pageData.attributes.main_photo.data.attributes.width || 800}
-                height={pageData.attributes.main_photo.data.attributes.height || 400}
+                src={`${process.env.API_URL}${pageData.attributes.main_photo.data[0].attributes.url}`}
+                width={pageData.attributes.main_photo.data[0].attributes.width || 800}
+                height={pageData.attributes.main_photo.data[0].attributes.height || 400}
                 alt="main page photo"
               />
             </div>

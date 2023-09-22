@@ -39,7 +39,7 @@ const SubdivPage: NextPage<SubdivPageProps> = ({ SEO, headerData, subdivList, ma
               id={el.id}
               department={'subdiv'}
               slug={el.attributes.slug}
-              photo={el.attributes.main_photo.data.attributes.url}
+              photo={el.attributes.main_photo.data[0].attributes.url}
               name={el.attributes.name}
             />
           ))}
