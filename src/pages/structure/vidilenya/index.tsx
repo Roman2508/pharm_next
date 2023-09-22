@@ -45,7 +45,7 @@ const ViddilenyaPage: NextPage<ViddilenyaPageProps> = ({
               id={el.id}
               department={'vidilenya'}
               slug={el.attributes.slug}
-              photo={el.attributes.main_photo.data.attributes.url}
+              photo={el.attributes.main_photo.data[0].attributes.url}
               name={el.attributes.name}
             />
           ))}
