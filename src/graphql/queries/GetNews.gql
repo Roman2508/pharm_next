@@ -1,7 +1,10 @@
 query GetNews($currentPage: Int = 1, $pageSize: Int = 3) {
-  novinas(sort: "date:desc", pagination: { page: $currentPage, pageSize: $pageSize }) {
+  novinas(
+    sort: "date:desc"
+    pagination: { page: $currentPage, pageSize: $pageSize }
+  ) {
     meta {
-      pagination{
+      pagination {
         total
         page
         pageSize
@@ -24,14 +27,14 @@ query GetNews($currentPage: Int = 1, $pageSize: Int = 3) {
           }
         }
         collage_photos {
-         data {
-          id
-          attributes {
-            url
-            width
-            height
+          data {
+            id
+            attributes {
+              url
+              width
+              height
+            }
           }
-        }
         }
         video_url
         news_tags {
@@ -43,6 +46,14 @@ query GetNews($currentPage: Int = 1, $pageSize: Int = 3) {
           }
         }
       }
+    }
+  }
+}
+
+query GetAllNovinasId {
+  novinas(pagination: { pageSize: 50000 }) {
+    data {
+      id
     }
   }
 }

@@ -11,7 +11,7 @@
 .teachers__filter-text {
   display: inline-block;
   margin-right: 30px;
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   font-size: 20px;
   margin-bottom: 20px;
 }
@@ -73,12 +73,9 @@
   cursor: pointer;
 }
 
-.teachers__item-info {
-}
-
 .teachers__image-box {
   min-width: 150px;
-  margin-right: 10px;
+  margin: 0 10px;
 }
 
 .teachers__image-box img {
@@ -137,6 +134,8 @@
   .teachers__item {
     flex-basis: 100%;
     max-width: 500px;
+    border-bottom: 1px solid #b1b1b1;
+    border-radius: 0;
   }
 }
 
@@ -145,6 +144,7 @@
     justify-content: start;
     padding: 10px 0;
     margin-bottom: 20px;
+
     &:hover {
       transform: translateY(0);
       box-shadow: none;

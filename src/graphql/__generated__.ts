@@ -2956,6 +2956,11 @@ export type GetNewsQueryVariables = Exact<{
 
 export type GetNewsQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly meta: { readonly __typename?: 'ResponseCollectionMeta', readonly pagination: { readonly __typename?: 'Pagination', readonly total: number, readonly page: number, readonly pageSize: number, readonly pageCount: number } }, readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly title: string, readonly body: string, readonly date: any, readonly video_url: string, readonly main_photo: { readonly __typename?: 'UploadFileEntityResponse', readonly data: { readonly __typename?: 'UploadFileEntity', readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } } }, readonly collage_photos: { readonly __typename?: 'UploadFileRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'UploadFileEntity', readonly id: string, readonly attributes: { readonly __typename?: 'UploadFile', readonly url: string, readonly width: number, readonly height: number } }> }, readonly news_tags: { readonly __typename?: 'NewsTagRelationResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NewsTagEntity', readonly id: string, readonly attributes: { readonly __typename?: 'NewsTag', readonly title: string } }> } } }> } };
 
+export type GetAllNovinasIdQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllNovinasIdQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string }> } };
+
 export type GetNewsByMonthQueryVariables = Exact<{
   currentPage?: InputMaybe<Scalars['Int']['input']>;
   pageSize?: InputMaybe<Scalars['Int']['input']>;
@@ -3956,6 +3961,15 @@ export const GetNewsDocument = gql`
   }
 }
     `;
+export const GetAllNovinasIdDocument = gql`
+    query GetAllNovinasId {
+  novinas(pagination: {pageSize: 50000}) {
+    data {
+      id
+    }
+  }
+}
+    `;
 export const GetNewsByMonthDocument = gql`
     query GetNewsByMonth($currentPage: Int = 1, $pageSize: Int = 6, $startDate: Date, $endDate: Date) {
   novinas(
@@ -4479,6 +4493,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetNews(variables?: GetNewsQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetNewsQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNewsQuery>(GetNewsDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetNews', 'query');
+    },
+    GetAllNovinasId(variables?: GetAllNovinasIdQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllNovinasIdQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllNovinasIdQuery>(GetAllNovinasIdDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllNovinasId', 'query');
     },
     GetNewsByMonth(variables?: GetNewsByMonthQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetNewsByMonthQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetNewsByMonthQuery>(GetNewsByMonthDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetNewsByMonth', 'query');

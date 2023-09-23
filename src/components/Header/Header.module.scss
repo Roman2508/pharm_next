@@ -276,13 +276,13 @@
 }
 
 .submenu-triangle::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 17px;
   right: 15px;
   border: 7px solid transparent;
   border-left-color: #000000;
-  background-image: url('../../../public/assets/icons/triangle.svg');
+  background-image: url("../../../public/assets/icons/triangle.svg");
 }
 
 @media (max-width: 1100px) {
@@ -494,7 +494,8 @@
     left: -150% !important;
     overflow-y: auto;
   }
-  .header__nav-submenu .header__nav-submenu.header__nav-submenu-lover-level--open {
+  .header__nav-submenu
+    .header__nav-submenu.header__nav-submenu-lover-level--open {
     left: 0 !important;
   }
   /* // submenu lover level */
@@ -537,9 +538,6 @@
   .main-menu-triangle {
     width: 20%;
   }
-  /* .main-screen { */
-  /* height: 70vh !important; */
-  /* } */
 }
 
 @media (max-width: 640px) {
@@ -574,10 +572,8 @@
 
   .header__top-link img {
     width: 34px;
+    height: auto;
   }
-  /* .main-menu-triangle::after {
-    width: 20%;
-  } */
 }
 
 @media (max-width: 375px) {

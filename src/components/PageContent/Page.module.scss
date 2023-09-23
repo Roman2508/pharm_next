@@ -15,7 +15,7 @@
 /* page-conent */
 .page-conent {
   width: 100%;
-  font-family: 'GilroyRegular', sans-serif;
+  font-family: "GilroyRegular", sans-serif;
   border-collapse: collapse;
   font-size: 20px;
   margin-bottom: 20px;
@@ -33,7 +33,7 @@
 .page-conent h5 strong,
 .page-conent h6,
 .page-conent h6 strong {
-  font-family: 'GilroyBold', sans-serif !important;
+  font-family: "GilroyBold", sans-serif !important;
   color: var(--primary-color) !important;
   margin-bottom: 10px;
 }
@@ -153,7 +153,7 @@
 
 .cmk-teachers-title {
   font-size: 24px;
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -180,7 +180,7 @@
   height: 130px;
 }
 .teacher-name {
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   font-size: 24px;
 }
 .teacher-lessons {
@@ -220,7 +220,7 @@
 
 .section-name {
   font-size: 24px;
-  font-family: 'GilroyBold', sans-serif;
+  font-family: "GilroyBold", sans-serif;
   background-color: var(--gray-color);
   color: var(--primary-color);
   text-align: center;
@@ -332,22 +332,22 @@
 
 @media (max-width: 840px) {
   .page-conent h1 {
-    font-size: 36px;
+    font-size: 36px !important;
   }
   .page-conent h2 {
-    font-size: 32px;
+    font-size: 32px !important;
   }
   .page-conent h3 {
-    font-size: 30px;
+    font-size: 30px !important;
   }
   .page-conent h4 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
   .page-conent h5 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
   .page-conent h6 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
 
   .partner-item img {
@@ -357,22 +357,22 @@
 
 @media (max-width: 768px) {
   .page-conent h1 {
-    font-size: 32px;
+    font-size: 32px !important;
   }
   .page-conent h2 {
-    font-size: 30px;
+    font-size: 30px !important;
   }
   .page-conent h3 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
   .page-conent h4 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
   .page-conent h5 {
-    font-size: 22px;
+    font-size: 22px !important;
   }
   .page-conent h6 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
 
   .partner-item img {
@@ -399,22 +399,22 @@
   }
 
   .page-conent h1 {
-    font-size: 30px;
+    font-size: 30px !important;
   }
   .page-conent h2 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
   .page-conent h3 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
   .page-conent h4 {
-    font-size: 22px;
+    font-size: 22px !important;
   }
   .page-conent h5 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
   .page-conent h6 {
-    font-size: 18px;
+    font-size: 18px !important;
   }
 
   .partner-item img {
@@ -471,22 +471,22 @@
   }
 
   .page-conent h1 {
-    font-size: 28px;
+    font-size: 28px !important;
   }
   .page-conent h2 {
-    font-size: 26px;
+    font-size: 26px !important;
   }
   .page-conent h3 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
   .page-conent h4 {
-    font-size: 22px;
+    font-size: 22px !important;
   }
   .page-conent h5 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
   .page-conent h6 {
-    font-size: 18px;
+    font-size: 18px !important;
   }
 
   .full-size__text {
@@ -500,21 +500,21 @@
   }
 
   .page-conent h1 {
-    font-size: 26px;
+    font-size: 26px !important;
   }
   .page-conent h2 {
-    font-size: 24px;
+    font-size: 24px !important;
   }
   .page-conent h3 {
-    font-size: 22px;
+    font-size: 22px !important;
   }
   .page-conent h4 {
-    font-size: 20px;
+    font-size: 20px !important;
   }
   .page-conent h5 {
-    font-size: 18px;
+    font-size: 18px !important;
   }
   .page-conent h6 {
-    font-size: 16px;
+    font-size: 16px !important;
   }
 }
