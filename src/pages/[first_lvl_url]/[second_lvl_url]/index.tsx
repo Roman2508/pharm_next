@@ -43,7 +43,7 @@ const Page: React.FC<IPageProps> = ({
           {pageData.attributes.title}
         </h1>
 
-        {!!pageData.attributes.main_photo.data.length && (
+        {!!pageData.attributes.main_photo.data && (
           <div className="container">
             <div className={"main-photo-page"}>
               <Image

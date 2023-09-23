@@ -1,10 +1,10 @@
-import { GraphQLClient } from 'graphql-request'
+import { GraphQLClient } from "graphql-request"
 
-import { getSdk } from './__generated__'
+import { getSdk } from "./__generated__"
 // import { ApolloClient, InMemoryCache } from '@apollo/client'
 
 const client = new GraphQLClient(
-  process.env.GRAPHQL_API_URL || 'http://localhost:1337/graphql'
+  process.env.GRAPHQL_API_URL || "http://localhost:1337/graphql"
   // {
   //   headers: {
   //     Authorization:
@@ -21,4 +21,4 @@ const client = new GraphQLClient(
 // })
 
 export const gql = getSdk(client)
-export * from './__generated__'
+export * from "./__generated__"
