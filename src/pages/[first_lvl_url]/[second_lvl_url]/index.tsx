@@ -1,10 +1,10 @@
-import React from 'react'
-import cn from 'classnames'
-import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
+import React from "react"
+import cn from "classnames"
+import { GetServerSideProps, GetStaticPaths, GetStaticProps } from "next"
 
-import styles from '../Page.module.scss'
-import { Layout } from '@/layouts/Layout'
-import PageContnet from '@/components/PageContent/PageContnet'
+import styles from "../Page.module.scss"
+import { Layout } from "@/layouts/Layout"
+import PageContnet from "@/components/PageContent/PageContnet"
 import {
   GetHeaderQuery,
   GetHeaderScheduleQuery,
@@ -12,8 +12,8 @@ import {
   GetSeoQuery,
   PageEntity,
   gql,
-} from '@/graphql/client'
-import Image from 'next/image'
+} from "@/graphql/client"
+import Image from "next/image"
 
 interface IPageProps {
   SEO: GetSeoQuery
@@ -23,7 +23,13 @@ interface IPageProps {
   headerSchedule: GetHeaderScheduleQuery
 }
 
-const Page: React.FC<IPageProps> = ({ SEO, headerData, mainScreenData, pageData, headerSchedule }) => {
+const Page: React.FC<IPageProps> = ({
+  SEO,
+  headerData,
+  mainScreenData,
+  pageData,
+  headerSchedule,
+}) => {
   return (
     <Layout
       SEO={SEO}
@@ -32,53 +38,101 @@ const Page: React.FC<IPageProps> = ({ SEO, headerData, mainScreenData, pageData,
       title={pageData.attributes.SEO.title}
       headerSchedule={headerSchedule}
     >
-      <div className={styles['---']}>
-        <h1 className={`${styles['page-title']} section-title`}>{pageData.attributes.title}</h1>
+      <div className={styles["---"]}>
+        <h1 className={`${styles["page-title"]} section-title`}>
+          {pageData.attributes.title}
+        </h1>
 
         {!!pageData.attributes.main_photo.data.length && (
           <div className="container">
-            <div className={'main-photo-page'}>
+            <div className={"main-photo-page"}>
               <Image
-                src={`${process.env.API_URL}${pageData.attributes.main_photo.data[0].attributes.url}`}
-                width={pageData.attributes.main_photo.data[0].attributes.width || 800}
-                height={pageData.attributes.main_photo.data[0].attributes.height || 400}
+                src={`${process.env.API_URL}${pageData.attributes.main_photo.data.attributes.url}`}
+                width={
+                  pageData.attributes.main_photo.data.attributes.width || 800
+                }
+                height={
+                  pageData.attributes.main_photo.data.attributes.height || 400
+                }
                 alt="main page photo"
               />
             </div>
           </div>
         )}
 
-        <div className={cn(styles['page-conent'])}>
-          {String(pageData.attributes.layout) === 'col_1_8_3' ? (
-            <div className={cn('page-row', 'container')}>
-              <PageContnet colSize="col-1-12" pageComponents={pageData.attributes.left_sidebar} />
-              <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
-              <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
+        <div className={cn(styles["page-conent"])}>
+          {String(pageData.attributes.layout) === "col_1_8_3" ? (
+            <div className={cn("page-row", "container")}>
+              <PageContnet
+                colSize="col-1-12"
+                pageComponents={pageData.attributes.left_sidebar}
+              />
+              <PageContnet
+                colSize="col-8-12"
+                pageComponents={pageData.attributes.page_components}
+              />
+              <PageContnet
+                colSize="col-3-12"
+                pageComponents={pageData.attributes.right_sidebar}
+              />
             </div>
-          ) : String(pageData.attributes.layout) === 'col_2_7_3' ? (
-            <div className={cn('page-row', 'container')}>
-              <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.left_sidebar} />
-              <PageContnet colSize="col-7-12" pageComponents={pageData.attributes.page_components} />
-              <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
+          ) : String(pageData.attributes.layout) === "col_2_7_3" ? (
+            <div className={cn("page-row", "container")}>
+              <PageContnet
+                colSize="col-2-12"
+                pageComponents={pageData.attributes.left_sidebar}
+              />
+              <PageContnet
+                colSize="col-7-12"
+                pageComponents={pageData.attributes.page_components}
+              />
+              <PageContnet
+                colSize="col-3-12"
+                pageComponents={pageData.attributes.right_sidebar}
+              />
             </div>
-          ) : String(pageData.attributes.layout) === 'col_2_8_2' ? (
-            <div className={cn('page-row', 'container')}>
-              <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.left_sidebar} />
-              <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
-              <PageContnet colSize="col-2-12" pageComponents={pageData.attributes.right_sidebar} />
+          ) : String(pageData.attributes.layout) === "col_2_8_2" ? (
+            <div className={cn("page-row", "container")}>
+              <PageContnet
+                colSize="col-2-12"
+                pageComponents={pageData.attributes.left_sidebar}
+              />
+              <PageContnet
+                colSize="col-8-12"
+                pageComponents={pageData.attributes.page_components}
+              />
+              <PageContnet
+                colSize="col-2-12"
+                pageComponents={pageData.attributes.right_sidebar}
+              />
             </div>
-          ) : String(pageData.attributes.layout) === 'col_8_4' ? (
-            <div className={cn('page-row', 'container')}>
-              <PageContnet colSize="col-8-12" pageComponents={pageData.attributes.page_components} />
-              <PageContnet colSize="col-4-12" pageComponents={pageData.attributes.right_sidebar} />
+          ) : String(pageData.attributes.layout) === "col_8_4" ? (
+            <div className={cn("page-row", "container")}>
+              <PageContnet
+                colSize="col-8-12"
+                pageComponents={pageData.attributes.page_components}
+              />
+              <PageContnet
+                colSize="col-4-12"
+                pageComponents={pageData.attributes.right_sidebar}
+              />
             </div>
-          ) : String(pageData.attributes.layout) === 'col_9_3' ? (
-            <div className={cn('page-row', 'container')}>
-              <PageContnet colSize="col-9-12" pageComponents={pageData.attributes.page_components} />
-              <PageContnet colSize="col-3-12" pageComponents={pageData.attributes.right_sidebar} />
+          ) : String(pageData.attributes.layout) === "col_9_3" ? (
+            <div className={cn("page-row", "container")}>
+              <PageContnet
+                colSize="col-9-12"
+                pageComponents={pageData.attributes.page_components}
+              />
+              <PageContnet
+                colSize="col-3-12"
+                pageComponents={pageData.attributes.right_sidebar}
+              />
             </div>
           ) : (
-            <PageContnet colSize="col-12" pageComponents={pageData.attributes.page_components} />
+            <PageContnet
+              colSize="col-12"
+              pageComponents={pageData.attributes.page_components}
+            />
           )}
         </div>
       </div>
@@ -98,7 +152,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 
     const allPaths = pagesUrl.pages.data.map((el) => {
-      const arr = el.attributes.page_url.split('/').filter((f) => f !== '')
+      const arr = el.attributes.page_url.split("/").filter((f) => f !== "")
 
       if (arr.length === 2) {
         return {
@@ -110,14 +164,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
       } else {
         return {
           params: {
-            first_lvl_url: '',
-            second_lvl_url: '',
+            first_lvl_url: "",
+            second_lvl_url: "",
           },
         }
       }
     })
 
-    const paths = allPaths.filter((f) => f.params.first_lvl_url !== '' && f.params.second_lvl_url !== '')
+    const paths = allPaths.filter(
+      (f) => f.params.first_lvl_url !== "" && f.params.second_lvl_url !== ""
+    )
 
     return {
       paths,
@@ -134,8 +190,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const returnData = {
-    props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {}, headerSchedule: {} },
-    redirect: { destination: '/404', permanent: true },
+    props: {
+      SEO: {},
+      headerData: {},
+      pageData: {},
+      mainScreenData: {},
+      headerSchedule: {},
+    },
+    redirect: { destination: "/404", permanent: true },
   }
 
   try {
@@ -143,7 +205,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       return returnData
     }
 
-    const pageData = await gql.GetPage({ pageUrl: `/${params.first_lvl_url}/${params.second_lvl_url}` })
+    const pageData = await gql.GetPage({
+      pageUrl: `/${params.first_lvl_url}/${params.second_lvl_url}`,
+    })
 
     if (!pageData.pages.data[0]) {
       return returnData
@@ -175,8 +239,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       revalidate: 10,
     }
   } catch (error) {
-    console.log(error, 'default page error')
-    return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {}, headerSchedule: {} } }
+    console.log(error, "default page error")
+    return {
+      props: {
+        SEO: {},
+        headerData: {},
+        pageData: {},
+        mainScreenData: {},
+        headerSchedule: {},
+      },
+    }
   }
 }
 

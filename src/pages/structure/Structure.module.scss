@@ -6,3 +6,9 @@
   display: flex;
   flex-wrap: wrap;
 }
+
+@media (max-width: 540px) {
+  .main-title {
+    font-size: 24px;
+  }
+}

@@ -1,37 +1,42 @@
 // @ts-nocheck
 
-import React from 'react'
-import cn from 'classnames'
-import Link from 'next/link'
-import Image from 'next/image'
-import 'keen-slider/keen-slider.min.css'
+import React from "react"
+import cn from "classnames"
+import Link from "next/link"
+import Image from "next/image"
+import "keen-slider/keen-slider.min.css"
 
-import styles from './Page.module.scss'
-import personStyles from './PersonComponent.module.scss'
+import styles from "./Page.module.scss"
+import personStyles from "./PersonComponent.module.scss"
 // import panoramsStyles from './PanoramsComponent.module.scss'
 // import twoColImageStyles from './TwoColumnWithImage.module.scss'
 // import linkStyles from './ButtonLinkComponent.module.scss'
 
-import { useKeenSlider } from 'keen-slider/react'
+import { useKeenSlider } from "keen-slider/react"
 
 // import { FancyboxGallery } from '../FancyboxGallery'
 // import { Accordion } from '../ui/Accordion/Accordion'
-import { PagePageComponentsDynamicZone, UploadFileEntity, Worker, WorkerEntity } from '@/graphql/__generated__'
+import {
+  PagePageComponentsDynamicZone,
+  UploadFileEntity,
+  Worker,
+  WorkerEntity,
+} from "@/graphql/__generated__"
 // import FullScreenFrame from '../FullScreenFrame/FullScreenFrame'
-import ButtonImages from '../PageComponents/ButtonImages'
-import EducationBooks from '../PageComponents/EducationBooks'
-import FullSizePerson from '../PageComponents/FullSizePerson'
-import Partners from '../PageComponents/Partners'
-import PageCardsComponent from '../PageComponents/PageCardsComponent'
-import ButtonLink from '../PageComponents/ButtonLink'
-import PersonComponent from '../PageComponents/PersonComponent/PersonComponent'
-import PhotosGallery from '../PageComponents/PhotosGallery'
-import AccordionComponent from '../PageComponents/AccordionComponent'
-import PanoramsComponent from '../PageComponents/PanoramasComponent/PanoramsComponent'
-import TwoColWithImage from '../PageComponents/TwoColWithImage/TwoColWithImage'
-import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
-import useSlider from '@/hooks/useSlider'
-import { SliderArrow } from '../Slider/SliderArrows'
+import ButtonImages from "../PageComponents/ButtonImages"
+import EducationBooks from "../PageComponents/EducationBooks"
+import FullSizePerson from "../PageComponents/FullSizePerson"
+import Partners from "../PageComponents/Partners"
+import PageCardsComponent from "../PageComponents/PageCardsComponent"
+import ButtonLink from "../PageComponents/ButtonLink"
+import PersonComponent from "../PageComponents/PersonComponent/PersonComponent"
+import PhotosGallery from "../PageComponents/PhotosGallery"
+import AccordionComponent from "../PageComponents/AccordionComponent"
+import PanoramsComponent from "../PageComponents/PanoramasComponent/PanoramsComponent"
+import TwoColWithImage from "../PageComponents/TwoColWithImage/TwoColWithImage"
+import replaceDataInBodyComponent from "@/utils/replaceDataInBodyComponent"
+import useSlider from "@/hooks/useSlider"
+import { SliderArrow } from "../Slider/SliderArrows"
 
 interface IPageContnetProps {
   colSize: string
@@ -42,14 +47,29 @@ interface IPageContnetProps {
   pageComponents: readonly PagePageComponentsDynamicZone[]
 }
 
-const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeachers, cmkSlug }: IPageContnetProps) => {
+const PageContnet = ({
+  colSize,
+  pageComponents,
+  mainPhotoCol,
+  cmkHead,
+  cmkTeachers,
+  cmkSlug,
+}: IPageContnetProps) => {
   const cmkHeadPhone = cmkHead?.phone
   const cmkHeadphoneWithoutSymbols = cmkHeadPhone
-    ? cmkHeadPhone.replace('(', '').replace(')', '').replace('-', '').replace('_', '')
-    : ''
-  const cmkHeadLink = cmkHead ? `/structure/cmks/${cmkSlug}/${cmkHead.slug}` : '/'
+    ? cmkHeadPhone
+        .replace("(", "")
+        .replace(")", "")
+        .replace("-", "")
+        .replace("_", "")
+    : ""
+  const cmkHeadLink = cmkHead
+    ? `/structure/cmks/${cmkSlug}/${cmkHead.slug}`
+    : "/"
   const teachersOnPage = 4
-  const pagesCount = cmkTeachers ? Math.ceil(cmkTeachers.length / teachersOnPage) : 1
+  const pagesCount = cmkTeachers
+    ? Math.ceil(cmkTeachers.length / teachersOnPage)
+    : 1
 
   const [teachersRange, setTeachersRange] = React.useState([0, teachersOnPage])
   const [currentPage, setCurrentPage] = React.useState(1)
@@ -102,10 +122,13 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
   const handleChangeTeachersRange = (currentPage: number) => {
     setCurrentPage(currentPage)
     setTeachersRange((prev) => {
-      return [currentPage * teachersOnPage - teachersOnPage, currentPage * teachersOnPage]
+      return [
+        currentPage * teachersOnPage - teachersOnPage,
+        currentPage * teachersOnPage,
+      ]
     })
   }
-  console.log(loaded, instanceRef.current)
+
   React.useEffect(() => {
     setCurrentPage(1)
   }, [cmkTeachers])
@@ -113,7 +136,7 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
   return (
     <div className={colSize}>
       {mainPhotoCol && mainPhotoCol.length === 1 && (
-        <div className={'cmk-main-photo'}>
+        <div className={"cmk-main-photo"}>
           <Image
             src={`${process.env.API_URL}${mainPhotoCol[0].attributes.url}`}
             width={mainPhotoCol[0].attributes.width}
@@ -125,9 +148,12 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
 
       {mainPhotoCol && mainPhotoCol.length > 1 && (
         <>
-          <div ref={sliderRef} className={cn('keen-slider', 'main-photo-slider')}>
+          <div
+            ref={sliderRef}
+            className={cn("keen-slider", "main-photo-slider")}
+          >
             {mainPhotoCol.map((el) => (
-              <div className={cn('cmk-main-photo', 'keen-slider__slide')}>
+              <div className={cn("cmk-main-photo", "keen-slider__slide")}>
                 <Image
                   src={`${process.env.API_URL}${el.attributes.url}`}
                   width={el.attributes.width}
@@ -140,14 +166,20 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
 
             {loaded && instanceRef.current && (
               <div className="dots">
-                {[...Array(instanceRef?.current?.track?.details?.slides?.length).keys()].map((idx) => {
+                {[
+                  ...Array(
+                    instanceRef?.current?.track?.details?.slides?.length
+                  ).keys(),
+                ].map((idx) => {
                   return (
                     <button
                       key={idx}
                       onClick={() => {
                         instanceRef.current?.moveToIdx(idx)
                       }}
-                      className={'dot' + (currentSlide === idx ? ' active' : '')}
+                      className={
+                        "dot" + (currentSlide === idx ? " active" : "")
+                      }
                     ></button>
                   )
                 })}
@@ -173,9 +205,9 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
       )}
 
       {cmkHead && (
-        <div className={personStyles['wrapper']}>
+        <div className={personStyles["wrapper"]}>
           <Link href={cmkHeadLink} target="_blank">
-            <div className={personStyles['photo']}>
+            <div className={personStyles["photo"]}>
               <Image
                 src={`${process.env.API_URL}${cmkHead.photo.data.attributes.url}`}
                 width={cmkHead.photo.data.attributes.width}
@@ -184,49 +216,64 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
             </div>
           </Link>
 
-          <div className={personStyles['info']}>
+          <div className={personStyles["info"]}>
             <Link href={cmkHeadLink} target="_blank">
-              <h5 className={personStyles['name']}>{cmkHead.name}</h5>
+              <h5 className={personStyles["name"]}>{cmkHead.name}</h5>
             </Link>
 
-            <p className={personStyles['position']}>{cmkHead.position}</p>
+            <p className={personStyles["position"]}>{cmkHead.position}</p>
             {cmkHead.phone && (
               <div>
-                <a className={personStyles['tel']} href={`tel:${cmkHeadphoneWithoutSymbols}`}>
+                <a
+                  className={personStyles["tel"]}
+                  href={`tel:${cmkHeadphoneWithoutSymbols}`}
+                >
                   {cmkHead.phone}
                 </a>
               </div>
             )}
             {cmkHead.email && (
-              <a className={personStyles['email']} href={`mailto:${cmkHead.email}`}>
+              <a
+                className={personStyles["email"]}
+                href={`mailto:${cmkHead.email}`}
+              >
                 {cmkHead.email}
               </a>
             )}
           </div>
         </div>
       )}
-      {cmkTeachers && <div className={styles['cmk-teachers-title']}>Склад комісії</div>}
       {cmkTeachers && (
-        <div className={styles['teachers-list']}>
+        <div className={styles["cmk-teachers-title"]}>Склад комісії</div>
+      )}
+      {cmkTeachers && (
+        <div className={styles["teachers-list"]}>
           {cmkTeachers
             .filter((teacher) => teacher.attributes.name !== cmkHead?.name)
             .slice(teachersRange[0], teachersRange[1])
             .map((teacher) => {
-              const nameArray = teacher.attributes.name.split(' ')
+              const nameArray = teacher.attributes.name.split(" ")
               const teacherLink = `/structure/cmks/${cmkSlug}/${teacher.attributes.slug}`
 
               return (
-                <div className={styles['teacher-wrapper']} key={teacher.id}>
-                  <div className={styles['teacher-row']}>
-                    <Link className={styles['teacher-photo']} href={teacherLink}>
+                <div className={styles["teacher-wrapper"]} key={teacher.id}>
+                  <div className={styles["teacher-row"]}>
+                    <Link
+                      className={styles["teacher-photo"]}
+                      href={teacherLink}
+                    >
                       <Image
                         src={`${process.env.API_URL}${teacher.attributes.photo.data.attributes.url}`}
-                        width={teacher.attributes.photo.data.attributes.width || 150}
-                        height={teacher.attributes.photo.data.attributes.height || 150}
+                        width={
+                          teacher.attributes.photo.data.attributes.width || 150
+                        }
+                        height={
+                          teacher.attributes.photo.data.attributes.height || 150
+                        }
                         alt="teacher photo"
                       />
                     </Link>
-                    <Link className={styles['teacher-name']} href={teacherLink}>
+                    <Link className={styles["teacher-name"]} href={teacherLink}>
                       {nameArray.map((el) => {
                         if (!el.length) return
                         return (
@@ -238,9 +285,9 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
                       })}
                     </Link>
                   </div>
-                  <ul className={styles['teacher-lessons']}>
+                  <ul className={styles["teacher-lessons"]}>
                     {teacher.attributes.lessons.data.map((lesson) => (
-                      <li className={styles['teacher-lesson']} key={lesson.id}>
+                      <li className={styles["teacher-lesson"]} key={lesson.id}>
                         «{lesson.attributes.name}»
                       </li>
                     ))}
@@ -251,13 +298,13 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
         </div>
       )}
       {cmkTeachers && (
-        <div className={styles['cmk-teacher-pagination']}>
+        <div className={styles["cmk-teacher-pagination"]}>
           {Array(pagesCount)
             .fill(null)
             .map((el, index) => (
               <span
-                className={cn(styles['cmk-teacher-page'], {
-                  [styles['active-page']]: currentPage === index + 1,
+                className={cn(styles["cmk-teacher-page"], {
+                  [styles["active-page"]]: currentPage === index + 1,
                 })}
                 onClick={() => handleChangeTeachersRange(index + 1)}
                 key={index}
@@ -269,42 +316,78 @@ const PageContnet = ({ colSize, pageComponents, mainPhotoCol, cmkHead, cmkTeache
       )}
       {/* {pageComponents.map((component: PagePageComponentsDynamicZone) => { */}
       {pageComponents.map((component: any) => {
-        if (component.component_type === 'body') {
+        if (component.component_type === "body") {
           const componentBody = replaceDataInBodyComponent(component?.body)
 
           /* body */
           return (
-            <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
-              <div className={styles['page-conent']} dangerouslySetInnerHTML={{ __html: componentBody }} />
+            <div
+              className={cn({ ["container"]: colSize === "col-12" })}
+              key={component.id}
+            >
+              <div
+                className={styles["page-conent"]}
+                dangerouslySetInnerHTML={{ __html: componentBody }}
+              />
             </div>
           )
           /* // body */
-        } else if (component.component_type === 'two_col_with_image') {
-          return <TwoColWithImage component={component} key={component.id} colSize={colSize} />
-        } else if (component.component_type === 'panoramas') {
-          return <PanoramsComponent component={component} key={component.id} colSize={colSize} />
-        } else if (component.component_type === 'accordion') {
-          return <AccordionComponent component={component} key={component.id} colSize={colSize} />
-        } else if (component.component_type === 'photos_gallery') {
-          return <PhotosGallery component={component} colSize={colSize} key={component.id} />
-        } else if (component.component_type === 'person') {
+        } else if (component.component_type === "two_col_with_image") {
+          return (
+            <TwoColWithImage
+              component={component}
+              key={component.id}
+              colSize={colSize}
+            />
+          )
+        } else if (component.component_type === "panoramas") {
+          return (
+            <PanoramsComponent
+              component={component}
+              key={component.id}
+              colSize={colSize}
+            />
+          )
+        } else if (component.component_type === "accordion") {
+          return (
+            <AccordionComponent
+              component={component}
+              key={component.id}
+              colSize={colSize}
+            />
+          )
+        } else if (component.component_type === "photos_gallery") {
+          return (
+            <PhotosGallery
+              component={component}
+              colSize={colSize}
+              key={component.id}
+            />
+          )
+        } else if (component.component_type === "person") {
           return <PersonComponent component={component} key={component.id} />
-        } else if (component.component_type === 'button_link') {
-          return <ButtonLink component={component} key={component.id} colSize={colSize} />
-        } else if (component.component_type === 'page_cards') {
+        } else if (component.component_type === "button_link") {
+          return (
+            <ButtonLink
+              component={component}
+              key={component.id}
+              colSize={colSize}
+            />
+          )
+        } else if (component.component_type === "page_cards") {
           return <PageCardsComponent component={component} key={component.id} />
-        } else if (component.component_type === 'partners') {
+        } else if (component.component_type === "partners") {
           return <Partners component={component} key={component.id} />
-        } else if (component.component_type === 'full-size-person') {
+        } else if (component.component_type === "full-size-person") {
           return <FullSizePerson component={component} key={component.id} />
-        } else if (component.component_type === 'education_books') {
+        } else if (component.component_type === "education_books") {
           return <EducationBooks component={component} key={component.id} />
-        } else if (component.component_type === 'button_images') {
+        } else if (component.component_type === "button_images") {
           return <ButtonImages component={component} key={component.id} />
         }
 
         return (
-          <div style={{ color: 'red' }} key={component.id}>
+          <div style={{ color: "red" }} key={component.id}>
             Unknown component!
           </div>
         )
