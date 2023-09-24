@@ -3165,7 +3165,7 @@ export const GetBlocksPanoramsComponentFragmentDoc = gql`
   id
   title
   component_type
-  panoramas {
+  panoramas(pagination: {pageSize: 30}) {
     data {
       id
       attributes {
@@ -3219,7 +3219,7 @@ export const GetPhotosGalleryComponentFragmentDoc = gql`
   id
   title
   component_type
-  images {
+  images(pagination: {pageSize: 30}) {
     data {
       id
       attributes {
@@ -3786,7 +3786,7 @@ export const GetFullNewsDocument = gql`
             }
           }
         }
-        collage_photos {
+        collage_photos(pagination: {pageSize: 30}) {
           data {
             attributes {
               url

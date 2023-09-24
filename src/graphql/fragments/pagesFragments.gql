@@ -56,7 +56,7 @@ fragment GetBlocksPanoramsComponent on ComponentPageBlocksPanorams {
   id
   title
   component_type
-  panoramas {
+  panoramas(pagination: { pageSize: 30 }) {
     data {
       id
       attributes {
@@ -108,7 +108,7 @@ fragment GetPhotosGalleryComponent on ComponentPageBlocksPhotosGallery {
   id
   title
   component_type
-  images {
+  images(pagination: { pageSize: 30 }) {
     data {
       id
       attributes {

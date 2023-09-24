@@ -15,7 +15,7 @@ query GetFullNews($newsId: ID = "3") {
             }
           }
         }
-        collage_photos {
+        collage_photos(pagination: { pageSize: 30 }) {
           data {
             attributes {
               url
