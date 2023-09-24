@@ -3,6 +3,7 @@ import cn from 'classnames'
 
 import styles from './Contacts.module.scss'
 import ContactsItem from './ContactsItem'
+import { HomePageContactEntity } from '@/graphql/__generated__'
 
 const mainPageContacts = [
   {
@@ -35,23 +36,27 @@ const mainPageContacts = [
   },
 ]
 
-export const Contacts = () => {
+interface IContactsProps {
+  data: HomePageContactEntity
+}
+
+export const Contacts: React.FC<IContactsProps> = ({ data }) => {
   return (
     <div className={styles['contacts']}>
       <div className={cn(styles['contacts__container'], 'container')}>
         <div className={styles['contacts__wrapper']}>
-          <h2 className={cn(styles['contacts__title'], 'section-title')}>КОНТАКТИ</h2>
+          <h2 className={cn(styles['contacts__title'], 'section-title')}>{data.attributes.title}</h2>
 
           <div className={styles['contacts__row']}>
             <div className={styles['contacts__items']}>
-              {mainPageContacts.map((el) => (
+              {data.attributes.Contacts.map((el) => (
                 <ContactsItem key={el.id} name={el.name} position={el.position} phone={el.phone} email={el.email} />
               ))}
             </div>
 
             <div className={styles['contacts__map']}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d6291.689037301852!2d28.64056024719695!3d50.244635952177546!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x472c648aed44e5cf%3A0x8c8080cc023799b!2z0JbQuNGC0L7QvNC40YDRgdGM0LrQuNC5INCx0LDQt9C-0LLQuNC5INGE0LDRgNC80LDRhtC10LLRgtC40YfQvdC40Lkg0YTQsNGF0L7QstC40Lkg0LrQvtC70LXQtNC2INCW0LjRgtC-0LzQuNGA0YHRjNC60L7RlyDQvtCx0LvQsNGB0L3QvtGXINGA0LDQtNC4!5e0!3m2!1sru!2sua!4v1688215841222!5m2!1sru!2sua"
+                src={data.attributes.frame_url}
                 width="700"
                 height="400"
                 style={{ border: 0 }}

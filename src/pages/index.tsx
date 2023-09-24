@@ -15,6 +15,7 @@ import {
   GetAllVideosQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
+  GetHomePageDataQuery,
   GetMainScreenQuery,
   GetNewsQuery,
   GetPartnersQuery,
@@ -29,6 +30,7 @@ interface IHomeProps {
   events: GetAllEventsQuery
   partners: GetPartnersQuery
   headerData: GetHeaderQuery
+  homePageData: GetHomePageDataQuery
   mainScreenData: GetMainScreenQuery
   advertisments: GetAdvertisementsQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -41,6 +43,7 @@ const Home: NextPage<IHomeProps> = ({
   newsData,
   partners,
   headerData,
+  homePageData,
   advertisments,
   mainScreenData,
   headerSchedule,
@@ -54,15 +57,19 @@ const Home: NextPage<IHomeProps> = ({
       SEO={SEO}
     >
       <Announcement advertisments={advertisments} />
-      <About />
-      <Stats />
+      {/* @ts-ignore */}
+      <About data={homePageData.homePageAbout.data} />
+      {/* @ts-ignore */}
+      <Stats data={homePageData.homePageStat.data} />
       <div className="container">
         <News newsData={newsData} showTitle addMarginBottom />
       </div>
       <Events events={events} />
-      <Gallery />
+      {/* @ts-ignore */}
+      <Gallery data={homePageData.homePageGallery.data} />
       <Videos videos={videos} />
-      <Contacts />
+      {/* @ts-ignore */}
+      <Contacts data={homePageData.homePageContact.data} />
       <Partners partners={partners} />
     </HomePageLayout>
   )
@@ -80,6 +87,7 @@ export const getServerSideProps: GetStaticProps = async () => {
     const events = await gql.GetAllEvents()
     const videos = await gql.GetAllVideos()
     const partners = await gql.GetPartners()
+    const homePageData = await gql.GetHomePageData()
 
     return {
       props: {
@@ -89,6 +97,7 @@ export const getServerSideProps: GetStaticProps = async () => {
         partners,
         newsData,
         headerData,
+        homePageData,
         advertisments,
         mainScreenData,
         headerSchedule,
@@ -103,6 +112,7 @@ export const getServerSideProps: GetStaticProps = async () => {
         videos: {},
         newsData: {},
         headerData: {},
+        homePageData: {},
         advertisments: {},
         mainScreenData: {},
         headerSchedule: {},
