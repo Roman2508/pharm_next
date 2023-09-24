@@ -1,12 +1,7 @@
-import React from "react"
-import cn from "classnames"
-import Image from "next/image"
-import {
-  GetServerSideProps,
-  GetStaticPaths,
-  GetStaticProps,
-  NextPage,
-} from "next"
+import React from 'react'
+import cn from 'classnames'
+import Image from 'next/image'
+import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'next'
 
 import {
   GetAllNewsDatesQuery,
@@ -17,16 +12,16 @@ import {
   GetSomeLastNewsQuery,
   NovinaEntity,
   gql,
-} from "@/graphql/client"
-import { Layout } from "@/layouts/Layout"
-import styles from "../../../Novina.module.scss"
-import { getVideoUrl } from "@/utils/getVideoUrl"
-import NewsArchive from "@/components/News/NewsArchive"
-import convertMonthName from "@/utils/convertMonthName"
-import { ResentNews } from "@/components/News/ResentNews"
-import { FancyboxGallery } from "@/components/FancyboxGallery"
-import pageStyles from "../../../../../components/PageContent/Page.module.scss"
-import replaceDataInBodyComponent from "@/utils/replaceDataInBodyComponent"
+} from '@/graphql/client'
+import { Layout } from '@/layouts/Layout'
+import styles from '../../../Novina.module.scss'
+import { getVideoUrl } from '@/utils/getVideoUrl'
+import NewsArchive from '@/components/News/NewsArchive'
+import convertMonthName from '@/utils/convertMonthName'
+import { ResentNews } from '@/components/News/ResentNews'
+import { FancyboxGallery } from '@/components/FancyboxGallery'
+import pageStyles from '../../../../../components/PageContent/Page.module.scss'
+import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
 
 interface IFullNewsPageProps {
   SEO: GetSeoQuery
@@ -63,12 +58,12 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
     >
       <div className="container">
         <div className="page-row">
-          <div className={styles["col-2-12"]}>
-            <div className={`${styles["date"]}`}>
-              <div className={styles["date-inner"]}>
-                <h6 className={styles["day"]}>{day}</h6>
-                <p className={styles["month"]}>{month}</p>
-                <p className={styles["year"]}>{year}</p>
+          <div className={styles['col-2-12']}>
+            <div className={`${styles['date']}`}>
+              <div className={styles['date-inner']}>
+                <h6 className={styles['day']}>{day}</h6>
+                <p className={styles['month']}>{month}</p>
+                <p className={styles['year']}>{year}</p>
               </div>
 
               {/* <div className={styles['share']}>
@@ -124,23 +119,21 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
             )} */}
           </div>
 
-          <div className={styles["col-7-12"]}>
-            <div className={styles["top-wrapper"]}>
-              <div className={`${styles["mobile-date"]} ${styles["date"]}`}>
-                <div className={styles["date-inner"]}>
-                  <h6 className={styles["day"]}>{day}</h6>
-                  <p className={styles["month"]}>{month}</p>
-                  <p className={styles["year"]}>{year}</p>
+          <div className={styles['col-7-12']}>
+            <div className={styles['top-wrapper']}>
+              <div className={`${styles['mobile-date']} ${styles['date']}`}>
+                <div className={styles['date-inner']}>
+                  <h6 className={styles['day']}>{day}</h6>
+                  <p className={styles['month']}>{month}</p>
+                  <p className={styles['year']}>{year}</p>
                 </div>
               </div>
 
-              <h1 className={styles["news-title"]}>
-                {fullNews.attributes.title}
-              </h1>
+              <h1 className={styles['news-title']}>{fullNews.attributes.title}</h1>
             </div>
 
-            <div className={styles["full-news"]}>
-              <div className={styles["main-img"]}>
+            <div className={styles['full-news']}>
+              <div className={styles['main-img']}>
                 <Image
                   src={`${process.env.API_URL}${fullNews.attributes.main_photo.data.attributes.url}`}
                   width={fullNews.attributes.main_photo.data.attributes.width}
@@ -149,11 +142,8 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
                 />
               </div>
 
-              <div className={pageStyles["page-conent"]}>
-                <div
-                  className={styles["news-body"]}
-                  dangerouslySetInnerHTML={{ __html: newsBody }}
-                />
+              <div className={pageStyles['page-conent']}>
+                <div className={styles['news-body']} dangerouslySetInnerHTML={{ __html: newsBody }} />
               </div>
 
               {fullNews.attributes.video_url && (
@@ -168,20 +158,14 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
               )}
 
               {fullNews.attributes.collage_photos.data.length ? (
-                <FancyboxGallery
-                  className={`page-gallery ${styles["full-news-gallery"]}`}
-                >
+                <FancyboxGallery className={`page-gallery ${styles['full-news-gallery']}`}>
                   {fullNews.attributes.collage_photos.data.map((el) => (
                     <a
                       key={el.attributes.url}
                       data-fancybox="gallery"
                       href={`${process.env.API_URL}${el.attributes.url}`}
-                      className={cn(
-                        "gallery-item",
-                        "hand-pointer",
-                        "scale-icon"
-                      )}
-                      style={{ maxWidth: "320px" }}
+                      className={cn('gallery-item', 'hand-pointer', 'scale-icon')}
+                      style={{ maxWidth: '320px' }}
                     >
                       <Image
                         src={`${process.env.API_URL}${el.attributes.url}`}
@@ -198,9 +182,9 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
             </div>
           </div>
 
-          <div className={styles["col-3-12"]}>
-            <div className={styles["resent-news"]}>
-              <h2 className="title-md" style={{ textAlign: "center" }}>
+          <div className={styles['col-3-12']}>
+            <div className={styles['resent-news']}>
+              <h2 className="title-md" style={{ textAlign: 'center' }}>
                 Попередні новини
               </h2>
               <div className="resent-news__items">
@@ -210,10 +194,7 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
               </div>
             </div>
 
-            <h2
-              className={`title-md`}
-              style={{ marginBottom: "20px", textAlign: "center" }}
-            >
+            <h2 className={`title-md`} style={{ marginBottom: '20px', textAlign: 'center' }}>
               Архів новин
             </h2>
 
@@ -227,35 +208,94 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
   )
 }
 
-// export const getStaticPaths: GetStaticPaths = async () => {
-//   try {
-//     const data = await gql.GetAllNovinasId()
+export const getStaticPaths: GetStaticPaths = async () => {
+  try {
+    const data = await gql.GetAllNovinasId()
 
-//     if (!data.novinas.data.length) {
-//       return {
-//         paths: [],
-//         fallback: false,
-//       }
-//     }
+    if (!data.novinas.data.length) {
+      return {
+        paths: [],
+        fallback: false,
+      }
+    }
 
-//     const paths = data.novinas.data.map((el) => ({
-//       params: { news_id: el.id },
-//     }))
+    const paths = data.novinas.data.map((el) => {
+      const date = el.attributes.date.split('-')
+      return {
+        params: { news_id: el.id, year: date[0], month: date[1], day: date[2] },
+      }
+    })
 
-//     return {
-//       paths,
-//       fallback: false,
-//     }
-//   } catch (err) {
-//     console.log(err)
-//     return {
-//       paths: [],
-//       fallback: false,
-//     }
-//   }
-// }
+    return {
+      paths,
+      fallback: false,
+    }
+  } catch (err) {
+    console.log(err)
+    return {
+      paths: [],
+      fallback: false,
+    }
+  }
+}
 
-// export const getStaticProps: GetStaticProps = async ({ params }) => {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
+  try {
+    const returnData = {
+      props: {
+        headerData: {},
+        mainScreenData: {},
+        fullNews: {},
+        newsDates: {},
+      },
+      redirect: { destination: '/404', permanent: true },
+    }
+
+    if (!params || !params.news_id || typeof params.news_id !== 'string') {
+      return returnData
+    }
+
+    const fullNews = await gql.GetFullNews({ newsId: params.news_id })
+
+    if (!fullNews.novinas.data.length) {
+      return returnData
+    }
+
+    const SEO = await gql.GetSEO()
+    const headerData = await gql.GetHeader()
+    const newsDates = await gql.GetAllNewsDates()
+    const mainScreenData = await gql.GetMainScreen()
+    const headerSchedule = await gql.GetHeaderSchedule()
+    const resentNews = await gql.GetSomeLastNews({ newsCount: 5 })
+
+    return {
+      props: {
+        SEO,
+        newsDates,
+        headerData,
+        resentNews,
+        headerSchedule,
+        mainScreenData,
+        fullNews: fullNews.novinas.data[0],
+      },
+    }
+  } catch (error) {
+    console.log(error, 'news page error')
+    return {
+      props: {
+        SEO: {},
+        headerData: {},
+        mainScreenData: {},
+        fullNews: {},
+        newsDates: {},
+        headerSchedule: {},
+      },
+      redirect: { destination: '/404', permanent: true },
+    }
+  }
+}
+
+// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
 //   try {
 //     const returnData = {
 //       props: {
@@ -306,64 +346,8 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
 //         newsDates: {},
 //         headerSchedule: {},
 //       },
-//       redirect: { destination: "/404", permanent: true },
 //     }
 //   }
 // }
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-  try {
-    const returnData = {
-      props: {
-        headerData: {},
-        mainScreenData: {},
-        fullNews: {},
-        newsDates: {},
-      },
-      redirect: { destination: "/404", permanent: true },
-    }
-
-    if (!params || !params.news_id || typeof params.news_id !== "string") {
-      return returnData
-    }
-
-    const fullNews = await gql.GetFullNews({ newsId: params.news_id })
-
-    if (!fullNews.novinas.data.length) {
-      return returnData
-    }
-
-    const SEO = await gql.GetSEO()
-    const headerData = await gql.GetHeader()
-    const newsDates = await gql.GetAllNewsDates()
-    const mainScreenData = await gql.GetMainScreen()
-    const headerSchedule = await gql.GetHeaderSchedule()
-    const resentNews = await gql.GetSomeLastNews({ newsCount: 5 })
-
-    return {
-      props: {
-        SEO,
-        newsDates,
-        headerData,
-        resentNews,
-        headerSchedule,
-        mainScreenData,
-        fullNews: fullNews.novinas.data[0],
-      },
-    }
-  } catch (error) {
-    console.log(error, "news page error")
-    return {
-      props: {
-        SEO: {},
-        headerData: {},
-        mainScreenData: {},
-        fullNews: {},
-        newsDates: {},
-        headerSchedule: {},
-      },
-    }
-  }
-}
 
 export default FullNewsPage

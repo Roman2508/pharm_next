@@ -2959,7 +2959,7 @@ export type GetNewsQuery = { readonly __typename?: 'Query', readonly novinas: { 
 export type GetAllNovinasIdQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type GetAllNovinasIdQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string }> } };
+export type GetAllNovinasIdQuery = { readonly __typename?: 'Query', readonly novinas: { readonly __typename?: 'NovinaEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'NovinaEntity', readonly id: string, readonly attributes: { readonly __typename?: 'Novina', readonly date: any } }> } };
 
 export type GetNewsByMonthQueryVariables = Exact<{
   currentPage?: InputMaybe<Scalars['Int']['input']>;
@@ -3966,6 +3966,9 @@ export const GetAllNovinasIdDocument = gql`
   novinas(pagination: {pageSize: 50000}) {
     data {
       id
+      attributes {
+        date
+      }
     }
   }
 }

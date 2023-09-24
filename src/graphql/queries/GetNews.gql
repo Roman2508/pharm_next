@@ -54,6 +54,9 @@ query GetAllNovinasId {
   novinas(pagination: { pageSize: 50000 }) {
     data {
       id
+      attributes {
+        date
+      }
     }
   }
 }
