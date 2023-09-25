@@ -48,6 +48,8 @@ const Home: NextPage<IHomeProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
+  console.log(homePageData)
+
   return (
     <HomePageLayout
       title="Головна сторінка | ЖБФК"
