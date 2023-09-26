@@ -8,13 +8,13 @@ import {
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
   GetSeoQuery,
-  WorkerEntity,
+  GroupEntity,
   gql,
 } from '@/graphql/client'
 
 interface IGroupSchedulePageProps {
   SEO: GetSeoQuery
-  groupData: WorkerEntity
+  groupData: GroupEntity
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -27,10 +27,6 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
-  if (!groupData) {
-    return null
-  }
-
   const calendarUrl = `https://calendar.google.com/calendar/embed?showTitle=0&showTz=0&mode=AGENDA&height=600&wkst=2&hl=uk_UA&bgcolor=%23FFFFFF&src=${groupData.attributes.calendar_id}&ctz=Europe%2FKiev`
 
   return (
@@ -63,16 +59,16 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const cmks = await gql.GetGroupSchedule()
+    const data = await gql.GetGroupSchedule()
 
-    if (!cmks.groups.data.length) {
+    if (!data.groups.data.length) {
       return {
         paths: [],
         fallback: false,
       }
     }
 
-    const paths = cmks.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
+    const paths = data.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
 
     return {
       paths,
@@ -90,7 +86,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   try {
     const returnData = {
-      props: { headerData: {}, mainScreenData: {}, groupData: {}, headerSchedule: {} },
+      props: { SEO: {}, headerData: {}, mainScreenData: {}, groupData: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: true },
     }
 
