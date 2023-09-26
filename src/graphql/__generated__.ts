@@ -3237,6 +3237,11 @@ export type GetGroupScheduleQueryVariables = Exact<{
 
 export type GetGroupScheduleQuery = { readonly __typename?: 'Query', readonly groups: { readonly __typename?: 'GroupEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'GroupEntity', readonly attributes: { readonly __typename?: 'Group', readonly name: string, readonly calendar_id: string } }> } };
 
+export type GetAllGroupScheduleQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetAllGroupScheduleQuery = { readonly __typename?: 'Query', readonly groups: { readonly __typename?: 'GroupEntityResponseCollection', readonly data: ReadonlyArray<{ readonly __typename?: 'GroupEntity', readonly attributes: { readonly __typename?: 'Group', readonly name: string, readonly calendar_id: string } }> } };
+
 export type GetHeaderQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -4160,6 +4165,18 @@ export const GetGroupScheduleDocument = gql`
   }
 }
     `;
+export const GetAllGroupScheduleDocument = gql`
+    query GetAllGroupSchedule {
+  groups(pagination: {pageSize: 1000}) {
+    data {
+      attributes {
+        name
+        calendar_id
+      }
+    }
+  }
+}
+    `;
 export const GetHeaderDocument = gql`
     query GetHeader {
   header {
@@ -4883,6 +4900,9 @@ export function getSdk(client: GraphQLClient, withWrapper: SdkFunctionWrapper = 
     },
     GetGroupSchedule(variables?: GetGroupScheduleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetGroupScheduleQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetGroupScheduleQuery>(GetGroupScheduleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetGroupSchedule', 'query');
+    },
+    GetAllGroupSchedule(variables?: GetAllGroupScheduleQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetAllGroupScheduleQuery> {
+      return withWrapper((wrappedRequestHeaders) => client.request<GetAllGroupScheduleQuery>(GetAllGroupScheduleDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetAllGroupSchedule', 'query');
     },
     GetHeader(variables?: GetHeaderQueryVariables, requestHeaders?: GraphQLClientRequestHeaders): Promise<GetHeaderQuery> {
       return withWrapper((wrappedRequestHeaders) => client.request<GetHeaderQuery>(GetHeaderDocument, variables, {...requestHeaders, ...wrappedRequestHeaders}), 'GetHeader', 'query');

@@ -79,18 +79,18 @@ const Home: NextPage<IHomeProps> = ({
     >
       <Announcement advertisments={advertisments} />
       {/* @ts-ignore */}
-      {/* <About data={homePageData.homePageAbout.data} /> */}
+      <About data={homePageData.homePageAbout.data} />
       {/* @ts-ignore */}
-      {/* <Stats data={homePageData.homePageStat.data} /> */}
+      <Stats data={homePageData.homePageStat.data} />
       <div className="container">
         <News newsData={newsData} showTitle addMarginBottom />
       </div>
       <Events events={events} />
       {/* @ts-ignore */}
-      {/* <Gallery data={homePageData.homePageGallery.data} /> */}
+      <Gallery data={homePageData.homePageGallery.data} />
       <Videos videos={videos} />
       {/* @ts-ignore */}
-      {/* <Contacts data={homePageData.homePageContact.data} /> */}
+      <Contacts data={homePageData.homePageContact.data} />
       <Partners partners={partners} />
     </HomePageLayout>
   )

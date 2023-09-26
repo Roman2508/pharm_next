@@ -70,7 +70,7 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const groupsData = await gql.GetGroupSchedule()
+    const groupsData = await gql.GetAllGroupSchedule()
 
     if (!groupsData.groups.data.length) {
       return {

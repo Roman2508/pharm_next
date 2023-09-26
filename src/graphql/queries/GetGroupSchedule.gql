@@ -8,3 +8,14 @@ query GetGroupSchedule($groupName: String) {
     }
   }
 }
+
+query GetAllGroupSchedule {
+  groups(pagination: { pageSize: 1000 }) {
+    data {
+      attributes {
+        name
+        calendar_id
+      }
+    }
+  }
+}
