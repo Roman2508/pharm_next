@@ -98,9 +98,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       return returnData
     }
 
-    const teacherData = await gql.GetGroupSchedule({ groupName: params.group_name })
+    const groupData = await gql.GetGroupSchedule({ groupName: params.group_name })
 
-    if (!teacherData.groups.data[0]) {
+    if (!groupData.groups.data[0]) {
       return returnData
     }
 
@@ -115,12 +115,12 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         headerData,
         mainScreenData,
         headerSchedule,
-        groupData: teacherData.groups.data[0],
+        groupData: groupData.groups.data[0],
       },
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
+    return { props: { SEO: {}, groupData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 
