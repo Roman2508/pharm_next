@@ -13,6 +13,7 @@ import {
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface IVidilenyaPageProps {
   SEO: GetSeoQuery
@@ -29,9 +30,8 @@ const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
-  //
-  if (!SEO || !vidilenyaData) {
-    return null
+  if (!SEO || !headerData || !vidilenyaData || !mainScreenData || !headerSchedule) {
+    return <LoadingSpinner />
   }
 
   return (
@@ -109,7 +109,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!data.vidilenyas.data.length) {
       return {
         paths: [],
-        fallback: false,
+        fallback: true,
       }
     }
 
@@ -117,13 +117,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: false,
+      fallback: true,
     }
   } catch (err) {
     console.log(err)
     return {
       paths: [],
-      fallback: false,
+      fallback: true,
     }
   }
 }

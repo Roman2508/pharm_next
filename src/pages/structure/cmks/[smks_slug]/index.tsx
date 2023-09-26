@@ -13,6 +13,7 @@ import {
 import { Layout } from '@/layouts/Layout'
 import styles from '../../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface ISmksPageProps {
   SEO: GetSeoQuery
@@ -23,6 +24,10 @@ interface ISmksPageProps {
 }
 
 const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkData, mainScreenData, headerSchedule }) => {
+  if (!SEO || !headerData || !cmkData || !mainScreenData || !headerSchedule) {
+    return <LoadingSpinner />
+  }
+
   return (
     <Layout
       SEO={SEO}
@@ -119,7 +124,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!cmks.cycleCommissions.data.length) {
       return {
         paths: [],
-        fallback: false,
+        fallback: true,
       }
     }
 
@@ -127,13 +132,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: false,
+      fallback: true,
     }
   } catch (err) {
     console.log(err)
     return {
       paths: [],
-      fallback: false,
+      fallback: true,
     }
   }
 }

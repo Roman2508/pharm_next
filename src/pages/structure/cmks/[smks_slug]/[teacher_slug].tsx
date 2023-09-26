@@ -16,6 +16,7 @@ import { Layout } from '@/layouts/Layout'
 import styles from './Teacher.module.scss'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
 import pageStyles from '../../../../components/PageContent/Page.module.scss'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface ITeacherPageProps {
   SEO: GetSeoQuery
@@ -33,6 +34,10 @@ const tabs = [
 
 const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, mainScreenData, headerSchedule }) => {
   const [activeTab, setActiveTab] = React.useState(1)
+
+  if (!SEO || !teacher || !headerData || !mainScreenData || !headerSchedule) {
+    return <LoadingSpinner />
+  }
 
   return (
     <Layout
@@ -155,7 +160,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!teachers.workers.data.length) {
       return {
         paths: [],
-        fallback: false,
+        fallback: true,
       }
     }
 
@@ -172,13 +177,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: false,
+      fallback: true,
     }
   } catch (err) {
     console.log(err)
     return {
       paths: [],
-      fallback: false,
+      fallback: true,
     }
   }
 }

@@ -13,6 +13,7 @@ import {
   GetSeoQuery,
   gql,
 } from '@/graphql/client'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface ISmksPageProps {
   SEO: GetSeoQuery
@@ -23,6 +24,10 @@ interface ISmksPageProps {
 }
 
 const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainScreenData, headerSchedule }) => {
+  if (!SEO || !headerData || !subdivData || !mainScreenData || !headerSchedule) {
+    return <LoadingSpinner />
+  }
+
   return (
     <Layout
       SEO={SEO}
@@ -98,7 +103,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!cmks.subdivisions.data.length) {
       return {
         paths: [],
-        fallback: false,
+        fallback: true,
       }
     }
 
@@ -106,13 +111,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: false,
+      fallback: true,
     }
   } catch (err) {
     console.log(err)
     return {
       paths: [],
-      fallback: false,
+      fallback: true,
     }
   }
 }
