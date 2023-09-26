@@ -27,7 +27,9 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
-  const calendarUrl = `https://calendar.google.com/calendar/embed?showTitle=0&showTz=0&mode=AGENDA&height=600&wkst=2&hl=uk_UA&bgcolor=%23FFFFFF&src=${groupData.attributes.calendar_id}&ctz=Europe%2FKiev`
+  const calendarUrl = groupData
+    ? `https://calendar.google.com/calendar/embed?showTitle=0&showTz=0&mode=AGENDA&height=600&wkst=2&hl=uk_UA&bgcolor=%23FFFFFF&src=${groupData.attributes.calendar_id}&ctz=Europe%2FKiev`
+    : ''
 
   return (
     <Layout
@@ -35,11 +37,11 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
       headerData={headerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
-      title={groupData.attributes.name}
+      title={groupData?.attributes?.name || ''}
     >
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
-          Розклад групи {groupData.attributes.name}
+          Розклад групи {groupData?.attributes?.name || ''}
         </div>
 
         <div className={styles['schedule-box']}>
@@ -96,14 +98,21 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const groupData = await gql.GetGroupSchedule({ groupName: params.group_name })
 
-    if (!groupData.groups.data[0]) {
-      return returnData
-    }
-
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
+
+    if (
+      !groupData.groups.data[0] ||
+      !SEO.seo.data.attributes ||
+      !headerData.header.data ||
+      !mainScreenData.header.data ||
+      !headerSchedule.groups.data ||
+      !headerSchedule.workers.data
+    ) {
+      return returnData
+    }
 
     return {
       props: {

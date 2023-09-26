@@ -11,7 +11,7 @@ interface ISubHeaderProps {
 }
 
 const SubHeader: React.FC<ISubHeaderProps> = ({ mainScreenData }) => {
-  const logo = mainScreenData.header?.data?.attributes?.Header?.logo?.data?.attributes?.url
+  const logo = mainScreenData?.header?.data?.attributes?.Header?.logo?.data?.attributes?.url
     ? `${process.env.API_URL}${mainScreenData.header?.data?.attributes?.Header?.logo?.data?.attributes?.url}`
     : ''
 
@@ -20,7 +20,7 @@ const SubHeader: React.FC<ISubHeaderProps> = ({ mainScreenData }) => {
       <div className={styles['sub-header__video']}>
         <video autoPlay muted loop playsInline>
           <source
-            src={`${process.env.API_URL}${mainScreenData.header?.data?.attributes?.Header?.background?.data?.attributes?.url}`}
+            src={`${process.env.API_URL}${mainScreenData?.header?.data?.attributes?.Header?.background?.data?.attributes?.url}`}
             type="video/mp4"
           />
         </video>

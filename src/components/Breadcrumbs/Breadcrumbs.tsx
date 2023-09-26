@@ -10,7 +10,7 @@ const Breadcrumbs = () => {
 
   let currentLink = ''
 
-  const crumbs = pathname
+  const crumbs = (pathname || '')
     .split('/')
     .filter((el) => el !== '')
     .map((el, index) => {
