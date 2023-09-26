@@ -155,7 +155,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!teachers.workers.data.length) {
       return {
         paths: [],
-        fallback: true,
+        fallback: false,
       }
     }
 
@@ -172,13 +172,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: true,
+      fallback: false,
     }
   } catch (err) {
     console.log(err)
     return {
       paths: [],
-      fallback: true,
+      fallback: false,
     }
   }
 }
