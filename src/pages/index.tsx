@@ -8,7 +8,7 @@ import { Gallery } from '@/components/Gallery/Gallery'
 import { Videos } from '@/components/Videos/Videos'
 import { Contacts } from '@/components/Contacts/Contacts'
 import { Partners } from '@/components/Partners/Partners'
-import { GetStaticProps, NextPage } from 'next'
+import { GetServerSideProps, GetStaticProps, NextPage } from 'next'
 import {
   GetAdvertisementsQuery,
   GetAllEventsQuery,
@@ -79,37 +79,36 @@ const Home: NextPage<IHomeProps> = ({
     >
       <Announcement advertisments={advertisments} />
       {/* @ts-ignore */}
-      <About data={homePageData.homePageAbout.data} />
+      {/* <About data={homePageData.homePageAbout.data} /> */}
       {/* @ts-ignore */}
-      <Stats data={homePageData.homePageStat.data} />
+      {/* <Stats data={homePageData.homePageStat.data} /> */}
       <div className="container">
         <News newsData={newsData} showTitle addMarginBottom />
       </div>
       <Events events={events} />
       {/* @ts-ignore */}
-      <Gallery data={homePageData.homePageGallery.data} />
+      {/* <Gallery data={homePageData.homePageGallery.data} /> */}
       <Videos videos={videos} />
       {/* @ts-ignore */}
-      <Contacts data={homePageData.homePageContact.data} />
+      {/* <Contacts data={homePageData.homePageContact.data} /> */}
       <Partners partners={partners} />
     </HomePageLayout>
   )
 }
 
-export const getServerSideProps: GetStaticProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
   try {
-    const headerData = await gql.GetHeader()
-    const headerSchedule = await gql.GetHeaderSchedule()
-    const footerData = await gql.GetFooter()
-
-    const mainScreenData = await gql.GetMainScreen()
     const SEO = await gql.GetSEO()
     const newsData = await gql.GetNews()
-    const advertisments = await gql.GetAdvertisements()
     const events = await gql.GetAllEvents()
     const videos = await gql.GetAllVideos()
     const partners = await gql.GetPartners()
+    const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
+    const mainScreenData = await gql.GetMainScreen()
     const homePageData = await gql.GetHomePageData()
+    const advertisments = await gql.GetAdvertisements()
+    const headerSchedule = await gql.GetHeaderSchedule()
 
     return {
       props: {
