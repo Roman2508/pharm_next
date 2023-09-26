@@ -4,6 +4,7 @@ import { SubmitHandler, Controller, useForm } from 'react-hook-form'
 
 import {
   GetAdministrationQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -23,6 +24,7 @@ import ContactsItem from '@/components/Contacts/ContactsItem'
 interface IContactsPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   administration: GetAdministrationQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -45,6 +47,7 @@ const topicList = [
 const Contacts: NextPage<IContactsPageProps> = ({
   SEO,
   headerData,
+  footerData,
   mainScreenData,
   administration,
   headerSchedule,
@@ -85,6 +88,7 @@ const Contacts: NextPage<IContactsPageProps> = ({
       SEO={SEO}
       title="Контакти"
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
     >
@@ -194,6 +198,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const administration = await gql.GetAdministration()
     const headerSchedule = await gql.GetHeaderSchedule()
@@ -202,6 +207,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         administration,
         headerSchedule,
@@ -210,7 +216,9 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'about page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, administration: {}, headerSchedule: {} } }
+    return {
+      props: { SEO: {}, headerData: {}, footerData: {}, mainScreenData: {}, administration: {}, headerSchedule: {} },
+    }
   }
 }
 

@@ -9,6 +9,7 @@ import {
   GetMainScreenQuery,
   CycleCommissionEntity,
   GetHeaderScheduleQuery,
+  GetFooterQuery,
 } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from '../../Structure.module.scss'
@@ -18,13 +19,21 @@ import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 interface ISmksPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   cmkData: CycleCommissionEntity
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
 
-const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkData, mainScreenData, headerSchedule }) => {
-  if (!SEO || !headerData || !cmkData || !mainScreenData || !headerSchedule) {
+const SmksPage: NextPage<ISmksPageProps> = ({
+  SEO,
+  headerData,
+  footerData,
+  cmkData,
+  mainScreenData,
+  headerSchedule,
+}) => {
+  if (!SEO || !headerData || !footerData || !cmkData || !mainScreenData || !headerSchedule) {
     return <LoadingSpinner />
   }
 
@@ -32,6 +41,7 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, cmkData, mainScre
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
       title={cmkData.attributes.SEO.title}
@@ -162,6 +172,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -169,6 +180,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
         cmkData: cmkData.cycleCommissions.data[0],
@@ -176,7 +188,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'cmks page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} } }
+    return { props: { SEO: {}, headerData: {}, footerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} } }
   }
 }
 

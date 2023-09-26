@@ -9,6 +9,7 @@ import {
   GetMainScreenQuery,
   CycleCommissionEntity,
   GetHeaderScheduleQuery,
+  GetFooterQuery,
 } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
@@ -18,6 +19,7 @@ import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 interface IVidilenyaPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   vidilenyaData: CycleCommissionEntity
   headerSchedule: GetHeaderScheduleQuery
@@ -26,11 +28,12 @@ interface IVidilenyaPageProps {
 const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({
   SEO,
   headerData,
+  footerData,
   vidilenyaData,
   mainScreenData,
   headerSchedule,
 }) => {
-  if (!SEO || !headerData || !vidilenyaData || !mainScreenData || !headerSchedule) {
+  if (!SEO || !headerData || !footerData || !vidilenyaData || !mainScreenData || !headerSchedule) {
     return <LoadingSpinner />
   }
 
@@ -38,6 +41,7 @@ const VidilenyaPage: NextPage<IVidilenyaPageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       headerSchedule={headerSchedule}
       mainScreenData={mainScreenData}
       title={vidilenyaData?.attributes?.SEO.title}
@@ -147,6 +151,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -164,6 +169,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
         vidilenyaData: vidilenyaData.vidilenyas.data[0],
@@ -176,6 +182,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO: {},
         headerData: {},
+        footerData: {},
         mainScreenData: {},
         vidilenyaData: {},
         headerSchedule: {},

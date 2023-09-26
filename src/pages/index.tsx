@@ -13,6 +13,7 @@ import {
   GetAdvertisementsQuery,
   GetAllEventsQuery,
   GetAllVideosQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetHomePageDataQuery,
@@ -29,6 +30,7 @@ interface IHomeProps {
   newsData: GetNewsQuery
   videos: GetAllVideosQuery
   events: GetAllEventsQuery
+  footerData: GetFooterQuery
   partners: GetPartnersQuery
   headerData: GetHeaderQuery
   homePageData: GetHomePageDataQuery
@@ -44,6 +46,7 @@ const Home: NextPage<IHomeProps> = ({
   newsData,
   partners,
   headerData,
+  footerData,
   homePageData,
   advertisments,
   mainScreenData,
@@ -55,6 +58,7 @@ const Home: NextPage<IHomeProps> = ({
     !videos ||
     !newsData ||
     !partners ||
+    !footerData ||
     !headerData ||
     !homePageData ||
     !advertisments ||
@@ -70,6 +74,7 @@ const Home: NextPage<IHomeProps> = ({
       headerData={headerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
+      footerData={footerData}
       SEO={SEO}
     >
       <Announcement advertisments={advertisments} />
@@ -95,6 +100,7 @@ export const getServerSideProps: GetStaticProps = async () => {
   try {
     const headerData = await gql.GetHeader()
     const headerSchedule = await gql.GetHeaderSchedule()
+    const footerData = await gql.GetFooter()
 
     const mainScreenData = await gql.GetMainScreen()
     const SEO = await gql.GetSEO()
@@ -112,6 +118,7 @@ export const getServerSideProps: GetStaticProps = async () => {
         events,
         partners,
         newsData,
+        footerData,
         headerData,
         homePageData,
         advertisments,
@@ -128,6 +135,7 @@ export const getServerSideProps: GetStaticProps = async () => {
         videos: {},
         newsData: {},
         headerData: {},
+        footerData: {},
         homePageData: {},
         advertisments: {},
         mainScreenData: {},

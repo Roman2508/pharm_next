@@ -1,25 +1,27 @@
 import React from 'react'
 import cn from 'classnames'
+import Image from 'next/image'
 import { GetStaticPaths, GetStaticProps } from 'next'
 
+import {
+  gql,
+  PageEntity,
+  GetSeoQuery,
+  GetFooterQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  GetHeaderScheduleQuery,
+} from '@/graphql/client'
 import styles from '../../Page.module.scss'
 import { Layout } from '@/layouts/Layout'
 import PageContnet from '@/components/PageContent/PageContnet'
-import {
-  GetHeaderQuery,
-  GetHeaderScheduleQuery,
-  GetMainScreenQuery,
-  GetSeoQuery,
-  PageEntity,
-  gql,
-} from '@/graphql/client'
-import Image from 'next/image'
 import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface IAdministrationProps {
   SEO: GetSeoQuery
   pageData: PageEntity
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
@@ -27,11 +29,12 @@ interface IAdministrationProps {
 const Administration: React.FC<IAdministrationProps> = ({
   SEO,
   headerData,
+  footerData,
   mainScreenData,
   pageData,
   headerSchedule,
 }) => {
-  if (!SEO || !headerData || !mainScreenData || !pageData || !headerSchedule) {
+  if (!SEO || !headerData || !footerData || !mainScreenData || !pageData || !headerSchedule) {
     return <LoadingSpinner />
   }
 
@@ -39,6 +42,7 @@ const Administration: React.FC<IAdministrationProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       title={pageData.attributes.SEO.title}
       headerSchedule={headerSchedule}
@@ -151,8 +155,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const returnData = {
     props: {
       SEO: {},
-      headerData: {},
       pageData: {},
+      headerData: {},
+      footerData: {},
       mainScreenData: {},
       headerSchedule: {},
     },
@@ -174,11 +179,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
     if (
       !headerData ||
+      !footerData ||
       !mainScreenData ||
       !SEO.seo.data.attributes.SEO.length ||
       !headerSchedule.groups.data.length ||
@@ -191,6 +198,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         headerSchedule,
         mainScreenData,
         pageData: pageData.pages.data[0],
@@ -203,50 +211,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         SEO: {},
-        headerData: {},
         pageData: {},
+        headerData: {},
+        footerData: {},
         mainScreenData: {},
         headerSchedule: {},
       },
     }
   }
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   try {
-//     const returnData = {
-//       props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {} },
-//       redirect: { destination: '/404', permanent: true },
-//     }
-
-//     if (!params || !params.first_lvl_url || !params.second_lvl_url || !params.third_lvl_url) {
-//       return returnData
-//     }
-
-//     const pageData = await gql.GetPage({
-//       pageUrl: `/${params.first_lvl_url}/${params.second_lvl_url}/${params.third_lvl_url}`,
-//     })
-
-//     if (!pageData.pages.data[0]) {
-//       return returnData
-//     }
-
-//     const SEO = await gql.GetSEO()
-//     const headerData = await gql.GetHeader()
-//     const mainScreenData = await gql.GetMainScreen()
-
-//     return {
-//       props: {
-//         SEO,
-//         headerData,
-//         mainScreenData,
-//         pageData: pageData.pages.data[0],
-//       },
-//     }
-//   } catch (error) {
-//     console.log(error, 'default page error')
-//     return { props: { SEO: {}, headerData: {}, pageData: {}, mainScreenData: {} } }
-//   }
-// }
 
 export default Administration

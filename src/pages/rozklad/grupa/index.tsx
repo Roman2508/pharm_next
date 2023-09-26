@@ -5,6 +5,7 @@ import { Layout } from '@/layouts/Layout'
 import GroupSchedule from '@/components/GroupSchedule/GroupSchedule'
 import {
   GetAllGroupsQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -16,16 +17,25 @@ interface ISchedulePageProps {
   SEO: GetSeoQuery
   groups: GetAllGroupsQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
 
-const SchedulePage: React.FC<ISchedulePageProps> = ({ SEO, headerData, mainScreenData, groups, headerSchedule }) => {
+const SchedulePage: React.FC<ISchedulePageProps> = ({
+  SEO,
+  groups,
+  headerData,
+  footerData,
+  mainScreenData,
+  headerSchedule,
+}) => {
   return (
     <Layout
       SEO={SEO}
       title="Розклад"
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
     >
@@ -41,6 +51,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const SEO = await gql.GetSEO()
     const groups = await gql.GetAllGroups()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -49,6 +60,7 @@ export const getStaticProps: GetStaticProps = async () => {
         SEO,
         groups,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
       },
@@ -56,7 +68,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, headerData: {}, headerSchedule: {} } }
+    return { props: { SEO: {}, groups: {}, headerData: {}, footerData: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 

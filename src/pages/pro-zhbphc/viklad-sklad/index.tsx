@@ -8,6 +8,7 @@ import styles from './VidladSklad.module.scss'
 import {
   GetAllCycleCommissionsQuery,
   GetAllTeachersFullInfoQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -23,6 +24,7 @@ import Link from 'next/link'
 interface ITeachingStaffPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   teachers: GetAllTeachersFullInfoQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -33,6 +35,7 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
   SEO,
   teachers,
   headerData,
+  footerData,
   headerSchedule,
   mainScreenData,
   cycleCommissions,
@@ -66,6 +69,7 @@ const TeachingStaff: NextPage<ITeachingStaffPageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       title="Викладацький склад"
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
@@ -131,6 +135,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const teachers = await gql.GetAllTeachersFullInfo()
     const headerSchedule = await gql.GetHeaderSchedule()
@@ -141,6 +146,7 @@ export const getStaticProps: GetStaticProps = async () => {
         SEO,
         teachers,
         headerData,
+        footerData,
         headerSchedule,
         mainScreenData,
         cycleCommissions,
@@ -154,6 +160,7 @@ export const getStaticProps: GetStaticProps = async () => {
         SEO: {},
         teachers: {},
         headerData: {},
+        footerData: {},
         mainScreenData: {},
         headerSchedule: {},
         cycleCommissions: {},

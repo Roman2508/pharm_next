@@ -1,24 +1,33 @@
 import React from 'react'
+import Image from 'next/image'
 import { GetStaticProps } from 'next'
 
+import {
+  gql,
+  GetSeoQuery,
+  GetFooterQuery,
+  GetHeaderQuery,
+  GetMainScreenQuery,
+  GetHeaderScheduleQuery,
+} from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from './GeneralInfo.module.scss'
 import tableStyles from '../../components/ui/Table/Table.module.scss'
-import { GetHeaderQuery, GetHeaderScheduleQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
-import Image from 'next/image'
 
 interface IGeneralInfoProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
 
-const GeneralInfo: React.FC<IGeneralInfoProps> = ({ SEO, headerData, mainScreenData, headerSchedule }) => {
+const GeneralInfo: React.FC<IGeneralInfoProps> = ({ SEO, headerData, footerData, mainScreenData, headerSchedule }) => {
   return (
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
       title="Zhytomyr College of Pharmacy"
@@ -268,6 +277,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -275,6 +285,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
       },
@@ -282,7 +293,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'general info page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
+    return { props: { SEO: {}, headerData: {}, footerData: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 

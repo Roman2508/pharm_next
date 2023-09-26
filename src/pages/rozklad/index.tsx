@@ -5,6 +5,7 @@ import { Layout } from '@/layouts/Layout'
 import {
   GetAllCycleCommissionsTeachersQuery,
   GetAllGroupsQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -18,6 +19,7 @@ interface ISchedulePageProps {
   SEO: GetSeoQuery
   groups: GetAllGroupsQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
   cycleCommissions: GetAllCycleCommissionsTeachersQuery
@@ -27,6 +29,7 @@ const SchedulePage: React.FC<ISchedulePageProps> = ({
   SEO,
   groups,
   headerData,
+  footerData,
   headerSchedule,
   mainScreenData,
   cycleCommissions,
@@ -36,6 +39,7 @@ const SchedulePage: React.FC<ISchedulePageProps> = ({
       SEO={SEO}
       title="Розклад"
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
     >
@@ -61,6 +65,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const SEO = await gql.GetSEO()
     const groups = await gql.GetAllGroups()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
     const cycleCommissions = await gql.GetAllCycleCommissionsTeachers()
@@ -70,6 +75,7 @@ export const getStaticProps: GetStaticProps = async () => {
         SEO,
         groups,
         headerData,
+        footerData,
         headerSchedule,
         mainScreenData,
         cycleCommissions,
@@ -79,7 +85,15 @@ export const getStaticProps: GetStaticProps = async () => {
   } catch (error) {
     console.log(error, 'news page error')
     return {
-      props: { SEO: {}, headerData: {}, mainScreenData: {}, cycleCommission: {}, groups: {}, headerSchedule: {} },
+      props: {
+        SEO: {},
+        groups: {},
+        headerData: {},
+        footerData: {},
+        mainScreenData: {},
+        cycleCommission: {},
+        headerSchedule: {},
+      },
     }
   }
 }

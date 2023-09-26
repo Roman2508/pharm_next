@@ -11,6 +11,7 @@ import {
   GetHeaderQuery,
   GetMainScreenQuery,
   GetHeaderScheduleQuery,
+  GetFooterQuery,
 } from '@/graphql/client'
 import { Layout } from '@/layouts/Layout'
 import styles from './Teacher.module.scss'
@@ -21,6 +22,7 @@ import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 interface ITeacherPageProps {
   SEO: GetSeoQuery
   teacher: WorkerEntity
+  footerData: GetFooterQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -32,7 +34,14 @@ const tabs = [
   { id: 3, text: 'Друковані праці' },
 ]
 
-const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, mainScreenData, headerSchedule }) => {
+const TeacherPage: React.FC<ITeacherPageProps> = ({
+  SEO,
+  teacher,
+  headerData,
+  footerData,
+  mainScreenData,
+  headerSchedule,
+}) => {
   const [activeTab, setActiveTab] = React.useState(1)
 
   if (!SEO || !teacher || !headerData || !mainScreenData || !headerSchedule) {
@@ -43,6 +52,7 @@ const TeacherPage: React.FC<ITeacherPageProps> = ({ SEO, teacher, headerData, ma
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       title={teacher.attributes.name}
       headerSchedule={headerSchedule}
@@ -209,6 +219,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -216,6 +227,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
         teacher: teacher.workers.data[0],
@@ -224,7 +236,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   } catch (error) {
     console.log(error, 'teacher page error')
     return {
-      props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
+      props: { SEO: {}, headerData: {}, footerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: true },
     }
   }

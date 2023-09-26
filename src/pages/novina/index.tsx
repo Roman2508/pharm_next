@@ -6,6 +6,7 @@ import { News } from '@/components/News/News'
 import NewsArchive from '@/components/News/NewsArchive'
 import {
   GetAllNewsDatesQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -18,6 +19,7 @@ interface INewsPageProps {
   SEO: GetSeoQuery
   newsData: GetNewsQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   newsDates: GetAllNewsDatesQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -26,6 +28,7 @@ interface INewsPageProps {
 const NewsPage: React.FC<INewsPageProps> = ({
   SEO,
   headerData,
+  footerData,
   mainScreenData,
   newsData,
   newsDates,
@@ -35,6 +38,7 @@ const NewsPage: React.FC<INewsPageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       title="Всі новини"
       headerSchedule={headerSchedule}
@@ -61,6 +65,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const newsData = await gql.GetNews({ pageSize: 6 })
     const newsDates = await gql.GetAllNewsDates()
@@ -79,6 +84,7 @@ export const getStaticProps: GetStaticProps = async () => {
         props: {
           SEO: {},
           headerData: {},
+          footerData: {},
           mainScreenData: {},
           newsData: {},
           newsDates: {},
@@ -92,6 +98,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         SEO,
         newsData,
+        footerData,
         newsDates,
         headerData,
         mainScreenData,
@@ -102,7 +109,15 @@ export const getStaticProps: GetStaticProps = async () => {
   } catch (error) {
     console.log(error, 'news page error')
     return {
-      props: { SEO: {}, headerData: {}, mainScreenData: {}, newsData: {}, newsDates: {}, headerSchedule: {} },
+      props: {
+        SEO: {},
+        newsData: {},
+        newsDates: {},
+        headerData: {},
+        footerData: {},
+        mainScreenData: {},
+        headerSchedule: {},
+      },
       redirect: { destination: '/404', permanent: true },
     }
   }

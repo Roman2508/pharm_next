@@ -1,7 +1,13 @@
 import { Footer } from '@/components/Footer/Footer'
 import Header from '@/components/Header/Header'
 import MainScreen from '@/components/MainScreen/MainScreen'
-import { GetHeaderQuery, GetHeaderScheduleQuery, GetMainScreenQuery, GetSeoQuery } from '@/graphql/__generated__'
+import {
+  GetFooterQuery,
+  GetHeaderQuery,
+  GetHeaderScheduleQuery,
+  GetMainScreenQuery,
+  GetSeoQuery,
+} from '@/graphql/__generated__'
 import Head from 'next/head'
 import React, { PropsWithChildren } from 'react'
 
@@ -9,6 +15,7 @@ interface ILayoutProps {
   title?: string
   description?: string
   SEO: GetSeoQuery
+  footerData: GetFooterQuery
   headerData: GetHeaderQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -19,6 +26,7 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
   title = 'ЖБФФК',
   SEO,
   headerData,
+  footerData,
   mainScreenData,
   headerSchedule,
 }) => {
@@ -42,7 +50,7 @@ export const HomePageLayout: React.FC<PropsWithChildren<ILayoutProps>> = ({
         <Header headerData={headerData} headerSchedule={headerSchedule} />
         <MainScreen mainScreenData={mainScreenData} />
         {children}
-        <Footer />
+        <Footer footerData={footerData} />
       </main>
     </>
   )

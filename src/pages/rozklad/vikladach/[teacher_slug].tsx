@@ -4,6 +4,7 @@ import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from '../Rozklad.module.scss'
 import {
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -17,6 +18,7 @@ interface ITeacherSchedulePageProps {
   SEO: GetSeoQuery
   teacherData: WorkerEntity
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
@@ -25,6 +27,7 @@ const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({
   SEO,
   headerData,
   teacherData,
+  footerData,
   headerSchedule,
   mainScreenData,
 }) => {
@@ -39,6 +42,7 @@ const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({
       SEO={SEO}
       title="Викладач"
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
     >
@@ -64,16 +68,16 @@ const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const cmks = await gql.GetAllTeachers()
+    const teachersData = await gql.GetAllTeachers()
 
-    if (!cmks.workers.data.length) {
+    if (!teachersData.workers.data.length) {
       return {
         paths: [],
         fallback: true,
       }
     }
 
-    const paths = cmks.workers.data.map((el) => ({ params: { teacher_slug: el.attributes.slug } }))
+    const paths = teachersData.workers.data.map((el) => ({ params: { teacher_slug: el.attributes.slug } }))
 
     return {
       paths,
@@ -107,6 +111,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -114,15 +119,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
         teacherData: teacherData.workers.data[0],
       },
     }
   } catch (error) {
-    console.log(error, 'news page error')
+    console.log(error, 'teacher schedule page error')
     return {
-      props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} },
+      props: { SEO: {}, teacherData: {}, headerData: {}, footerData: {}, mainScreenData: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: true },
     }
   }

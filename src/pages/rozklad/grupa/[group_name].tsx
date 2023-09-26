@@ -4,6 +4,7 @@ import { GetServerSideProps, GetStaticPaths, GetStaticProps } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from '../Rozklad.module.scss'
 import {
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -17,6 +18,7 @@ interface IGroupSchedulePageProps {
   SEO: GetSeoQuery
   groupData: GroupEntity
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
@@ -25,6 +27,7 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
   SEO,
   groupData,
   headerData,
+  footerData,
   mainScreenData,
   headerSchedule,
 }) => {
@@ -40,6 +43,7 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
       title={groupData.attributes.name}
@@ -66,16 +70,16 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
 
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
-    const data = await gql.GetGroupSchedule()
+    const groupsData = await gql.GetGroupSchedule()
 
-    if (!data.groups.data.length) {
+    if (!groupsData.groups.data.length) {
       return {
         paths: [],
         fallback: true,
       }
     }
 
-    const paths = data.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
+    const paths = groupsData.groups.data.map((el) => ({ params: { group_name: el.attributes.name } }))
 
     return {
       paths,
@@ -103,8 +107,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const groupData = await gql.GetGroupSchedule({ groupName: params.group_name })
 
+    if (!groupData.groups.data[0]) {
+      return returnData
+    }
+
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -112,15 +121,16 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
         groupData: groupData.groups.data[0],
       },
     }
   } catch (error) {
-    console.log(error, 'news page error')
+    console.log(error, 'groups schedule page error')
     return {
-      props: { SEO: {}, groupData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} },
+      props: { SEO: {}, groupData: {}, headerData: {}, footerData: {}, mainScreenData: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: true },
     }
   }

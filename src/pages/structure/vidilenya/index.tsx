@@ -4,6 +4,7 @@ import { GetServerSideProps, NextPage } from 'next'
 import { Layout } from '@/layouts/Layout'
 import styles from '../Structure.module.scss'
 import {
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -16,6 +17,7 @@ import PageCard from '@/components/PageCard/PageCard'
 interface ViddilenyaPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   vidilenyaList: VidilenyaEntity[]
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -24,6 +26,7 @@ interface ViddilenyaPageProps {
 const ViddilenyaPage: NextPage<ViddilenyaPageProps> = ({
   SEO,
   headerData,
+  footerData,
   vidilenyaList,
   mainScreenData,
   headerSchedule,
@@ -32,6 +35,7 @@ const ViddilenyaPage: NextPage<ViddilenyaPageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       title={'Відділення'}
       headerSchedule={headerSchedule}
@@ -59,6 +63,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const vidilenyaList = await gql.GetAllVidilenyas()
     const headerSchedule = await gql.GetHeaderSchedule()
@@ -67,6 +72,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         headerSchedule,
         vidilenyaList: vidilenyaList.vidilenyas.data,
@@ -74,7 +80,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'viddilenya page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} } }
+    return { props: { SEO: {}, footerData: {}, headerData: {}, mainScreenData: {}, cmkData: {}, headerSchedule: {} } }
   }
 }
 

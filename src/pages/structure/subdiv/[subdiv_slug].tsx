@@ -7,6 +7,7 @@ import styles from '../Structure.module.scss'
 import PageContnet from '@/components/PageContent/PageContnet'
 import {
   CycleCommissionEntity,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -18,13 +19,21 @@ import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 interface ISmksPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   subdivData: CycleCommissionEntity
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
 
-const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainScreenData, headerSchedule }) => {
-  if (!SEO || !headerData || !subdivData || !mainScreenData || !headerSchedule) {
+const SmksPage: NextPage<ISmksPageProps> = ({
+  SEO,
+  headerData,
+  footerData,
+  subdivData,
+  mainScreenData,
+  headerSchedule,
+}) => {
+  if (!SEO || !headerData || !footerData || !subdivData || !mainScreenData || !headerSchedule) {
     return <LoadingSpinner />
   }
 
@@ -32,6 +41,7 @@ const SmksPage: NextPage<ISmksPageProps> = ({ SEO, headerData, subdivData, mainS
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
       title={subdivData?.attributes?.SEO?.title}
@@ -141,12 +151,14 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
     if (
       !headerData ||
       !mainScreenData ||
+      !footerData ||
       !SEO.seo.data.attributes.SEO.length ||
       !headerSchedule.groups.data.length ||
       !headerSchedule.workers.data.length
@@ -158,6 +170,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO,
         headerData,
+        footerData,
         headerSchedule,
         mainScreenData,
         subdivData: subdivData.subdivisions.data[0],
@@ -166,7 +179,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   } catch (error) {
     console.log(error, 'subdiv page error')
     return {
-      props: { SEO: {}, headerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
+      props: { SEO: {}, headerData: {}, footerData: {}, mainScreenData: {}, subdivData: {}, headerSchedule: {} },
       redirect: { destination: '/404', permanent: true },
     }
   }

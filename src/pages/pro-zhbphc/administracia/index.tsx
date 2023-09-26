@@ -7,6 +7,7 @@ import AdministrationCard from '@/components/AdministrationCard/AdministrationCa
 import { GetStaticProps } from 'next'
 import {
   GetAdministrationQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -17,6 +18,7 @@ import {
 interface IAdministrationProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   administration: GetAdministrationQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -25,6 +27,7 @@ interface IAdministrationProps {
 const Administration: React.FC<IAdministrationProps> = ({
   SEO,
   headerData,
+  footerData,
   mainScreenData,
   administration,
   headerSchedule,
@@ -34,6 +37,7 @@ const Administration: React.FC<IAdministrationProps> = ({
       SEO={SEO}
       title="Адміністрація"
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
     >
@@ -62,6 +66,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const administration = await gql.GetAdministration()
     const headerSchedule = await gql.GetHeaderSchedule()
@@ -70,6 +75,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         SEO,
         headerData,
+        footerData,
         mainScreenData,
         administration,
         headerSchedule,
@@ -78,7 +84,9 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'about page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, administration: {}, headerSchedule: {} } }
+    return {
+      props: { SEO: {}, headerData: {}, footerData: {}, mainScreenData: {}, administration: {}, headerSchedule: {} },
+    }
   }
 }
 

@@ -2,16 +2,17 @@ import React from 'react'
 
 import { Layout } from '@/layouts/Layout'
 import { GetStaticProps } from 'next'
-import { GetHeaderQuery, GetHeaderScheduleQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
+import { GetFooterQuery, GetHeaderQuery, GetHeaderScheduleQuery, GetMainScreenQuery, GetSeoQuery, gql } from '@/graphql/client'
 
 interface INotFonundPageProps {
   SEO: GetSeoQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
 }
 
-const NotFonundPage: React.FC<INotFonundPageProps> = ({ SEO, headerData, headerSchedule, mainScreenData }) => {
+const NotFonundPage: React.FC<INotFonundPageProps> = ({ SEO, footerData, headerData, headerSchedule, mainScreenData }) => {
   return (
     <Layout
       SEO={SEO}
@@ -19,6 +20,7 @@ const NotFonundPage: React.FC<INotFonundPageProps> = ({ SEO, headerData, headerS
       title="Сторінку не знайдено"
       headerSchedule={headerSchedule}
       mainScreenData={mainScreenData}
+      footerData={footerData}
     >
       <div className="container">
         <div className={`section-title`}>Помилка при завантаженні сторінки</div>
@@ -31,6 +33,7 @@ export const getStaticProps: GetStaticProps = async () => {
   try {
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -38,6 +41,7 @@ export const getStaticProps: GetStaticProps = async () => {
       props: {
         SEO,
         headerData,
+        footerData,
         headerSchedule,
         mainScreenData,
       },
@@ -45,7 +49,7 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'NotFonundPage error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
+    return { props: { SEO: {}, footerData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
   }
 }
 

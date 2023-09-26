@@ -5,6 +5,7 @@ import { GetServerSideProps, GetStaticPaths, GetStaticProps, NextPage } from 'ne
 
 import {
   GetAllNewsDatesQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -28,6 +29,7 @@ interface IFullNewsPageProps {
   SEO: GetSeoQuery
   fullNews: NovinaEntity
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   newsDates: GetAllNewsDatesQuery
   resentNews: GetSomeLastNewsQuery
   mainScreenData: GetMainScreenQuery
@@ -40,6 +42,7 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
   newsDates,
   resentNews,
   headerData,
+  footerData,
   mainScreenData,
   headerSchedule,
 }) => {
@@ -57,6 +60,7 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       mainScreenData={mainScreenData}
       title={fullNews.attributes.title}
       headerSchedule={headerSchedule}
@@ -268,6 +272,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
     const SEO = await gql.GetSEO()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const newsDates = await gql.GetAllNewsDates()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
@@ -278,6 +283,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
         SEO,
         newsDates,
         headerData,
+        footerData,
         resentNews,
         headerSchedule,
         mainScreenData,
@@ -290,6 +296,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       props: {
         SEO: {},
         headerData: {},
+        footerData: {},
         mainScreenData: {},
         fullNews: {},
         newsDates: {},
@@ -299,60 +306,5 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   }
 }
-
-// export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-//   try {
-//     const returnData = {
-//       props: {
-//         headerData: {},
-//         mainScreenData: {},
-//         fullNews: {},
-//         newsDates: {},
-//       },
-//       redirect: { destination: "/404", permanent: true },
-//     }
-
-//     if (!params || !params.news_id || typeof params.news_id !== "string") {
-//       return returnData
-//     }
-
-//     const fullNews = await gql.GetFullNews({ newsId: params.news_id })
-
-//     if (!fullNews.novinas.data.length) {
-//       return returnData
-//     }
-
-//     const SEO = await gql.GetSEO()
-//     const headerData = await gql.GetHeader()
-//     const newsDates = await gql.GetAllNewsDates()
-//     const mainScreenData = await gql.GetMainScreen()
-//     const headerSchedule = await gql.GetHeaderSchedule()
-//     const resentNews = await gql.GetSomeLastNews({ newsCount: 5 })
-
-//     return {
-//       props: {
-//         SEO,
-//         newsDates,
-//         headerData,
-//         resentNews,
-//         headerSchedule,
-//         mainScreenData,
-//         fullNews: fullNews.novinas.data[0],
-//       },
-//     }
-//   } catch (error) {
-//     console.log(error, "news page error")
-//     return {
-//       props: {
-//         SEO: {},
-//         headerData: {},
-//         mainScreenData: {},
-//         fullNews: {},
-//         newsDates: {},
-//         headerSchedule: {},
-//       },
-//     }
-//   }
-// }
 
 export default FullNewsPage

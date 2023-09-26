@@ -4,6 +4,7 @@ import { GetStaticProps, NextPage } from 'next'
 
 import {
   GetAllVideosQuery,
+  GetFooterQuery,
   GetHeaderQuery,
   GetHeaderScheduleQuery,
   GetMainScreenQuery,
@@ -20,6 +21,7 @@ interface IMTBazaPageProps {
   SEO: GetSeoQuery
   videos: GetAllVideosQuery
   headerData: GetHeaderQuery
+  footerData: GetFooterQuery
   panoramas: GetPanoramsQuery
   mainScreenData: GetMainScreenQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -27,10 +29,11 @@ interface IMTBazaPageProps {
 
 const VideoAnd3d: NextPage<IMTBazaPageProps> = ({
   SEO,
-  headerData,
-  mainScreenData,
   videos,
   panoramas,
+  headerData,
+  footerData,
+  mainScreenData,
   headerSchedule,
 }) => {
   const [isOpenFullScreen, setOpenFullScreen] = React.useState(false)
@@ -46,6 +49,7 @@ const VideoAnd3d: NextPage<IMTBazaPageProps> = ({
     <Layout
       SEO={SEO}
       headerData={headerData}
+      footerData={footerData}
       title="Відео і 3D-панорами"
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
@@ -95,6 +99,7 @@ export const getStaticProps: GetStaticProps = async () => {
     const SEO = await gql.GetSEO()
     const videos = await gql.GetAllVideos()
     const headerData = await gql.GetHeader()
+    const footerData = await gql.GetFooter()
     const panoramas = await gql.GetPanorams()
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
@@ -105,6 +110,7 @@ export const getStaticProps: GetStaticProps = async () => {
         videos,
         panoramas,
         headerData,
+        footerData,
         headerSchedule,
         mainScreenData,
       },
@@ -112,7 +118,17 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   } catch (error) {
     console.log(error, 'about page error')
-    return { props: { SEO: {}, headerData: {}, mainScreenData: {}, videos: {}, panoramas: {}, headerSchedule: {} } }
+    return {
+      props: {
+        SEO: {},
+        videos: {},
+        panoramas: {},
+        headerData: {},
+        footerData: {},
+        mainScreenData: {},
+        headerSchedule: {},
+      },
+    }
   }
 }
 
