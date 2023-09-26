@@ -5,13 +5,6 @@ import Image from 'next/image'
 import Form from '../Form/Form'
 import Modal from '../Modal/Modal'
 import styles from './Footer.module.scss'
-import emailIcon from '../../../public/assets/icons/email.png'
-import logoIcon from '../../../public/assets/icons/logo_white.svg'
-import mapIcon from '../../../public/assets/images/footer/map.png'
-import youtubeIcon from '../../../public/assets/icons/youtube.png'
-import telegramIcon from '../../../public/assets/icons/telegram.png'
-import facebookIcon from '../../../public/assets/icons/facebook.png'
-import instagramIcon from '../../../public/assets/icons/instagram.png'
 import { GetFooterQuery } from '@/graphql/__generated__'
 import { clearPhoneNumber } from '@/utils/clearPhoneNumber'
 
@@ -95,7 +88,7 @@ export const Footer: React.FC<IFooterProps> = ({ footerData }) => {
               <div className={styles['footer__info']}>
                 <ul className={styles['social__list']}>
                   {footerData.footer.data.attributes.social.map((el) => (
-                    <li className={styles['social__list-item']}>
+                    <li className={styles['social__list-item']} key={el.id}>
                       <a href="#">
                         <Image
                           className={styles['social__list-icon']}
