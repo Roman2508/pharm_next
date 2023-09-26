@@ -11,6 +11,7 @@ import {
   GroupEntity,
   gql,
 } from '@/graphql/client'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface IGroupSchedulePageProps {
   SEO: GetSeoQuery
@@ -27,6 +28,10 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
+  if (!groupData) {
+    return <LoadingSpinner />
+  }
+
   const calendarUrl = groupData
     ? `https://calendar.google.com/calendar/embed?showTitle=0&showTz=0&mode=AGENDA&height=600&wkst=2&hl=uk_UA&bgcolor=%23FFFFFF&src=${groupData.attributes.calendar_id}&ctz=Europe%2FKiev`
     : ''
@@ -37,11 +42,11 @@ const GroupSchedulePage: React.FC<IGroupSchedulePageProps> = ({
       headerData={headerData}
       mainScreenData={mainScreenData}
       headerSchedule={headerSchedule}
-      title={groupData?.attributes?.name || ''}
+      title={groupData.attributes.name}
     >
       <div className="container">
         <div className={`section-title`} style={{ marginBottom: '40px' }}>
-          Розклад групи {groupData?.attributes?.name || ''}
+          Розклад групи {groupData.attributes.name}
         </div>
 
         <div className={styles['schedule-box']}>
@@ -103,17 +108,6 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     const mainScreenData = await gql.GetMainScreen()
     const headerSchedule = await gql.GetHeaderSchedule()
 
-    if (
-      !groupData.groups.data[0] ||
-      !SEO.seo.data.attributes ||
-      !headerData.header.data ||
-      !mainScreenData.header.data ||
-      !headerSchedule.groups.data ||
-      !headerSchedule.workers.data
-    ) {
-      return returnData
-    }
-
     return {
       props: {
         SEO,
@@ -125,7 +119,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, groupData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
+    return {
+      props: { SEO: {}, groupData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
   }
 }
 

@@ -11,6 +11,7 @@ import {
   WorkerEntity,
   gql,
 } from '@/graphql/client'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface ITeacherSchedulePageProps {
   SEO: GetSeoQuery
@@ -27,6 +28,10 @@ const TeacherSchedulePage: React.FC<ITeacherSchedulePageProps> = ({
   headerSchedule,
   mainScreenData,
 }) => {
+  if (!teacherData) {
+    return <LoadingSpinner />
+  }
+
   const calendarUrl = `https://calendar.google.com/calendar/embed?showTitle=0&showTz=0&mode=AGENDA&height=600&wkst=2&hl=uk_UA&bgcolor=%23FFFFFF&src=${teacherData.attributes.calendar_id}&ctz=Europe%2FKiev`
 
   return (
@@ -116,7 +121,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     }
   } catch (error) {
     console.log(error, 'news page error')
-    return { props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} } }
+    return {
+      props: { SEO: {}, teacherData: {}, headerData: {}, mainScreenData: {}, headerSchedule: {} },
+      redirect: { destination: '/404', permanent: true },
+    }
   }
 }
 

@@ -22,6 +22,7 @@ import { ResentNews } from '@/components/News/ResentNews'
 import { FancyboxGallery } from '@/components/FancyboxGallery'
 import pageStyles from '../../../../../components/PageContent/Page.module.scss'
 import replaceDataInBodyComponent from '@/utils/replaceDataInBodyComponent'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface IFullNewsPageProps {
   SEO: GetSeoQuery
@@ -42,6 +43,10 @@ const FullNewsPage: NextPage<IFullNewsPageProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
+  if (!SEO || !fullNews || !newsDates || !resentNews || !headerData || !mainScreenData || !headerSchedule) {
+    return <LoadingSpinner />
+  }
+
   const videoUrl = getVideoUrl(fullNews.attributes.video_url)
 
   const { day, month, year } = convertMonthName(fullNews?.attributes?.date)
@@ -215,7 +220,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     if (!data.novinas.data.length) {
       return {
         paths: [],
-        fallback: false,
+        fallback: true,
       }
     }
 
@@ -228,13 +233,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
     return {
       paths,
-      fallback: false,
+      fallback: true,
     }
   } catch (err) {
     console.log(err)
     return {
       paths: [],
-      fallback: false,
+      fallback: true,
     }
   }
 }

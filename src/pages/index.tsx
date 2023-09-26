@@ -22,6 +22,7 @@ import {
   GetSeoQuery,
   gql,
 } from '@/graphql/client'
+import LoadingSpinner from '@/components/LoadingSpinner/LoadingSpinner'
 
 interface IHomeProps {
   SEO: GetSeoQuery
@@ -48,6 +49,21 @@ const Home: NextPage<IHomeProps> = ({
   mainScreenData,
   headerSchedule,
 }) => {
+  if (
+    !SEO ||
+    !events ||
+    !videos ||
+    !newsData ||
+    !partners ||
+    !headerData ||
+    !homePageData ||
+    !advertisments ||
+    !mainScreenData ||
+    !headerSchedule
+  ) {
+    return <LoadingSpinner />
+  }
+
   return (
     <HomePageLayout
       title="Головна сторінка | ЖБФК"
