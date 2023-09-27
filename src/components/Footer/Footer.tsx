@@ -54,7 +54,7 @@ export const Footer: React.FC<IFooterProps> = ({ footerData }) => {
           <div className={styles['footer__wrapper']}>
             <div className={styles['footer__left-col']}>
               <div className={styles['footer__map']}>
-                <a href="#">
+                <a href={footerData.footer.data.attributes.map_url}>
                   <Image
                     className={styles['social__list-icon']}
                     src={`${process.env.API_URL}${footerData.footer.data.attributes.map_photo.data.attributes.url}`}
