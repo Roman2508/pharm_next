@@ -33,7 +33,7 @@ interface IHomeProps {
   footerData: GetFooterQuery
   partners: GetPartnersQuery
   headerData: GetHeaderQuery
-  homePageData: GetHomePageDataQuery
+  // homePageData: GetHomePageDataQuery
   mainScreenData: GetMainScreenQuery
   advertisments: GetAdvertisementsQuery
   headerSchedule: GetHeaderScheduleQuery
@@ -47,26 +47,26 @@ const Home: NextPage<IHomeProps> = ({
   partners,
   headerData,
   footerData,
-  homePageData,
+  // homePageData,
   advertisments,
   mainScreenData,
   headerSchedule,
 }) => {
-  if (
-    !SEO ||
-    !events ||
-    !videos ||
-    !newsData ||
-    !partners ||
-    !footerData ||
-    !headerData ||
-    !homePageData ||
-    !advertisments ||
-    !mainScreenData ||
-    !headerSchedule
-  ) {
-    return <LoadingSpinner />
-  }
+  // if (
+  //   !SEO ||
+  //   !events ||
+  //   !videos ||
+  //   !newsData ||
+  //   !partners ||
+  //   !footerData ||
+  //   !headerData ||
+  //   !homePageData ||
+  //   !advertisments ||
+  //   !mainScreenData ||
+  //   !headerSchedule
+  // ) {
+  //   return <LoadingSpinner />
+  // }
 
   return (
     <HomePageLayout
@@ -79,18 +79,18 @@ const Home: NextPage<IHomeProps> = ({
     >
       <Announcement advertisments={advertisments} />
       {/* @ts-ignore */}
-      <About data={homePageData.homePageAbout.data} />
+      {/* <About data={homePageData.homePageAbout.data} /> */}
       {/* @ts-ignore */}
-      <Stats data={homePageData.homePageStat.data} />
+      {/* <Stats data={homePageData.homePageStat.data} /> */}
       <div className="container">
         <News newsData={newsData} showTitle addMarginBottom />
       </div>
       <Events events={events} />
       {/* @ts-ignore */}
-      <Gallery data={homePageData.homePageGallery.data} />
+      {/* <Gallery data={homePageData.homePageGallery.data} /> */}
       <Videos videos={videos} />
       {/* @ts-ignore */}
-      <Contacts data={homePageData.homePageContact.data} />
+      {/* <Contacts data={homePageData.homePageContact.data} /> */}
       <Partners partners={partners} />
     </HomePageLayout>
   )
@@ -106,7 +106,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     const headerData = await gql.GetHeader()
     const footerData = await gql.GetFooter()
     const mainScreenData = await gql.GetMainScreen()
-    const homePageData = await gql.GetHomePageData()
+    // const homePageData = await gql.GetHomePageData()
     const advertisments = await gql.GetAdvertisements()
     const headerSchedule = await gql.GetHeaderSchedule()
 
@@ -119,7 +119,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         newsData,
         footerData,
         headerData,
-        homePageData,
+        // homePageData,
         advertisments,
         mainScreenData,
         headerSchedule,
@@ -135,7 +135,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
         newsData: {},
         headerData: {},
         footerData: {},
-        homePageData: {},
+        // homePageData: {},
         advertisments: {},
         mainScreenData: {},
         headerSchedule: {},

@@ -50,7 +50,7 @@ const SchedulePage: React.FC<ISchedulePageProps> = ({
 
         <GroupSchedule groups={groups} />
 
-        <div className={`section-title`} style={{ marginBottom: '40px' }}>
+        <div className={`section-title`} style={{ margin: '60px 0 40px' }}>
           Викладачі
         </div>
 
