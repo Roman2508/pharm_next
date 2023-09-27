@@ -25,7 +25,17 @@ const MainScreen: React.FC<IMainScreenProps> = ({ mainScreenData }) => {
   return (
     <div className={styles['main-screen']}>
       <div className={styles['main-screen__video']}>
-        <video ref={videoRef} preload="none" autoPlay muted loop playsInline>
+        <video
+          ref={videoRef}
+          preload="none"
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            background: `transparent url('${process.env.API_URL}${mainScreenData?.header.data.attributes.Header.primaryVideoPoster.data.attributes.url}') 50% 50% / cover no-repeat`,
+          }}
+        >
           <source
             src={`${process.env.API_URL}${mainScreenData?.header.data.attributes.Header.background.data.attributes.url}`}
             type="video/mp4"

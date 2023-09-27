@@ -18,7 +18,15 @@ const SubHeader: React.FC<ISubHeaderProps> = ({ mainScreenData }) => {
   return (
     <div className={styles['sub-header']}>
       <div className={styles['sub-header__video']}>
-        <video autoPlay muted loop playsInline>
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          style={{
+            background: `transparent url('${process.env.API_URL}${mainScreenData?.header?.data?.attributes?.Header.secondaryVideoPoster.data.attributes.url}') 50% 50% / cover no-repeat`,
+          }}
+        >
           <source
             src={`${process.env.API_URL}${mainScreenData?.header?.data?.attributes?.Header?.background?.data?.attributes?.url}`}
             type="video/mp4"
