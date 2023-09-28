@@ -118,4 +118,13 @@
     border-radius: 0;
     overflow-x: auto;
   }
+  .openModal {
+    animation-name: none;
+  }
+  .closeModal {
+    animation-name: none;
+  }
+  .layoutClose {
+    display: none;
+  }
 }

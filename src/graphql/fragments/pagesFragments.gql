@@ -7,6 +7,7 @@ fragment GetAccordionComponent on ComponentPageBlocksAccordion {
 }
 
 fragment GetBodyComponent on ComponentPageBlocksBody {
+  id
   body
   component_type
 }
@@ -169,6 +170,7 @@ fragment GetBlocksPersonComponent on ComponentPageBlocksPerson {
 }
 
 fragment GetPageCardsComponent on ComponentPageBlocksPageCards {
+  id
   component_type
   cards {
     id
@@ -187,8 +189,8 @@ fragment GetPageCardsComponent on ComponentPageBlocksPageCards {
 }
 
 fragment GetFullSizePersonComponent on ComponentPageBlocksFullSizePerson {
-  component_type
   id
+  component_type
   name
   body
   photo {

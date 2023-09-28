@@ -116,6 +116,9 @@
   .events__slider-title {
     font-size: 22px;
   }
+  .events__photo {
+    max-height: 300px;
+  }
 }
 
 @media (max-width: 1024px) {
@@ -144,6 +147,9 @@
   .events__title {
     margin-bottom: 20px;
   }
+  .events__photo {
+    max-height: 270px;
+  }
 }
 
 @media (max-width: 640px) {
@@ -160,6 +166,9 @@
   }
   .events__item {
     flex-direction: column;
+  }
+  .events__photo {
+    max-height: 250px;
   }
 }
 

@@ -1,14 +1,24 @@
-import { NextApiRequest, NextApiResponse } from "next"
+import { NextApiRequest, NextApiResponse } from 'next'
 
-import sendgrid from "@sendgrid/mail"
+import sendgrid from '@sendgrid/mail'
 
-sendgrid.setApiKey(process.env.SENDGRID_API_KEY || "")
+sendgrid.setApiKey(process.env.SENDGRID_API_KEY || '')
 
 async function sendEmail(req: NextApiRequest, res: NextApiResponse) {
+  console.log('req.body: ', req.body)
+
+  let mail = ''
+
+  if (req.body.subject === 'Питання про вступ') {
+    mail = 'prystupko.olha@pharm.zt.ua'
+  } else {
+    mail = 'college@pharm.zt.ua'
+  }
+
   try {
     await sendgrid.send({
-      to: "noreply@pharm.zt.ua", // Your email where you'll receive emails
-      from: req.body.email, // your website email address here
+      to: mail, // Your email where you'll receive emails
+      from: 'noreply@pharm.zt.ua', // your website email address here
       subject: `[Повідомлення з сайту ЖБФФК] : ${req.body.subject}`,
       html: `
       <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -33,14 +43,14 @@ async function sendEmail(req: NextApiRequest, res: NextApiResponse) {
       </html>`,
     })
 
-    return res.status(200).json({ message: "Повідомлення надіслано!" })
+    return res.status(200).json({ message: 'Повідомлення надіслано!' })
   } catch (error) {
     console.log(error)
     // @ts-ignore
     return res.status(error.statusCode || 500).json({ error: error.message })
   }
 
-  return res.status(200).json({ error: "" })
+  return res.status(200).json({ error: '' })
 }
 
 export default sendEmail

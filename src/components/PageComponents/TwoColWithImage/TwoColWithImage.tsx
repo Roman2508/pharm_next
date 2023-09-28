@@ -12,7 +12,7 @@ interface ITwoColWithImageProps {
 const TwoColWithImage: React.FC<ITwoColWithImageProps> = ({ component, colSize }) => {
   if (component.layout === 'text_image') {
     return (
-      <div className={cn({ ['container']: colSize === 'col-12' })} key={component.id}>
+      <div className={cn({ ['container']: colSize === 'col-12' })}>
         <div className={styles['wrapper']}>
           <div
             className={cn(styles['content'], styles['right-image'])}
