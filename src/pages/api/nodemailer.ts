@@ -1,4 +1,3 @@
-import { SMTPClient } from 'smtp-client'
 import { NextApiRequest, NextApiResponse } from 'next'
 
 const nodemailer = require('nodemailer')

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@editorjs/editorjs": "^2.28.0",
+    "@emailjs/browser": "^3.11.0",
     "@fancyapps/ui": "^5.0.22",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",

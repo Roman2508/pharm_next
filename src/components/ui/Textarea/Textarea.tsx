@@ -7,6 +7,7 @@ import { FieldError } from 'react-hook-form'
 interface IInputProps {
   // isError?: boolean
   // errorMessage?: string
+  name?: string
   label?: string
   value?: string
   width?: string
@@ -18,6 +19,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, IInputProps>(
   (
     {
       error,
+      name = '',
       // setValue,
       label = '',
       value = '',
@@ -48,10 +50,10 @@ const Textarea = forwardRef<HTMLTextAreaElement, IInputProps>(
         <label
           className={cn(styles.label, {
             [styles.errorLabel]: error?.message,
-            [styles.focusLabel]: isFocusLabel,
+            [styles.focusLabel]: true,
             [styles.outlinedLabel]: true,
-            [styles.focusLabelLight]: isFocus,
-            [styles.focusOutlinedLabel]: isFocus,
+            [styles.focusLabelLight]: true,
+            [styles.focusOutlinedLabel]: true,
           })}
         >
           {label}
@@ -59,7 +61,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, IInputProps>(
 
         <div
           className={cn(styles.inputWrapper, {
-            [styles.focusInput]: isFocusLabel,
+            [styles.focusInput]: true,
             [styles.errorBottomLine]: error?.message,
           })}
           style={{ width: width }}
@@ -67,6 +69,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, IInputProps>(
           {/*  */}
           <textarea
             ref={ref}
+            name={name}
             // value={value}
             onBlur={onBlurHandler}
             style={{ width: width }}

@@ -1,111 +1,69 @@
 import React from 'react'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import emailjs from '@emailjs/browser'
+import { useForm } from 'react-hook-form'
 
 import Input from '../ui/Input/Input'
 import styles from './Form.module.scss'
-import Select from '../ui/Select/Select'
 import Button from '../ui/Button/Button'
 import { validEmail } from '@/utils/validMali'
-import SelectItem from '../ui/Select/SelectItem'
 import { Textarea } from '../ui/Textarea/Textarea'
-import { sendNodemailer } from '@/pages/api/nodemailer'
-// import { sendNodemailer } from '@/utils/email'
 
 interface IFormProps {
   isAnonim?: boolean
 }
 
 export interface IFormFields {
-  name: string
   email: string
-  body: string
-  topic: string
+  userName: string
+  subject: string
+  message: string
 }
 
-const topicList = [
-  { id: 1, text: '- Тема повідомлення -' },
-  { id: 2, text: 'Загальне питання' },
-  { id: 3, text: 'Питання до адміністрації' },
-  { id: 4, text: 'Питання про вступ' },
-]
-
 const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
+  const form = React.useRef(null)
+
+  const [isSubmitting, setIsSubmitting] = React.useState(false)
+
   const {
-    control,
     register,
-    formState: { errors, isSubmitting, isDirty, isValid },
-    handleSubmit,
+    formState: { errors, isDirty, isValid },
+    reset,
     getValues,
   } = useForm<IFormFields>()
 
-  const onSubmit: SubmitHandler<IFormFields> = async (data) => {
-    try {
-      // const res = await sendNodemailer('/api/nodemailer', {
-      //   subject: data.topic,
-      //   email: data.email,
-      //   fullname: data.name,
-      //   body: data.body,
-      // })
-      // await sendMailClient()
-      // alert('ok')
-      const res = await fetch('/api/nodemailer', {
-        body: JSON.stringify({
-          email: data.email,
-          fullname: data.name,
-          subject: data.topic,
-          body: data.body,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
+  const sendEmail = (e: any) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    emailjs
+      .sendForm('service_hsn7k71', 'template_6arn6nf', form.current || '', 'cq9KjIAiqLA7Ps4Ph')
+      .then(
+        (result) => {
+          console.log(result.text)
+          alert('Повідомлення відправлено!')
         },
-        method: 'POST',
+        (error) => {
+          console.log(error.text)
+          alert('Помилка при відправці повідомлення :(')
+        }
+      )
+      .finally(() => {
+        setIsSubmitting(false)
+        reset()
       })
-
-      const { error } = await res.json()
-
-      if (error) {
-        alert('Помилка при відправці повідомлення1!')
-      } else {
-        alert('Повідомлення відправлено!')
-      }
-    } catch (e) {
-      alert('Помилка при відправленні повідомлення!')
-    }
-
-    // const res = await fetch('/api/sendgrid', {
-    //   body: JSON.stringify({
-    //     email: data.email,
-    //     fullname: data.name,
-    //     subject: data.topic,
-    //     message: data.body,
-    //   }),
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   method: 'POST',
-    // })
-
-    // const { error } = await res.json()
-
-    // if (error) {
-    //   alert('Помилка при відправці повідомлення!')
-    // } else {
-    //   alert('Повідомлення відправлено!')
-    // }
   }
 
   return (
-    <form className={styles['form']} onSubmit={handleSubmit(onSubmit)}>
+    <form ref={form} onSubmit={sendEmail}>
       {isAnonim && (
         <>
           <Input
-            {...register('name', {
+            {...register('userName', {
               required: "Ім'я обов'язкове",
             })}
             width="100%"
             label="Ваше ім`я"
-            value={getValues().name}
-            error={errors.name}
+            value={getValues().userName}
+            error={errors.userName}
           />
 
           <Input
@@ -122,48 +80,38 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
             error={errors.email}
           />
 
-          <Controller
-            control={control}
-            name="topic"
-            defaultValue={topicList[0].text}
-            rules={{
-              validate: (value: string) => value !== '- Тема повідомлення -',
-            }}
-            render={({
-              field: { onChange, value, ref /* , name, onBlur */ },
-              fieldState: { error /* , invalid, isTouched, isDirty */ },
-              // formState,
-            }) => {
-              return (
-                <Select
-                  inputRef={ref}
-                  error={!!error}
-                  activeItem={value}
-                  isSubmitting={isSubmitting}
-                  label={'- Тема повідомлення -'}
-                >
-                  {topicList.map((el) => (
-                    <SelectItem value={el.text} key={el.id} onClick={() => onChange(el.text)} />
-                  ))}
-                </Select>
-              )
-            }}
-          />
+          <div className={styles.selectWrapper}>
+            <label htmlFor="subject" className={styles.selectLabel}>
+              Тема питання
+            </label>
+            <select
+              {...register('subject')}
+              name="subject"
+              id="subject"
+              className={styles.select}
+              value={getValues().subject}
+            >
+              <option>Загальне питання</option>
+              <option>Питання до адміністрації</option>
+              <option>Питання про вступ</option>
+            </select>
+          </div>
         </>
       )}
 
       {!isAnonim && <p className={styles['anon-desc']}>Ви можете відправити будь-яке повідомлення анонімно.</p>}
 
       <Textarea
-        {...register('body', {
+        {...register('message', {
           required: "Текст повідомлення обов'язковий",
         })}
         width="100%"
         label="Текст повідомлення"
-        value={getValues().body}
-        error={errors.body}
+        value={getValues().message}
+        error={errors.message}
       />
-      <Button disabled={!isDirty || !isValid || isSubmitting}>Відправити повідомлення</Button>
+
+      <Button disabled={isSubmitting || !isDirty || !isValid}>Відправити повідомлення</Button>
     </form>
   )
 }

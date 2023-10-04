@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 interface IButtonProps {
   children: string
-  disabled: boolean
+  disabled?: boolean
   link?: string
   isLink?: boolean
   width?: string
@@ -20,7 +20,7 @@ const Button: React.FC<IButtonProps> = ({ children, disabled, link, isLink = fal
     )
   } else {
     return (
-      <button className={styles['button']} style={{ width: width }} disabled={disabled}>
+      <button className={styles['button']} style={{ width: width }} disabled={disabled} type="submit">
         {children}
       </button>
     )

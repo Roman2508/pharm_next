@@ -2,7 +2,7 @@
 const nextConfig = {
   // reactStrictMode: true,
   images: {
-    domains: ['localhost', 'pharm.zt.ua', 'pharm.vercel.app', 'pharm-strapi.onrender.com'],
+    domains: ['localhost', 'pharm.zt.ua', 'new.pharm.zt.ua', 'pharm.vercel.app', 'pharm-strapi.onrender.com'],
     minimumCacheTTL: 1200,
     // formats: ['image/jpg', 'image/jpeg', 'image/png', 'image/svg'],
     remotePatterns: [
