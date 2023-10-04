@@ -1,13 +1,15 @@
-import React from "react"
-import { Controller, SubmitHandler, useForm } from "react-hook-form"
+import React from 'react'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 
-import Input from "../ui/Input/Input"
-import styles from "./Form.module.scss"
-import Select from "../ui/Select/Select"
-import Button from "../ui/Button/Button"
-import { validEmail } from "@/utils/validMali"
-import SelectItem from "../ui/Select/SelectItem"
-import { Textarea } from "../ui/Textarea/Textarea"
+import Input from '../ui/Input/Input'
+import styles from './Form.module.scss'
+import Select from '../ui/Select/Select'
+import Button from '../ui/Button/Button'
+import { validEmail } from '@/utils/validMali'
+import SelectItem from '../ui/Select/SelectItem'
+import { Textarea } from '../ui/Textarea/Textarea'
+import { sendNodemailer } from '@/pages/api/nodemailer'
+// import { sendNodemailer } from '@/utils/email'
 
 interface IFormProps {
   isAnonim?: boolean
@@ -21,10 +23,10 @@ export interface IFormFields {
 }
 
 const topicList = [
-  { id: 1, text: "- Тема повідомлення -" },
-  { id: 2, text: "Загальне питання" },
-  { id: 3, text: "Питання до адміністрації" },
-  { id: 4, text: "Питання про вступ" },
+  { id: 1, text: '- Тема повідомлення -' },
+  { id: 2, text: 'Загальне питання' },
+  { id: 3, text: 'Питання до адміністрації' },
+  { id: 4, text: 'Питання про вступ' },
 ]
 
 const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
@@ -37,34 +39,67 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
   } = useForm<IFormFields>()
 
   const onSubmit: SubmitHandler<IFormFields> = async (data) => {
-    const res = await fetch("/api/sendgrid", {
-      body: JSON.stringify({
-        email: data.email,
-        fullname: data.name,
-        subject: data.topic,
-        message: data.body,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-    })
+    try {
+      // const res = await sendNodemailer('/api/nodemailer', {
+      //   subject: data.topic,
+      //   email: data.email,
+      //   fullname: data.name,
+      //   body: data.body,
+      // })
+      // await sendMailClient()
+      // alert('ok')
+      const res = await fetch('/api/nodemailer', {
+        body: JSON.stringify({
+          email: data.email,
+          fullname: data.name,
+          subject: data.topic,
+          body: data.body,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        method: 'POST',
+      })
 
-    const { error } = await res.json()
+      const { error } = await res.json()
 
-    if (error) {
-      alert("Помилка при відправці повідомлення!")
-    } else {
-      alert("Повідомлення відправлено!")
+      if (error) {
+        alert('Помилка при відправці повідомлення1!')
+      } else {
+        alert('Повідомлення відправлено!')
+      }
+    } catch (e) {
+      alert('Помилка при відправленні повідомлення!')
     }
+
+    // const res = await fetch('/api/sendgrid', {
+    //   body: JSON.stringify({
+    //     email: data.email,
+    //     fullname: data.name,
+    //     subject: data.topic,
+    //     message: data.body,
+    //   }),
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   method: 'POST',
+    // })
+
+    // const { error } = await res.json()
+
+    // if (error) {
+    //   alert('Помилка при відправці повідомлення!')
+    // } else {
+    //   alert('Повідомлення відправлено!')
+    // }
   }
 
   return (
-    <form className={styles["form"]} onSubmit={handleSubmit(onSubmit)}>
+    <form className={styles['form']} onSubmit={handleSubmit(onSubmit)}>
       {isAnonim && (
         <>
           <Input
-            {...register("name", {
+            {...register('name', {
               required: "Ім'я обов'язкове",
             })}
             width="100%"
@@ -74,11 +109,11 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
           />
 
           <Input
-            {...register("email", {
+            {...register('email', {
               required: "E-mail обов'язковий",
               pattern: {
                 value: validEmail,
-                message: "Не вірний формат пошти",
+                message: 'Не вірний формат пошти',
               },
             })}
             width="100%"
@@ -92,7 +127,7 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
             name="topic"
             defaultValue={topicList[0].text}
             rules={{
-              validate: (value: string) => value !== "- Тема повідомлення -",
+              validate: (value: string) => value !== '- Тема повідомлення -',
             }}
             render={({
               field: { onChange, value, ref /* , name, onBlur */ },
@@ -105,14 +140,10 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
                   error={!!error}
                   activeItem={value}
                   isSubmitting={isSubmitting}
-                  label={"- Тема повідомлення -"}
+                  label={'- Тема повідомлення -'}
                 >
                   {topicList.map((el) => (
-                    <SelectItem
-                      value={el.text}
-                      key={el.id}
-                      onClick={() => onChange(el.text)}
-                    />
+                    <SelectItem value={el.text} key={el.id} onClick={() => onChange(el.text)} />
                   ))}
                 </Select>
               )
@@ -121,14 +152,10 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
         </>
       )}
 
-      {!isAnonim && (
-        <p className={styles["anon-desc"]}>
-          Ви можете відправити будь-яке повідомлення анонімно.
-        </p>
-      )}
+      {!isAnonim && <p className={styles['anon-desc']}>Ви можете відправити будь-яке повідомлення анонімно.</p>}
 
       <Textarea
-        {...register("body", {
+        {...register('body', {
           required: "Текст повідомлення обов'язковий",
         })}
         width="100%"
@@ -136,9 +163,7 @@ const Form: React.FC<IFormProps> = ({ isAnonim = false }) => {
         value={getValues().body}
         error={errors.body}
       />
-      <Button disabled={!isDirty || !isValid || isSubmitting}>
-        Відправити повідомлення
-      </Button>
+      <Button disabled={!isDirty || !isValid || isSubmitting}>Відправити повідомлення</Button>
     </form>
   )
 }

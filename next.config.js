@@ -15,14 +15,14 @@ const nextConfig = {
     ],
   },
   env: {
-    // API_URL: 'http://localhost:1337',
-    // GRAPHQL_API_URL: 'http://localhost:1337/graphql',
+    API_URL: 'http://localhost:1337',
+    GRAPHQL_API_URL: 'http://localhost:1337/graphql',
 
     // API_URL: 'https://api.pharm.zt.ua',
     // GRAPHQL_API_URL: 'https://api.pharm.zt.ua/graphql',
 
-    API_URL: 'https://pharm.up.railway.app',
-    GRAPHQL_API_URL: 'https://pharm.up.railway.app/graphql',
+    // API_URL: 'https://pharm.up.railway.app',
+    // GRAPHQL_API_URL: 'https://pharm.up.railway.app/graphql',
 
     SENDGRID_API_KEY: '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',
     // SENDGRID_API_KEY: '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',

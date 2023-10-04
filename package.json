@@ -27,6 +27,7 @@
     "lodash.range": "^3.2.0",
     "next": "13.4.16",
     "nextjs-progressbar": "^0.0.16",
+    "nodemailer": "^6.9.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hook-form": "^7.46.1",
@@ -34,11 +35,13 @@
     "remark": "^14.0.3",
     "remark-html": "^15.0.2",
     "sass": "^1.65.1",
+    "smtp-client": "^0.4.0",
     "swiper": "^10.1.0",
     "typescript": "5.1.6"
   },
   "devDependencies": {
     "@types/lodash.range": "^3.2.7",
+    "@types/nodemailer": "^6.4.11",
     "@types/react-slick": "^0.23.10"
   }
 }
