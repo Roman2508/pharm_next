@@ -42,13 +42,15 @@ let transporter = nodemailer.createTransport({
 })
 
 export const sendNodemailer = async (req: NextApiRequest, res: NextApiResponse) => {
-  try {
-    const info = await transporter.sendMail({
-      from: 'pharm_form@pharm.zt.ua',
-      to: 'ptashnyk.roman@pharm.zt.ua',
-      subject: `[Повідомлення з сайту ЖБФФК] : ${req.body.subject}`,
-      text: 'Hello world?',
-      html: `
+  if (req.method === 'POST') {
+    // Process a POST request
+    try {
+      const info = await transporter.sendMail({
+        from: 'pharm_form@pharm.zt.ua',
+        to: 'ptashnyk.roman@pharm.zt.ua',
+        subject: `[Повідомлення з сайту ЖБФФК] : ${req.body.subject}`,
+        text: 'Hello world?',
+        html: `
                 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
                 <html lang="ua">
                   <head>
@@ -69,12 +71,13 @@ export const sendNodemailer = async (req: NextApiRequest, res: NextApiResponse) 
                     </div>
                   </body>
                 </html>`,
-    })
+      })
 
-    console.log('Message sent: %s', info.messageId)
+      console.log('Message sent: %s', info.messageId)
 
-    res.status(200).json({ message: 'success' })
-  } catch (error) {
-    console.error(error, 'nodemailer error')
+      res.status(200).json({ message: 'success' })
+    } catch (error) {
+      console.error(error, 'nodemailer error')
+    }
   }
 }
